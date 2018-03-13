@@ -14,6 +14,8 @@
 		BF56DED12058631A007E2483 /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECE2058631A007E2483 /* DisplayNodeCanvas.swift */; };
 		BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECF2058631A007E2483 /* DisplayNode.swift */; };
 		BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED02058631A007E2483 /* CanvasViewController.swift */; };
+		BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
+		BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED62058693E007E2483 /* DrawingCanvas.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		BF56DECE2058631A007E2483 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
 		BF56DECF2058631A007E2483 /* DisplayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNode.swift; sourceTree = "<group>"; };
 		BF56DED02058631A007E2483 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
+		BF56DED420586439007E2483 /* DisplayNodeSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeSocket.swift; sourceTree = "<group>"; };
+		BF56DED62058693E007E2483 /* DrawingCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvas.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 				BF56DECE2058631A007E2483 /* DisplayNodeCanvas.swift */,
 				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
 				BF56DED02058631A007E2483 /* CanvasViewController.swift */,
+				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
+				BF56DED62058693E007E2483 /* DrawingCanvas.swift */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -152,8 +158,10 @@
 				BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */,
 				BF56DED12058631A007E2483 /* DisplayNodeCanvas.swift in Sources */,
 				BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */,
+				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF56DECC20586313007E2483 /* Utils.swift in Sources */,
+				BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

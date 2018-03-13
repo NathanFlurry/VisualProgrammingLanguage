@@ -16,6 +16,10 @@ class DisplayNodeCanvas: UIView {
         let addingRecognizer = UITapGestureRecognizer(target: self, action: #selector(addVFLNode(_:)))
         addingRecognizer.numberOfTapsRequired = 2
         addGestureRecognizer(addingRecognizer)
+        
+        // Add a drawing canvas
+        let drawing = DrawingCanvas(frame: CGRect(x: 20, y: 20, width: 200, height: 200))
+        addSubview(drawing)
     }
     
     required init?(coder aDecoder: NSCoder) {
