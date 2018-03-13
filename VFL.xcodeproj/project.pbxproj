@@ -9,19 +9,25 @@
 /* Begin PBXBuildFile section */
 		BF56DE8B20585548007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DE8A20585548007E2483 /* AppDelegate.swift */; };
 		BF56DE8D20585548007E2483 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DE8C20585548007E2483 /* ViewController.swift */; };
-		BF56DE9020585548007E2483 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF56DE8E20585548007E2483 /* Main.storyboard */; };
 		BF56DE9220585548007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DE9120585548007E2483 /* Assets.xcassets */; };
 		BF56DE9520585548007E2483 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF56DE9320585548007E2483 /* LaunchScreen.storyboard */; };
+		BF56DE9D205855A1007E2483 /* VFLCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DE9C205855A1007E2483 /* VFLCanvas.swift */; };
+		BF56DE9F2058564F007E2483 /* VFLCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DE9E2058564F007E2483 /* VFLCanvasViewController.swift */; };
+		BF56DEA12058573E007E2483 /* VFLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEA02058573E007E2483 /* VFLNode.swift */; };
+		BF56DEA420585B50007E2483 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEA320585B50007E2483 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BF56DE8720585548007E2483 /* VFL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VFL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DE8A20585548007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF56DE8C20585548007E2483 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BF56DE8F20585548007E2483 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF56DE9120585548007E2483 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF56DE9420585548007E2483 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF56DE9620585548007E2483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF56DE9C205855A1007E2483 /* VFLCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFLCanvas.swift; sourceTree = "<group>"; };
+		BF56DE9E2058564F007E2483 /* VFLCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFLCanvasViewController.swift; sourceTree = "<group>"; };
+		BF56DEA02058573E007E2483 /* VFLNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFLNode.swift; sourceTree = "<group>"; };
+		BF56DEA320585B50007E2483 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +60,25 @@
 		BF56DE8920585548007E2483 /* VFL */ = {
 			isa = PBXGroup;
 			children = (
+				BF56DEA22058593F007E2483 /* Rendering */,
 				BF56DE8A20585548007E2483 /* AppDelegate.swift */,
 				BF56DE8C20585548007E2483 /* ViewController.swift */,
-				BF56DE8E20585548007E2483 /* Main.storyboard */,
 				BF56DE9120585548007E2483 /* Assets.xcassets */,
 				BF56DE9320585548007E2483 /* LaunchScreen.storyboard */,
 				BF56DE9620585548007E2483 /* Info.plist */,
+				BF56DEA320585B50007E2483 /* Utils.swift */,
 			);
 			path = VFL;
+			sourceTree = "<group>";
+		};
+		BF56DEA22058593F007E2483 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				BF56DE9E2058564F007E2483 /* VFLCanvasViewController.swift */,
+				BF56DE9C205855A1007E2483 /* VFLCanvas.swift */,
+				BF56DEA02058573E007E2483 /* VFLNode.swift */,
+			);
+			path = Rendering;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,7 +142,6 @@
 			files = (
 				BF56DE9520585548007E2483 /* LaunchScreen.storyboard in Resources */,
 				BF56DE9220585548007E2483 /* Assets.xcassets in Resources */,
-				BF56DE9020585548007E2483 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,20 +154,16 @@
 			files = (
 				BF56DE8D20585548007E2483 /* ViewController.swift in Sources */,
 				BF56DE8B20585548007E2483 /* AppDelegate.swift in Sources */,
+				BF56DE9D205855A1007E2483 /* VFLCanvas.swift in Sources */,
+				BF56DEA12058573E007E2483 /* VFLNode.swift in Sources */,
+				BF56DE9F2058564F007E2483 /* VFLCanvasViewController.swift in Sources */,
+				BF56DEA420585B50007E2483 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		BF56DE8E20585548007E2483 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BF56DE8F20585548007E2483 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BF56DE9320585548007E2483 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
