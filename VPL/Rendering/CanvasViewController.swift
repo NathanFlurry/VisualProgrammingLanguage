@@ -1,6 +1,6 @@
 //
-//  VFLCanvasViewController.swift
-//  VFL
+//  CanvasViewController.swift
+//  VPL
 //
 //  Created by Nathan Flurry on 3/13/18.
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VFLCanvasViewController: UIViewController {
+class CanvasViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +16,7 @@ class VFLCanvasViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // Add canvas
-        let canvas = VFLCanvas()
+        let canvas = DisplayNodeCanvas()
         canvas.frame = view.bounds
         view.addSubview(canvas)
     }

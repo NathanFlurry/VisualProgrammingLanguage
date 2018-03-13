@@ -1,6 +1,6 @@
 //
-//  VFLCanvas.swift
-//  VFL
+//  Canvas.swift
+//  VPL
 //
 //  Created by Nathan Flurry on 3/13/18.
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
@@ -8,14 +8,9 @@
 
 import UIKit
 
-class VFLCanvas: UIView {
+class DisplayNodeCanvas: UIView {
     init() {
         super.init(frame: CGRect.zero)
-        
-        // Add a few random nodes
-        for _ in 0..<10 {
-            
-        }
         
         // Add a node adding gesture recognizer
         let addingRecognizer = UITapGestureRecognizer(target: self, action: #selector(addVFLNode(_:)))
@@ -29,7 +24,7 @@ class VFLCanvas: UIView {
     
     @objc func addVFLNode(_ sender: UITapGestureRecognizer) {
         let position = sender.location(ofTouch: 0, in: self)
-        let node = VFLNode(position: CGPoint(x: position.x, y: position.y))
+        let node = DisplayNode(position: CGPoint(x: position.x, y: position.y))
         addSubview(node)
     }
 }

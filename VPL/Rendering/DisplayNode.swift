@@ -1,6 +1,6 @@
 //
-//  VFLNode.swift
-//  VFL
+//  Node.swift
+//  VPL
 //
 //  Created by Nathan Flurry on 3/13/18.
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VFLNode: UIView {
+class DisplayNode: UIView {
     var position: CGPoint
     
     init(position: CGPoint) {
