@@ -14,12 +14,22 @@ class VFLCanvas: UIView {
         
         // Add a few random nodes
         for _ in 0..<10 {
-            let node = VFLNode(position: CGPoint(x: randomFloat() * 500, y: randomFloat() * 500))
-            addSubview(node)
+            
         }
+        
+        // Add a node adding gesture recognizer
+        let addingRecognizer = UITapGestureRecognizer(target: self, action: #selector(addVFLNode(_:)))
+        addingRecognizer.numberOfTapsRequired = 2
+        addGestureRecognizer(addingRecognizer)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func addVFLNode(_ sender: UITapGestureRecognizer) {
+        let position = sender.location(ofTouch: 0, in: self)
+        let node = VFLNode(position: CGPoint(x: position.x, y: position.y))
+        addSubview(node)
     }
 }

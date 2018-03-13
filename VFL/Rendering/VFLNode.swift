@@ -9,7 +9,6 @@
 import UIKit
 
 class VFLNode: UIView {
-
     var position: CGPoint
     
     init(position: CGPoint) {
