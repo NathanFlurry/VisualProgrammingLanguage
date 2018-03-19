@@ -9,32 +9,59 @@
 import UIKit
 
 class CanvasViewController: UIViewController {
-
+    /// Canvas for all of the drawing for quick shortcuts
+    var drawingCanvas: DrawingCanvas!
+    
+    /// Timer for committing shortcuts
+    var commitDrawingTimer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        // Add drawing canvas
+        drawingCanvas = DrawingCanvas(frame: CGRect.zero)
+        drawingCanvas.onInputStart = {
+            // Cancel the timer
+            self.commitDrawingTimer?.invalidate()
+            self.commitDrawingTimer = nil
+        }
+        drawingCanvas.onInputFinish = {
+            // Start a timer to commit the drawing
+            let timer = Timer(timeInterval: 0.5, repeats: false) { _ in
+                print("finish timer")
+                // Remove the timer
+                self.commitDrawingTimer = nil
+                
+                // Get the drawing
+                guard let output = self.drawingCanvas.complete() else {
+                    print("Drawing has no image.")
+                    return
+                }
+                
+                // Process
+                print("Processing image...")
+                try! OCRRequest(image: output) { result in
+                    print("OCR result:", result)
+                }
+            }
+            RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
+            self.commitDrawingTimer = timer
+        }
+        view.addSubview(drawingCanvas)
         
         // Add canvas
         let canvas = DisplayNodeCanvas()
         canvas.frame = view.bounds
-        view.addSubview(canvas)
+//        view.addSubview(canvas)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillLayoutSubviews() {
+        drawingCanvas.frame = view.bounds
     }
-    */
 
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Handle resizing
 class DrawingCanvas: UIView {
     /// This image is drawn into while there is an active stroke. When the
     /// finger lifts, it commits to `imageView`.
@@ -23,27 +24,35 @@ class DrawingCanvas: UIView {
     /// between the last point.
     private var lastPoint: CGPoint?
     
+    /// Event that gets called on input
+    public var onInputStart: (() -> Void)?
+    public var onInputFinish: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.black
+        backgroundColor = UIColor.white
         
-        tempImageView.frame = bounds
         imageView.frame = bounds
-        addSubview(tempImageView)
+        tempImageView.frame = bounds
         addSubview(imageView)
+        addSubview(tempImageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func complete() -> UIImage {
-        // Return the image from the bounds of all the data
-        // Fade the image and remove from superview when gone
-        // Create new image
+    func complete() -> UIImage? {
+        // TODO: Clip the text to visible
         
-        return UIImage()
+        // Get the result
+        let result = imageView.image
+        
+        // Clear the image
+        imageView.image = nil
+        
+        return result
     }
     
     
@@ -55,6 +64,9 @@ class DrawingCanvas: UIView {
         
         // Save the last position
         lastPoint = touch.location(in: self)
+        
+        // Call input start
+        onInputStart?()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -81,10 +93,23 @@ class DrawingCanvas: UIView {
         let currentPoint = touch.location(in: self)
         drawLine(from: lastPoint, to: currentPoint)
         
-        // Draw to the final image
+        // Begin new context
         UIGraphicsBeginImageContext(imageView.frame.size)
+        
+        // Fill a blank background
+        guard let context = UIGraphicsGetCurrentContext() else {
+            print("Failed to get graphics context.")
+            UIGraphicsEndImageContext()
+            return
+        }
+        context.setFillColor(gray: 1, alpha: 1.0)
+        context.fill(imageView.bounds)
+        
+        // Draw the images into the new context
         imageView.image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
         tempImageView.image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
+        
+        // Assign the image
         imageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -93,6 +118,9 @@ class DrawingCanvas: UIView {
         
         // Remove the last point
         self.lastPoint = nil
+        
+        // Call input finish
+        onInputFinish?()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -105,6 +133,7 @@ class DrawingCanvas: UIView {
     
     /// Draw a line between two points.
     func drawLine(from fromPoint: CGPoint, to toPoint: CGPoint) {
+        // Start a new context
         UIGraphicsBeginImageContext(frame.size)
         guard let context = UIGraphicsGetCurrentContext() else {
             print("Failed to get graphics context.")
@@ -120,7 +149,7 @@ class DrawingCanvas: UIView {
         // Stroke the path
         context.setLineCap(.round)
         context.setLineWidth(brushWidth)
-        context.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
+        context.setStrokeColor(gray: 0, alpha: 1)
         context.setBlendMode(.normal)
         context.strokePath()
         
@@ -129,4 +158,13 @@ class DrawingCanvas: UIView {
         UIGraphicsEndImageContext()
     }
 
+    override func layoutSubviews() {
+        // Resize image views
+        imageView.frame = bounds
+        tempImageView.frame = bounds
+        
+        // Clear other images
+        tempImageView.image = nil
+        imageView.image = nil
+    }
 }

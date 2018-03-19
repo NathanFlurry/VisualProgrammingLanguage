@@ -16,6 +16,9 @@
 		BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED02058631A007E2483 /* CanvasViewController.swift */; };
 		BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
 		BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED62058693E007E2483 /* DrawingCanvas.swift */; };
+		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
+		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
+		BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73C205F0144006AEEA7 /* ImageUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		BF56DED02058631A007E2483 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		BF56DED420586439007E2483 /* DisplayNodeSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeSocket.swift; sourceTree = "<group>"; };
 		BF56DED62058693E007E2483 /* DrawingCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvas.swift; sourceTree = "<group>"; };
+		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
+		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
+		BF86B73C205F0144006AEEA7 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,9 @@
 			isa = PBXGroup;
 			children = (
 				BF56DECD2058631A007E2483 /* Rendering */,
+				BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */,
+				BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */,
+				BF86B73C205F0144006AEEA7 /* ImageUtils.swift */,
 				BF56DECA20586313007E2483 /* Utils.swift */,
 				BF56DEB1205862B2007E2483 /* AppDelegate.swift */,
 				BF56DEB8205862B2007E2483 /* Assets.xcassets */,
@@ -158,9 +167,12 @@
 				BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */,
 				BF56DED12058631A007E2483 /* DisplayNodeCanvas.swift in Sources */,
 				BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */,
+				BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */,
+				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
 				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF56DECC20586313007E2483 /* Utils.swift in Sources */,
+				BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */,
 				BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
