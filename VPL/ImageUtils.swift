@@ -150,16 +150,21 @@ func getPixelColor(fromImage image: UIImage, pixel: CGPoint) -> UIColor {
     return UIColor(red: r, green: g, blue: b, alpha: a)
 }
 
-func crop(image: UIImage, rectangle: VNRectangleObservation) -> UIImage? {
-    var t: CGAffineTransform = CGAffineTransform.identity;
-    t = t.scaledBy(x: image.size.width, y: -image.size.height);
-    t = t.translatedBy(x: 0, y: -1 );
-    let x = rectangle.boundingBox.applying(t).origin.x
-    let y = rectangle.boundingBox.applying(t).origin.y
-    let width = rectangle.boundingBox.applying(t).width
-    let height = rectangle.boundingBox.applying(t).height
-    let fromRect = CGRect(x: x, y: y, width: width, height: height)
-    let drawImage = image.cgImage!.cropping(to: fromRect)
+extension VNRectangleObservation {
+    func applyTo(size: CGSize) -> CGRect {
+        var t: CGAffineTransform = CGAffineTransform.identity;
+        t = t.scaledBy(x: size.width, y: -size.height);
+        t = t.translatedBy(x: 0, y: -1 );
+        let x = boundingBox.applying(t).origin.x
+        let y = boundingBox.applying(t).origin.y
+        let width = boundingBox.applying(t).width
+        let height = boundingBox.applying(t).height
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+}
+
+func crop(image: UIImage, rectangle: CGRect) -> UIImage? {
+    let drawImage = image.cgImage!.cropping(to: rectangle)
     if let drawImage = drawImage {
         let uiImage = UIImage(cgImage: drawImage)
         return uiImage

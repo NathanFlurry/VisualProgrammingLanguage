@@ -28,7 +28,6 @@ class CanvasViewController: UIViewController {
         drawingCanvas.onInputFinish = {
             // Start a timer to commit the drawing
             let timer = Timer(timeInterval: 0.5, repeats: false) { _ in
-                print("finish timer")
                 // Remove the timer
                 self.commitDrawingTimer = nil
                 
@@ -39,9 +38,8 @@ class CanvasViewController: UIViewController {
                 }
                 
                 // Process
-                print("Processing image...")
                 try! OCRRequest(image: output) { (result, breakdown) in
-                    print("OCR result:", result)
+                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
                 }
             }
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)

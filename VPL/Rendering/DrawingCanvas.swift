@@ -17,6 +17,9 @@ class DrawingCanvas: UIView {
     /// Current image data.
     private let imageView: UIImageView = UIImageView()
     
+    /// Overlay image.
+    public let overlayImageView: UIImageView = UIImageView()
+    
     /// Brush thickness
     var brushWidth: CGFloat = 12
     
@@ -35,8 +38,10 @@ class DrawingCanvas: UIView {
         
         imageView.frame = bounds
         tempImageView.frame = bounds
+        overlayImageView.frame = bounds
         addSubview(imageView)
         addSubview(tempImageView)
+        addSubview(overlayImageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -162,6 +167,7 @@ class DrawingCanvas: UIView {
         // Resize image views
         imageView.frame = bounds
         tempImageView.frame = bounds
+        overlayImageView.frame = bounds
         
         // Clear other images
         tempImageView.image = nil

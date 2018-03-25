@@ -51,8 +51,8 @@ class OCRRequest {
         self.onComplete = onComplete
         
         // Save the model
-//        self.model = try VNCoreMLModel(for: Alphanum_28x28().model)
-        self.model = try VNCoreMLModel(for: chars74k().model)
+        self.model = try VNCoreMLModel(for: Alphanum_28x28().model)
+//        self.model = try VNCoreMLModel(for: chars74k().model)
         
         // Start the request
         let handler = VNImageRequestHandler(cgImage: convertedImage.cgImage!)
@@ -99,11 +99,12 @@ class OCRRequest {
             // Handle each character box
             for (charIndex, charBox) in charBoxes.enumerated() {
                 // Get the cropped image for the character
+                let charBox = charBox.applyTo(size: image.size)
                 if let cropped = crop(image: image, rectangle: charBox) {
                     // Classify the image
-                    //                    let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
-                    let processedImage = preProcess(image: cropped, size: CGSize(width: 128, height: 128))
-                    self.classifyImage(image: processedImage, charBox: charBox.boundingBox, wordIndex: wordIndex, characterIndex: charIndex)
+                     let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
+//                    let processedImage = preProcess(image: cropped, size: CGSize(width: 128, height: 128))
+                    self.classifyImage(image: processedImage, charBox: charBox, wordIndex: wordIndex, characterIndex: charIndex)
                 } else {
                     print("Failed to clip character.")
                     queryResults[wordIndex]![charIndex] = .failure
@@ -200,5 +201,49 @@ class OCRRequest {
         DispatchQueue.main.async {
             self.onComplete(result.0, result.1)
         }
+    }
+}
+
+extension DrawingCanvas {
+    func overlayOCRBreakdown(breakdown: OCRResultBreakdown) {
+        // Create new context
+        UIGraphicsBeginImageContext(overlayImageView.frame.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            print("Failed to create overlay context.")
+            return
+        }
+        
+        for char in breakdown {
+            // Make sure it's not a aspace
+            guard let char = char else {
+                continue
+            }
+
+            // Draw debug info
+            if case let .some(string, _, charBox) = char {
+                // Draw each rect
+                context.setFillColor(red: 1, green: 0, blue: 0, alpha: 0.2)
+                context.addRect(charBox)
+                context.fillPath()
+
+                // Draw each character
+                context.setFillColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.alignment = .center
+                (string as NSString).draw(
+                    with: charBox,
+                    options: .usesLineFragmentOrigin,
+                    attributes: [
+                        NSAttributedStringKey.font: UIFont.systemFont(ofSize: 36),
+                        NSAttributedStringKey.paragraphStyle: paragraphStyle
+                    ],
+                    context: nil
+                )
+            }
+        }
+        
+        // Finish context
+        overlayImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
     }
 }
