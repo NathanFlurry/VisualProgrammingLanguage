@@ -167,7 +167,7 @@ func crop(image: UIImage, rectangle: VNRectangleObservation) -> UIImage? {
     return nil
 }
 
-func preProcess(image: UIImage) -> UIImage {
+func preProcess(image: UIImage, size: CGSize) -> UIImage {
     let width = image.size.width
     let height = image.size.height
     let addToHeight2 = height / 2
@@ -175,7 +175,6 @@ func preProcess(image: UIImage) -> UIImage {
     let imageWithInsets = insertInsets(image: image,
                                        insetWidthDimension: addToWidth2,
                                        insetHeightDimension: addToHeight2)
-    let size = CGSize(width: 28, height: 28)
     let resizedImage = resize(image: imageWithInsets, targetSize: size)
     let grayScaleImage = convertToGrayscale(image: resizedImage)
     return grayScaleImage

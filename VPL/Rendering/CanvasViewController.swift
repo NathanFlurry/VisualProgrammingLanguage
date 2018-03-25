@@ -40,7 +40,7 @@ class CanvasViewController: UIViewController {
                 
                 // Process
                 print("Processing image...")
-                try! OCRRequest(image: output) { result in
+                try! OCRRequest(image: output) { (result, breakdown) in
                     print("OCR result:", result)
                 }
             }

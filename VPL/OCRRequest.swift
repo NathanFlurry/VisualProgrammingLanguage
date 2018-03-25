@@ -8,11 +8,14 @@
 
 /*
  Alphanum database generated from https://github.com/ProjectAGI/Preprocess-NIST-SD19
- Model borrowed from https://github.com/martinmitrevski/TextRecognizer
+ Alphanum model borrowed from https://github.com/martinmitrevski/TextRecognizer
+ Chars74k model borrowed from https://github.com/thijsheijden/Visionary
  */
 
 import UIKit
 import Vision
+
+typealias OCRResultBreakdown = [(String, UIImage)?]
 
 class OCRRequest {
     private static let loadingCharacter = "\u{FFFC}"
@@ -23,8 +26,9 @@ class OCRRequest {
     private let image: UIImage
     
     private var queryResults = [Int: [Int: String]]()
+    private var queryImages = [Int: [Int: UIImage]]()
     
-    private let onComplete: (String) -> Void
+    private let onComplete: (String, OCRResultBreakdown) -> Void
     
     public var completed: Bool {
         // Check if there are still any nil values
@@ -39,14 +43,15 @@ class OCRRequest {
     }
     
     @discardableResult
-    public init(image: UIImage, onComplete: @escaping (String) -> Void) throws {
+    public init(image: UIImage, onComplete: @escaping (String, OCRResultBreakdown) -> Void) throws {
         // Save the image
         let convertedImage = image |> adjustColors |> convertToGrayscale
         self.image = image
         self.onComplete = onComplete
         
         // Save the model
-        self.model = try VNCoreMLModel(for: Alphanum_28x28().model)
+//        self.model = try VNCoreMLModel(for: Alphanum_28x28().model)
+        self.model = try VNCoreMLModel(for: chars74k().model)
         
         // Start the request
         let handler = VNImageRequestHandler(cgImage: convertedImage.cgImage!)
@@ -74,6 +79,7 @@ class OCRRequest {
             
             // Add dictionary to results
             queryResults[wordIndex] = [:]
+            queryImages[wordIndex] = [:]
             
             // Place a spot in the results
             for (charIndex, _) in charBoxes.enumerated() {
@@ -95,7 +101,9 @@ class OCRRequest {
                 // Get the cropped image for the character
                 if let cropped = crop(image: image, rectangle: charBox) {
                     // Classify the image
-                    let processedImage = preProcess(image: cropped)
+                    //                    let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
+                    let processedImage = preProcess(image: cropped, size: CGSize(width: 128, height: 128))
+                    queryImages[wordIndex]![charIndex] = processedImage
                     self.classifyImage(image: processedImage, wordIndex: wordIndex, characterIndex: charIndex)
                 } else {
                     print("Failed to clip character.")
@@ -146,20 +154,28 @@ class OCRRequest {
         }
     }
     
-    private func serializeResults() -> String {
+    private func serializeResults() -> (String, OCRResultBreakdown) {
         // Iterate through each word and append the characters to the string
         var result = ""
+        var resultBreakdown = OCRResultBreakdown()
         var wordIndex = 0
         while let wordData = queryResults[wordIndex] {
             var characterIndex = 0
             while let character = wordData[characterIndex] {
                 guard character != OCRRequest.loadingCharacter else {
                     print("Character is still loading.")
-                    return ""
+                    return ("", [])
                 }
                 
                 // Add the character
                 result += character
+                
+                // Add the breakdown
+                if let queryImage = queryImages[wordIndex]?[characterIndex] {
+                    resultBreakdown.append((character, queryImage))
+                } else {
+                    print("Failed to find image for result breakdown.")
+                }
                 
                 // Next character
                 characterIndex += 1
@@ -167,12 +183,13 @@ class OCRRequest {
             
             // Add space
             result += " "
+            resultBreakdown.append(nil)
             
             // Next word
             wordIndex += 1
         }
         
-        return result
+        return (result, resultBreakdown)
     }
     
     private func attemptCompletion() {
@@ -186,7 +203,7 @@ class OCRRequest {
         
         // Call the completion handler
         DispatchQueue.main.async {
-            self.onComplete(result)
+            self.onComplete(result.0, result.1)
         }
     }
 }

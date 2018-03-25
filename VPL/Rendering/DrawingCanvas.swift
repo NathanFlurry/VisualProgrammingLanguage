@@ -18,7 +18,7 @@ class DrawingCanvas: UIView {
     private let imageView: UIImageView = UIImageView()
     
     /// Brush thickness
-    var brushWidth: CGFloat = 5
+    var brushWidth: CGFloat = 12
     
     /// Last point at which the user touched. This is used to draw the path
     /// between the last point.

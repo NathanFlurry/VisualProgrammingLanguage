@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* chars74k.mlmodel */; };
 		BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEB1205862B2007E2483 /* AppDelegate.swift */; };
 		BF56DEB9205862B2007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEB8205862B2007E2483 /* Assets.xcassets */; };
 		BF56DEBC205862B2007E2483 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEBA205862B2007E2483 /* LaunchScreen.storyboard */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF313B702066FFF7006EEA83 /* chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = chars74k.mlmodel; sourceTree = "<group>"; };
 		BF56DEAE205862B2007E2483 /* VPL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DEB1205862B2007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF56DEB8205862B2007E2483 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			children = (
 				BF56DECD2058631A007E2483 /* Rendering */,
 				BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */,
+				BF313B702066FFF7006EEA83 /* chars74k.mlmodel */,
 				BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */,
 				BF86B73C205F0144006AEEA7 /* ImageUtils.swift */,
 				BF56DECA20586313007E2483 /* Utils.swift */,
@@ -170,6 +173,7 @@
 				BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */,
 				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
 				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
+				BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF56DECC20586313007E2483 /* Utils.swift in Sources */,
 				BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */,
