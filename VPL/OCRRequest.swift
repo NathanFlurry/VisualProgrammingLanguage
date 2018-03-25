@@ -15,18 +15,18 @@
 import UIKit
 import Vision
 
-typealias OCRResultBreakdown = [(String, UIImage)?]
+typealias OCRResultBreakdown = [OCRResult?]
+
+enum OCRResult {
+    case loading, some(String, UIImage, CGRect), failure
+}
 
 class OCRRequest {
-    private static let loadingCharacter = "\u{FFFC}"
-    private static let failureCharacter = "\u{FFFD}"
-    
     private let model: VNCoreMLModel
     
     private let image: UIImage
     
-    private var queryResults = [Int: [Int: String]]()
-    private var queryImages = [Int: [Int: UIImage]]()
+    private var queryResults = [Int: [Int: OCRResult]]()
     
     private let onComplete: (String, OCRResultBreakdown) -> Void
     
@@ -34,7 +34,8 @@ class OCRRequest {
         // Check if there are still any nil values
         for (_, wordData) in queryResults {
             for (_, char) in wordData {
-                if char == OCRRequest.loadingCharacter {
+                // Check if still loading
+                if case .loading = char {
                     return false
                 }
             }
@@ -79,11 +80,10 @@ class OCRRequest {
             
             // Add dictionary to results
             queryResults[wordIndex] = [:]
-            queryImages[wordIndex] = [:]
             
             // Place a spot in the results
             for (charIndex, _) in charBoxes.enumerated() {
-                queryResults[wordIndex]![charIndex] = OCRRequest.loadingCharacter
+                queryResults[wordIndex]![charIndex] = .loading
             }
         }
         
@@ -103,11 +103,10 @@ class OCRRequest {
                     // Classify the image
                     //                    let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
                     let processedImage = preProcess(image: cropped, size: CGSize(width: 128, height: 128))
-                    queryImages[wordIndex]![charIndex] = processedImage
-                    self.classifyImage(image: processedImage, wordIndex: wordIndex, characterIndex: charIndex)
+                    self.classifyImage(image: processedImage, charBox: charBox.boundingBox, wordIndex: wordIndex, characterIndex: charIndex)
                 } else {
                     print("Failed to clip character.")
-                    queryResults[wordIndex]![charIndex] = OCRRequest.failureCharacter
+                    queryResults[wordIndex]![charIndex] = .failure
                 }
             }
         }
@@ -116,7 +115,7 @@ class OCRRequest {
         self.attemptCompletion()
     }
     
-    private func classifyImage(image: UIImage, wordIndex: Int, characterIndex: Int) {
+    private func classifyImage(image: UIImage, charBox: CGRect, wordIndex: Int, characterIndex: Int) {
         // Convert the image
         guard let ciImage = CIImage(image: image) else {
             print("Failed to convert UIImage to CIImage.")
@@ -136,7 +135,7 @@ class OCRRequest {
             
             // Insert the result
             objc_sync_enter(self)
-            self.queryResults[wordIndex]![characterIndex] = result
+            self.queryResults[wordIndex]![characterIndex] = .some(result, image, charBox)
             objc_sync_exit(self)
             
             // Try completing the request
@@ -162,19 +161,15 @@ class OCRRequest {
         while let wordData = queryResults[wordIndex] {
             var characterIndex = 0
             while let character = wordData[characterIndex] {
-                guard character != OCRRequest.loadingCharacter else {
+                switch character {
+                case .loading:
                     print("Character is still loading.")
                     return ("", [])
-                }
-                
-                // Add the character
-                result += character
-                
-                // Add the breakdown
-                if let queryImage = queryImages[wordIndex]?[characterIndex] {
-                    resultBreakdown.append((character, queryImage))
-                } else {
-                    print("Failed to find image for result breakdown.")
+                case .some(let string, _, _):
+                    result += string
+                    resultBreakdown.append(character)
+                case .failure:
+                    print("Character failure.")
                 }
                 
                 // Next character
