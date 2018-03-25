@@ -44,7 +44,7 @@ class OCRRequest {
     }
     
     @discardableResult
-    public init(image: UIImage, onComplete: @escaping (String, OCRResultBreakdown) -> Void) throws {
+    public init(image: UIImage, singleCharacter: Bool, onComplete: @escaping (String, OCRResultBreakdown) -> Void) throws {
         // Save the image
         let convertedImage = image |> adjustColors |> convertToGrayscale
         self.image = image
@@ -54,11 +54,28 @@ class OCRRequest {
         self.model = try VNCoreMLModel(for: Alphanum_28x28().model)
 //        self.model = try VNCoreMLModel(for: chars74k().model)
         
-        // Start the request
-        let handler = VNImageRequestHandler(cgImage: convertedImage.cgImage!)
-        let request: VNDetectTextRectanglesRequest = VNDetectTextRectanglesRequest(completionHandler: detectTextHandler)
-        request.reportCharacterBoxes = true
-        try handler.perform([request])
+        if singleCharacter {
+            // Set the query results
+            queryResults = [0: [0: .loading]]
+            
+            // Get the cropped image for the character
+            let charBox = image.trimWhiteRect()
+            print("char box", charBox)
+            if let cropped = crop(image: image, rectangle: charBox) {
+                // Classify the image
+                let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
+                self.classifyImage(image: processedImage, charBox: charBox, wordIndex: 0, characterIndex: 0)
+            } else {
+                print("Failed to clip character.")
+                queryResults[0]![0] = .failure
+            }
+        } else {
+            // Start the request
+            let handler = VNImageRequestHandler(cgImage: convertedImage.cgImage!)
+            let request: VNDetectTextRectanglesRequest = VNDetectTextRectanglesRequest(completionHandler: detectTextHandler)
+            request.reportCharacterBoxes = true
+            try handler.perform([request])
+        }
     }
     
     private func detectTextHandler(request: VNRequest, error: Error?) {

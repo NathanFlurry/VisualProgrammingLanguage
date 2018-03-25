@@ -38,7 +38,7 @@ class CanvasViewController: UIViewController {
                 }
                 
                 // Process
-                try! OCRRequest(image: output) { (result, breakdown) in
+                try! OCRRequest(image: output, singleCharacter: true) { (result, breakdown) in
                     self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
                 }
             }
