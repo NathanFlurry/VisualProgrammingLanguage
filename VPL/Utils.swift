@@ -6,9 +6,22 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
-import CoreGraphics
+import UIKit
 
 func randomFloat() -> CGFloat {
     return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+}
+
+extension NSLayoutConstraint {
+    @discardableResult
+    func activate() -> Self {
+        self.isActive = true
+        return self
+    }
+    
+    @discardableResult
+    func setPriority(_ priority: UILayoutPriority) -> Self {
+        self.priority = priority
+        return self
+    }
 }

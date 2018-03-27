@@ -24,51 +24,61 @@ extension DisplayableNode {
 }
 
 class DisplayNode: UIView {
-    static let titleHeight: CGFloat = 30
-    static let propertyHeight: CGFloat = 44
-    
     var node: DisplayableNode
     
-    let contentStack = UIStackView(frame: CGRect.zero)
+    var leftPanel: UIStackView!
+    var rightPanel: UIStackView!
     
     init(node: DisplayableNode) {
         // Save the node
         self.node = node
         
-        super.init(frame: CGRect.zero)
+        super.init(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
         
         // Setup the view
         backgroundColor = .green
-        
-        // Create the content stack
-        contentStack.axis = .vertical
-        contentStack.translatesAutoresizingMaskIntoConstraints = false
-        contentStack.distribution = .fillProportionally
-        addSubview(contentStack)
         
         // Add label
         let titleLabel = UILabel(frame: CGRect.zero)
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         titleLabel.text = node.name
-        contentStack.addArrangedSubview(titleLabel)
+        addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
+        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).activate()
         
-        // Create property panels
+        // Create panels
         let leftPanel = UIStackView(frame: CGRect.zero)
         let rightPanel = UIStackView(frame: CGRect.zero)
-//        leftPanel.distribution = .fillProportionally
-//        rightPanel.distribution = .fillProportionally
-        leftPanel.translatesAutoresizingMaskIntoConstraints = false
-        rightPanel.translatesAutoresizingMaskIntoConstraints = false
         leftPanel.axis = .vertical
         rightPanel.axis = .vertical
-        let panelStack = UIStackView(frame: CGRect.zero)
-        panelStack.axis = .horizontal
-        //        panelStack.distribution = .fillProportionally
-        panelStack.translatesAutoresizingMaskIntoConstraints = false
-        panelStack.addArrangedSubview(leftPanel)
-        panelStack.addArrangedSubview(rightPanel)
-        contentStack.addArrangedSubview(panelStack)
+        leftPanel.alignment = .leading
+        rightPanel.alignment = .trailing
+        leftPanel.distribution = .fill
+        rightPanel.distribution = .fill
+        addSubview(leftPanel)
+        addSubview(rightPanel)
+        
+        leftPanel.translatesAutoresizingMaskIntoConstraints = false
+        leftPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).activate()
+        leftPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
+        leftPanel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).activate()
+        leftPanel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8).activate()
+        
+        rightPanel.translatesAutoresizingMaskIntoConstraints = false
+        rightPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).activate()
+        rightPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
+        rightPanel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
+        rightPanel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8).activate()
+        
+        leftPanel.rightAnchor.constraint(equalTo: rightPanel.leftAnchor, constant: -8).activate()
+        
+//        leftPanel.setContentCompressionResistancePriority(.required, for: .vertical)
+//        rightPanel.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        self.leftPanel = leftPanel
+        self.rightPanel = rightPanel
         
         // Add left properies
         if let trigger = node.inputTrigger {
@@ -107,29 +117,35 @@ class DisplayNode: UIView {
     }
     
     func addProperty(parent: UIStackView, socket socketType: DisplayNodeSocketType, name: String, type: String?) {
-        let height = DisplayNode.propertyHeight
-        
-        let view = UIStackView(frame: CGRect.zero)
+        let view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.axis = .horizontal
-        view.alignment = .center
-//        view.distribution = .fill
-        view.spacing = 8
-        
-        let socket = DisplayNodeSocket(frame: CGRect(x: 0, y: 0, width: height, height: height), type: socketType)
-        view.addArrangedSubview(socket)
-        
+
+        let socket = DisplayNodeSocket(frame: CGRect.zero, type: socketType)
+        view.addSubview(socket)
+        socket.translatesAutoresizingMaskIntoConstraints = false
+        socket.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+        socket.topAnchor.constraint(equalTo: view.topAnchor).activate()
+        socket.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
+        socket.widthAnchor.constraint(equalTo: socket.heightAnchor).activate()
+
         let nameLabel = UILabel(frame: CGRect.zero)
         nameLabel.text = name
-        view.addArrangedSubview(nameLabel)
-        
+        view.addSubview(nameLabel)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.leftAnchor.constraint(equalTo: socket.rightAnchor, constant: 8).activate()
+        nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).activate() // Make the view's height dependent on font size
+        nameLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).activate() // ^
+        nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).activate()
+
         let typeLabel = UILabel(frame: CGRect.zero)
         typeLabel.text = type
         typeLabel.textColor = UIColor(white: 0, alpha: 0.5)
-//        view.addArrangedSubview(typeLabel)
-        
-        view.addArrangedSubview(UIView(frame: CGRect.zero)) // Add spacer view so everything is left-aligned
-        
+        view.addSubview(typeLabel)
+        typeLabel.translatesAutoresizingMaskIntoConstraints = false
+        typeLabel.leftAnchor.constraint(equalTo: nameLabel.rightAnchor, constant: 8).activate()
+        typeLabel.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -8).activate()
+        typeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).activate()
+
         parent.addArrangedSubview(view)
     }
     
@@ -146,14 +162,8 @@ class DisplayNode: UIView {
     }
     
     override func layoutSubviews() {
-        contentStack.setNeedsUpdateConstraints()
-        contentStack.updateConstraintsIfNeeded()
-        contentStack.setNeedsLayout()
-        contentStack.layoutIfNeeded()
-        contentStack.sizeToFit()
-        
-        let newSize = contentStack.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-        frame.size.width = newSize.width + 16
-        frame.size.height = newSize.height + 16
+        // Size to fit content
+        frame.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+//        frame.size.height = 200
     }
 }
