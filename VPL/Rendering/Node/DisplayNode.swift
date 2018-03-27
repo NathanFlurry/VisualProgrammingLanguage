@@ -44,9 +44,21 @@ class DisplayNode: UIView {
         let socket = DisplayNodeSocket(type: .controlFlow)
         socket.frame.origin = CGPoint(x: 30, y: 30)
         addSubview(socket)
+        
+        // Add drag gesture
+        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
+        addGestureRecognizer(dragGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func panned(sender: UIPanGestureRecognizer) {
+        if sender.state == .began || sender.state == .changed {
+            let translation = sender.translation(in: self)
+            center = CGPoint(x: center.x + translation.x, y: center.y + translation.y)
+            sender.setTranslation(CGPoint.zero, in: self)
+        }
     }
 }

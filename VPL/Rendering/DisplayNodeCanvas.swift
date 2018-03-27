@@ -17,12 +17,19 @@ class DisplayNodeCanvas: UIView {
         
         super.init(frame: frame)
         
-        self.isUserInteractionEnabled = false
         self.backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        // Only allow user interaction if interacting with subviews. This way
+        // the drawing canvas behind this view can still be interacted with.
+        let result = super.hitTest(point, with: event)
+        if result == self { return nil }
+        return result
     }
     
     func insertNode(node: DisplayNode) {
