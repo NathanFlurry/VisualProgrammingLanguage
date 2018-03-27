@@ -40,11 +40,11 @@ class DisplayNodeSocket: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func contentCompressionResistancePriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority {
-        return .required
-    }
-    
-    override func contentHuggingPriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority {
-        return .defaultLow
-    }
+//    override func contentCompressionResistancePriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority {
+//        return .required
+//    }
+//    
+//    override func contentHuggingPriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority {
+//        return .defaultLow
+//    }
 }
