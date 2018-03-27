@@ -99,6 +99,7 @@ final class NodeValue {
 
 protocol Node {
     var id: String { get }
+    var name: String { get }
     var inputTrigger: NodeTrigger? { get }
     var outputTrigger: NodeTrigger? { get }
     var extraOutputTriggers: [NodeTrigger] { get }

@@ -24,13 +24,14 @@ class FunctionNode: DisplayableNode {
     static let shortcutCharacter: String? = "F"
     
     let id: String = "function"
-    var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
+    let name: String = "Function"
+    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     
-    var name: String
+    var functionName: String
     var variables: [VariableInstance]
     
     required init() {
-        self.name = "TEMP"
+        self.functionName = "TEMP"
         self.variables = [] // TODO: This
         
         self.setupConnections()
@@ -64,7 +65,8 @@ class ConstNode: DisplayableNode {
     static let shortcutCharacter: String? = "C"
     
     let id: String = "const"
-    var outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
+    let name: String = "Constant"
+    let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
     
     var value: String
     
@@ -83,7 +85,8 @@ class GetVariableNode: DisplayableNode {
     static let shortcutCharacter: String? = "V"
     
     let id: String = "get variable"
-    var outputValues: [NodeValue] = [NodeValue(id: "get value", type: .any)]
+    let name = "Get Variable"
+    let outputValues: [NodeValue] = [NodeValue(id: "get value", type: .any)]
     
     var variable: VariableInstance
     
@@ -103,9 +106,10 @@ class SetVariableNode: DisplayableNode {
     static let shortcutCharacter: String? = "S"
     
     let id: String = "set variable"
-    var inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
-    var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
-    var inputValues: [NodeValue] = [NodeValue(id: "set value", type: .any)]
+    let name: String = "Set Variable"
+    let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
+    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
+    let inputValues: [NodeValue] = [NodeValue(id: "set value", type: .any)]
     
     var variable: VariableInstance
     
@@ -129,10 +133,11 @@ class IfNode: DisplayableNode {
     static let shortcutCharacter: String? = "I"
     
     let id: String = "if"
-    var inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
-    var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
-    var extraOutputTriggers: [NodeTrigger] = [NodeTrigger(id: "true"), NodeTrigger(id: "false")]
-    var inputValues: [NodeValue] = [NodeValue(id: "condition", type: .bool)]
+    let name: String = "If"
+    let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
+    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
+    let extraOutputTriggers: [NodeTrigger] = [NodeTrigger(id: "true"), NodeTrigger(id: "false")]
+    let inputValues: [NodeValue] = [NodeValue(id: "condition", type: .bool)]
     
     required init() {
         self.setupConnections()
@@ -155,9 +160,10 @@ class PrintNode: DisplayableNode {
     static let shortcutCharacter: String? = "P"
     
     let id: String = "print"
-    var inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
-    var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
-    var inputValues: [NodeValue] = [NodeValue(id: "value", type: .string)]
+    let name = "Print"
+    let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
+    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
+    let inputValues: [NodeValue] = [NodeValue(id: "value", type: .string)]
     
     required init() {
         self.setupConnections()
@@ -175,8 +181,9 @@ class ModNode: DisplayableNode {
     static let shortcutCharacter: String? = "M"
     
     let id: String = "mod"
-    var inputValues: [NodeValue] = [NodeValue(id: "a", type: .int), NodeValue(id: "b", type: .int)]
-    var outputValues: [NodeValue] = [NodeValue(id: "mod value", type: .int)]
+    let name: String = "Modulo"
+    let inputValues: [NodeValue] = [NodeValue(id: "a", type: .int), NodeValue(id: "b", type: .int)]
+    let outputValues: [NodeValue] = [NodeValue(id: "mod value", type: .int)]
     
     required init() {
         self.setupConnections()
@@ -195,8 +202,9 @@ class EqualsNode: DisplayableNode {
     static let shortcutCharacter: String? = "E"
     
     let id: String = "equals"
-    var inputValues: [NodeValue] = [NodeValue(id: "a", type: .int), NodeValue(id: "b", type: .int)]
-    var outputValues: [NodeValue] = [NodeValue(id: "equals", type: .bool)]
+    let name: String = "Equals"
+    let inputValues: [NodeValue] = [NodeValue(id: "a", type: .int), NodeValue(id: "b", type: .int)]
+    let outputValues: [NodeValue] = [NodeValue(id: "equals", type: .bool)]
     
     required init() {
         self.setupConnections()

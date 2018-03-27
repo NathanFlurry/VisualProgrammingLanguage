@@ -46,7 +46,9 @@ class DisplayNode: UIView {
         
         // Add label
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: DisplayNode.titleHeight))
-        titleLabel.text = node.id
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        titleLabel.text = node.name
         addSubview(titleLabel)
         
         // Add drag gesture
