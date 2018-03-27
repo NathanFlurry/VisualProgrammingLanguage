@@ -26,11 +26,10 @@ extension DisplayableNode {
 class DisplayNode: UIView {
     var node: DisplayableNode
     
-    var leftPanel: UIStackView!
-    var rightPanel: UIStackView!
+    weak var canvas: DisplayNodeCanvas?
     
     init(node: DisplayableNode) {
-        // Save the node
+        // Save the node and canvas
         self.node = node
         
         super.init(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
@@ -157,8 +156,8 @@ class DisplayNode: UIView {
     
     @objc func panned(sender: UIPanGestureRecognizer) {
         if sender.state == .began || sender.state == .changed {
-            // Bring to front
-            superview?.bringSubview(toFront: self)
+            // Notify the canvas the node was updated
+            canvas?.updatedNode(node: self)
             
             // Drag the view
             let translation = sender.translation(in: self)
