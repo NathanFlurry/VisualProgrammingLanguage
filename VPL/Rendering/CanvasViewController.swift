@@ -9,6 +9,12 @@
 import UIKit
 
 class CanvasViewController: UIViewController {
+    /// Shortcut for help.
+    var helpShortcut: String = "H"
+    
+    /// Shortcut for custom node popover.
+    var customNodeShortcut: String = "X"
+    
     /// View nodes that can be created.
     var spawnableNodes: [DisplayableNode.Type] = [] {
         willSet {
@@ -71,6 +77,22 @@ class CanvasViewController: UIViewController {
                         return
                     }
                     let charCenter = CGPoint(x: charBox.midX, y: charBox.midY)
+                    
+                    // Present help
+                    if character == self.helpShortcut {
+                        let alert = UIAlertController(title: "Help", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
+                        self.present(alert, animated: true)
+                        return
+                    }
+                    
+                    // Present custom node popover
+                    if character == self.customNodeShortcut {
+                        let alert = UIAlertController(title: "Custom Node", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
+                        self.present(alert, animated: true)
+                        return
+                    }
                     
                     // Create the node
                     self.createNode(character: character, position: charCenter)
