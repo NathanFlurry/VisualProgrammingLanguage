@@ -24,6 +24,10 @@ enum DisplayNodeSocketType {
 class DisplayNodeSocket: UIView {
     var type: DisplayNodeSocketType
     
+    override var intrinsicContentSize: CGSize {
+        return frame.size
+    }
+    
     init(frame: CGRect, type: DisplayNodeSocketType) {
         self.type = type
         
@@ -34,5 +38,13 @@ class DisplayNodeSocket: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func contentCompressionResistancePriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority {
+        return .required
+    }
+    
+    override func contentHuggingPriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority {
+        return .defaultLow
     }
 }

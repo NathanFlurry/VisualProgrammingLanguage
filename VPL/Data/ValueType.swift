@@ -8,6 +8,23 @@
 
 import Foundation
 
-indirect enum ValueType {
+indirect enum ValueType: CustomStringConvertible {
     case any, bool, string, int, float, option(ValueType)
+    
+    var description: String {
+        switch self {
+        case .any:
+            return "any"
+        case .bool:
+            return "bool"
+        case .string:
+            return "string"
+        case .int:
+            return "int"
+        case .float:
+            return "float"
+        case .option(let inner):
+            return inner.description + "?"
+        }
+    }
 }
