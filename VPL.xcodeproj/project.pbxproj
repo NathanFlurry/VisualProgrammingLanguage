@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF24CA092067623A007AB6F2 /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* ValueType.swift */; };
+		BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
+		BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */; };
+		BF24CA15206A1CB9007AB6F2 /* TempNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA14206A1CB9007AB6F2 /* TempNodes.swift */; };
 		BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* chars74k.mlmodel */; };
 		BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEB1205862B2007E2483 /* AppDelegate.swift */; };
 		BF56DEB9205862B2007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEB8205862B2007E2483 /* Assets.xcassets */; };
 		BF56DEBC205862B2007E2483 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEBA205862B2007E2483 /* LaunchScreen.storyboard */; };
 		BF56DECC20586313007E2483 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECA20586313007E2483 /* Utils.swift */; };
-		BF56DED12058631A007E2483 /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECE2058631A007E2483 /* DisplayNodeCanvas.swift */; };
 		BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECF2058631A007E2483 /* DisplayNode.swift */; };
 		BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED02058631A007E2483 /* CanvasViewController.swift */; };
 		BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
@@ -23,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF24CA082067623A007AB6F2 /* ValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueType.swift; sourceTree = "<group>"; };
+		BF24CA0A2069B6E5007AB6F2 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
+		BF24CA14206A1CB9007AB6F2 /* TempNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempNodes.swift; sourceTree = "<group>"; };
 		BF313B702066FFF7006EEA83 /* chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = chars74k.mlmodel; sourceTree = "<group>"; };
 		BF56DEAE205862B2007E2483 /* VPL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DEB1205862B2007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,7 +37,6 @@
 		BF56DEBB205862B2007E2483 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF56DEBD205862B3007E2483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF56DECA20586313007E2483 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		BF56DECE2058631A007E2483 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
 		BF56DECF2058631A007E2483 /* DisplayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNode.swift; sourceTree = "<group>"; };
 		BF56DED02058631A007E2483 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		BF56DED420586439007E2483 /* DisplayNodeSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeSocket.swift; sourceTree = "<group>"; };
@@ -51,6 +57,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF24CA072067620C007AB6F2 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BF24CA082067623A007AB6F2 /* ValueType.swift */,
+				BF24CA0A2069B6E5007AB6F2 /* Node.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		BF24CA0E2069BBA5007AB6F2 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
+				BF24CA14206A1CB9007AB6F2 /* TempNodes.swift */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		BF24CA13206A1C58007AB6F2 /* OCR */ = {
+			isa = PBXGroup;
+			children = (
+				BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */,
+				BF313B702066FFF7006EEA83 /* chars74k.mlmodel */,
+				BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */,
+				BF86B73C205F0144006AEEA7 /* ImageUtils.swift */,
+			);
+			path = OCR;
+			sourceTree = "<group>";
+		};
 		BF56DEA5205862B2007E2483 = {
 			isa = PBXGroup;
 			children = (
@@ -70,11 +105,9 @@
 		BF56DEB0205862B2007E2483 /* VPL */ = {
 			isa = PBXGroup;
 			children = (
+				BF24CA072067620C007AB6F2 /* Data */,
 				BF56DECD2058631A007E2483 /* Rendering */,
-				BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */,
-				BF313B702066FFF7006EEA83 /* chars74k.mlmodel */,
-				BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */,
-				BF86B73C205F0144006AEEA7 /* ImageUtils.swift */,
+				BF24CA13206A1C58007AB6F2 /* OCR */,
 				BF56DECA20586313007E2483 /* Utils.swift */,
 				BF56DEB1205862B2007E2483 /* AppDelegate.swift */,
 				BF56DEB8205862B2007E2483 /* Assets.xcassets */,
@@ -87,9 +120,9 @@
 		BF56DECD2058631A007E2483 /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
-				BF56DECE2058631A007E2483 /* DisplayNodeCanvas.swift */,
-				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
+				BF24CA0E2069BBA5007AB6F2 /* Node */,
 				BF56DED02058631A007E2483 /* CanvasViewController.swift */,
+				BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */,
 				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
 				BF56DED62058693E007E2483 /* DrawingCanvas.swift */,
 			);
@@ -123,7 +156,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Nathan Flurry";
 				TargetAttributes = {
 					BF56DEAD205862B2007E2483 = {
@@ -168,14 +201,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */,
-				BF56DED12058631A007E2483 /* DisplayNodeCanvas.swift in Sources */,
 				BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */,
 				BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */,
 				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
+				BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */,
+				BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */,
 				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
+				BF24CA15206A1CB9007AB6F2 /* TempNodes.swift in Sources */,
 				BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF56DECC20586313007E2483 /* Utils.swift in Sources */,
+				BF24CA092067623A007AB6F2 /* ValueType.swift in Sources */,
 				BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */,
 				BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */,
 			);
@@ -209,6 +245,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -216,6 +253,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -266,6 +304,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -273,6 +312,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

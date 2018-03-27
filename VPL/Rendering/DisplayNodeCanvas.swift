@@ -1,32 +1,32 @@
 //
-//  Canvas.swift
+//  DisplayNodeCanvas.swift
 //  VPL
 //
-//  Created by Nathan Flurry on 3/13/18.
+//  Created by Nathan Flurry on 3/26/18.
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
 import UIKit
 
 class DisplayNodeCanvas: UIView {
-    var drawing: DrawingCanvas!
+    var nodes: [DisplayNode]
     
-    init() {
-        super.init(frame: CGRect.zero)
+    override init(frame: CGRect) {
+        // Create new node list
+        nodes = []
         
-        // Add a node adding gesture recognizer
-        let addingRecognizer = UITapGestureRecognizer(target: self, action: #selector(addVFLNode(_:)))
-        addingRecognizer.numberOfTapsRequired = 2
-        addGestureRecognizer(addingRecognizer)
+        super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func addVFLNode(_ sender: UITapGestureRecognizer) {
-        let position = sender.location(ofTouch: 0, in: self)
-        let node = DisplayNode(position: CGPoint(x: position.x, y: position.y))
+    func insertNode(node: DisplayNode) {
+        assert(!nodes.contains(node))
+        
+        // Insert into the list and view
+        nodes.append(node)
         addSubview(node)
     }
 }

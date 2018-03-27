@@ -8,14 +8,29 @@
 
 import UIKit
 
+protocol DisplayableNode: Node {
+    /// The character that can be drawn to spawn this node.
+    static var shortcutCharacter: String? { get }
+    
+    /// View that can be used to represent the view's interactable content. This
+    /// allows for things like constant nodes to have dynamic content.
+    var nodeContent: UIView? { get }
+}
+
 class DisplayNode: UIView {
+    var node: DisplayableNode
     var position: CGPoint
     
-    init(position: CGPoint) {
+    init(node: DisplayableNode, position: CGPoint) {
+        // Save the node
+        self.node = node
+        
+        // Save the position
         self.position = position
         
         super.init(frame: CGRect(origin: position, size: CGSize(width: 100, height: 75)))
         
+        // Create the view
         self.backgroundColor = UIColor.green
         
         // Add a socket
