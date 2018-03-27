@@ -15,6 +15,9 @@ class CanvasViewController: UIViewController {
     /// Shortcut for custom node popover.
     var customNodeShortcut: String = "X"
     
+    /// Shortcut for loading/saving.
+    var loadShortcut: String = "L"
+    
     /// View nodes that can be created.
     var spawnableNodes: [DisplayableNode.Type] = [] {
         willSet {
@@ -40,15 +43,6 @@ class CanvasViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Add navigation items
-        navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(title: "Load", style: .plain, target: nil, action: nil),
-            UIBarButtonItem(title: "Save", style: .plain, target: nil, action: nil)
-        ]
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "Copy", style: .plain, target: nil, action: nil)
-        ]
         
         // Add the node canvas
         nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
@@ -98,6 +92,14 @@ class CanvasViewController: UIViewController {
                     // Present custom node popover
                     if character == self.customNodeShortcut {
                         let alert = UIAlertController(title: "Custom Node", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
+                        self.present(alert, animated: true)
+                        return
+                    }
+                    
+                    // Present custom node popover
+                    if character == self.loadShortcut {
+                        let alert = UIAlertController(title: "Load", message: nil, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
                         self.present(alert, animated: true)
                         return

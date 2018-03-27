@@ -28,12 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             EqualsNode.self
         ]
         
-        // Create navigation controller
-        let navigationControler = UINavigationController(rootViewController: viewController)
-        
         // Create the window
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = navigationControler
+        window!.rootViewController = viewController
         window!.makeKeyAndVisible()
         
         return true
