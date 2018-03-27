@@ -16,6 +16,9 @@ class DisplayNodeCanvas: UIView {
         nodes = []
         
         super.init(frame: frame)
+        
+        self.isUserInteractionEnabled = false
+        self.backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {

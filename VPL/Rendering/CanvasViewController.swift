@@ -10,7 +10,7 @@ import UIKit
 
 class CanvasViewController: UIViewController {
     /// View nodes that can be created.
-    var spawnableNodes = [DisplayableNode.Type]() {
+    var spawnableNodes: [DisplayableNode.Type] = [] {
         willSet {
             // Make sure there are no duplicate shortcuts
             for (i, node) in newValue.enumerated() {
@@ -94,6 +94,7 @@ class CanvasViewController: UIViewController {
     }
 
     override func viewWillLayoutSubviews() {
+        nodeCanvas.frame = view.bounds
         drawingCanvas.frame = view.bounds
     }
 
@@ -108,7 +109,8 @@ class CanvasViewController: UIViewController {
         let node = nodeType.init()
         
         // Create and insert the display node
-        let displayNode = DisplayNode(node: node, position: position)
+        let displayNode = DisplayNode(node: node)
+        displayNode.center = position
         nodeCanvas.insertNode(node: displayNode)
         
         return displayNode

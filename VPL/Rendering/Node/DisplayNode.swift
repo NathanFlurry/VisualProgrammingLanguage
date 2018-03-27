@@ -17,21 +17,28 @@ protocol DisplayableNode: Node {
     var nodeContent: UIView? { get }
 }
 
+extension DisplayableNode {
+    static var shortcutCharacter: String? { return nil }
+    
+    var nodeContent: UIView? { return nil }
+}
+
 class DisplayNode: UIView {
     var node: DisplayableNode
-    var position: CGPoint
     
-    init(node: DisplayableNode, position: CGPoint) {
+    init(node: DisplayableNode) {
         // Save the node
         self.node = node
         
-        // Save the position
-        self.position = position
-        
-        super.init(frame: CGRect(origin: position, size: CGSize(width: 100, height: 75)))
+        super.init(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 75)))
         
         // Create the view
         self.backgroundColor = UIColor.green
+        
+        // Add label
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: 30))
+        label.text = node.id
+        addSubview(label)
         
         // Add a socket
         let socket = DisplayNodeSocket(type: .controlFlow)

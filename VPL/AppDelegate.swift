@@ -15,11 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Create view controller
+        let viewController = CanvasViewController()
+        viewController.spawnableNodes = [
+            FunctionNode.self,
+            ConstNode.self,
+            GetVariableNode.self,
+            SetVariableNode.self,
+            IfNode.self,
+            PrintNode.self,
+            ModNode.self,
+            EqualsNode.self
+        ]
+        
+        // Create the window
         window = UIWindow(frame: UIScreen.main.bounds)
-        let homeViewController = CanvasViewController()
-        homeViewController.view.backgroundColor = UIColor.red
-        window!.rootViewController = homeViewController
+        window!.rootViewController = viewController
         window!.makeKeyAndVisible()
         
         return true

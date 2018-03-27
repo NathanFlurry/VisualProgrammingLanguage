@@ -60,7 +60,6 @@ class OCRRequest {
             
             // Get the cropped image for the character
             let charBox = image.trimWhiteRect()
-            print("char box", charBox)
             if let cropped = crop(image: image, rectangle: charBox) {
                 // Classify the image
                 let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
@@ -194,9 +193,11 @@ class OCRRequest {
                 characterIndex += 1
             }
             
-            // Add space
-            result += " "
-            resultBreakdown.append(nil)
+            // Add space if not the last word
+            if queryResults[wordIndex + 1] != nil {
+                result += " "
+                resultBreakdown.append(nil)
+            }
             
             // Next word
             wordIndex += 1

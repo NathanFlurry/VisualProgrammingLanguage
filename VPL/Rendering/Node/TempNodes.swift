@@ -20,7 +20,9 @@ class VariableInstance {
     }
 }
 
-class FunctionNode: Node {
+class FunctionNode: DisplayableNode {
+    static let shortcutCharacter: String? = "F"
+    
     let id: String = "function"
     var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     
@@ -58,7 +60,9 @@ class FunctionNode: Node {
     }
 }
 
-class ConstNode: Node {
+class ConstNode: DisplayableNode {
+    static let shortcutCharacter: String? = "C"
+    
     let id: String = "const"
     var outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
     
@@ -75,7 +79,9 @@ class ConstNode: Node {
     }
 }
 
-class GetVariableNode: Node {
+class GetVariableNode: DisplayableNode {
+    static let shortcutCharacter: String? = "V"
+    
     let id: String = "get variable"
     var outputValues: [NodeValue] = [NodeValue(id: "get value", type: .any)]
     
@@ -93,7 +99,9 @@ class GetVariableNode: Node {
     }
 }
 
-class SetVariableNode: Node {
+class SetVariableNode: DisplayableNode {
+    static let shortcutCharacter: String? = "S"
+    
     let id: String = "set variable"
     var inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
     var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
@@ -117,7 +125,9 @@ class SetVariableNode: Node {
     }
 }
 
-class IfNode: Node {
+class IfNode: DisplayableNode {
+    static let shortcutCharacter: String? = "I"
+    
     let id: String = "if"
     var inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
     var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
@@ -141,7 +151,9 @@ class IfNode: Node {
     }
 }
 
-class PrintNode: Node {
+class PrintNode: DisplayableNode {
+    static let shortcutCharacter: String? = "P"
+    
     let id: String = "print"
     var inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
     var outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
@@ -159,7 +171,9 @@ class PrintNode: Node {
     }
 }
 
-class ModNode: Node {
+class ModNode: DisplayableNode {
+    static let shortcutCharacter: String? = "M"
+    
     let id: String = "mod"
     var inputValues: [NodeValue] = [NodeValue(id: "a", type: .int), NodeValue(id: "b", type: .int)]
     var outputValues: [NodeValue] = [NodeValue(id: "mod value", type: .int)]
@@ -177,7 +191,9 @@ class ModNode: Node {
     }
 }
 
-class EqualsNode: Node {
+class EqualsNode: DisplayableNode {
+    static let shortcutCharacter: String? = "E"
+    
     let id: String = "equals"
     var inputValues: [NodeValue] = [NodeValue(id: "a", type: .int), NodeValue(id: "b", type: .int)]
     var outputValues: [NodeValue] = [NodeValue(id: "equals", type: .bool)]
