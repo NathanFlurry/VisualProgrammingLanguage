@@ -74,29 +74,23 @@ class DisplayNode: UIView {
         
         leftPanel.rightAnchor.constraint(equalTo: rightPanel.leftAnchor, constant: -8).activate()
         
-//        leftPanel.setContentCompressionResistancePriority(.required, for: .vertical)
-//        rightPanel.setContentCompressionResistancePriority(.required, for: .vertical)
-        
-        self.leftPanel = leftPanel
-        self.rightPanel = rightPanel
-        
         // Add left properies
         if let trigger = node.inputTrigger {
-            addTrigger(parent: leftPanel, trigger: trigger)
+            addTrigger(parent: leftPanel, leftAlign: true, trigger: trigger)
         }
         for value in node.inputValues {
-            addValue(parent: leftPanel, value: value)
+            addValue(parent: leftPanel, leftAlign: true, value: value)
         }
         
         // Add right properties
         if let trigger = node.outputTrigger {
-            addTrigger(parent: rightPanel, trigger: trigger)
+            addTrigger(parent: rightPanel, leftAlign: false, trigger: trigger)
         }
         for trigger in node.extraOutputTriggers {
-            addTrigger(parent: rightPanel, trigger: trigger)
+            addTrigger(parent: rightPanel, leftAlign: false, trigger: trigger)
         }
         for value in node.outputValues {
-            addValue(parent: rightPanel, value: value)
+            addValue(parent: rightPanel, leftAlign: false, value: value)
         }
         
         // Add drag gesture
@@ -108,22 +102,21 @@ class DisplayNode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addTrigger(parent: UIStackView, trigger: NodeTrigger) {
-        addProperty(parent: parent, socket: .controlFlow(trigger), name: trigger.id, type: nil)
+    func addTrigger(parent: UIStackView, leftAlign: Bool, trigger: NodeTrigger) {
+        addProperty(parent: parent, leftAlign: leftAlign, socket: .controlFlow(trigger), name: trigger.id, type: nil)
     }
     
-    func addValue(parent: UIStackView, value: NodeValue) {
-        addProperty(parent: parent, socket: .dataFlow(value), name: value.id, type: value.type.description)
+    func addValue(parent: UIStackView, leftAlign: Bool, value: NodeValue) {
+        addProperty(parent: parent, leftAlign: leftAlign, socket: .dataFlow(value), name: value.id, type: value.type.description)
     }
     
-    func addProperty(parent: UIStackView, socket socketType: DisplayNodeSocketType, name: String, type: String?) {
+    func addProperty(parent: UIStackView, leftAlign: Bool, socket socketType: DisplayNodeSocketType, name: String, type: String?) {
         let view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         let socket = DisplayNodeSocket(frame: CGRect.zero, type: socketType)
         view.addSubview(socket)
         socket.translatesAutoresizingMaskIntoConstraints = false
-        socket.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
         socket.topAnchor.constraint(equalTo: view.topAnchor).activate()
         socket.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
         socket.widthAnchor.constraint(equalTo: socket.heightAnchor).activate()
@@ -132,7 +125,6 @@ class DisplayNode: UIView {
         nameLabel.text = name
         view.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: socket.rightAnchor, constant: 8).activate()
         nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).activate() // Make the view's height dependent on font size
         nameLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).activate() // ^
         nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).activate()
@@ -142,9 +134,23 @@ class DisplayNode: UIView {
         typeLabel.textColor = UIColor(white: 0, alpha: 0.5)
         view.addSubview(typeLabel)
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
-        typeLabel.leftAnchor.constraint(equalTo: nameLabel.rightAnchor, constant: 8).activate()
-        typeLabel.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -8).activate()
         typeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).activate()
+        
+        // Add constraints to align the views horizontally
+        var alignedViews = [socket, nameLabel, typeLabel]
+        if !leftAlign {
+            alignedViews = alignedViews.reversed()
+        }
+        if leftAlign {
+            alignedViews.first?.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+            alignedViews.last?.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -8).activate()
+        } else {
+            alignedViews.first?.leftAnchor.constraint(greaterThanOrEqualTo: view.leftAnchor, constant: 8).activate()
+            alignedViews.last?.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
+        }
+        for i in 1..<alignedViews.count {
+            alignedViews[i].leftAnchor.constraint(equalTo: alignedViews[i-1].rightAnchor, constant: 8).activate()
+        }
 
         parent.addArrangedSubview(view)
     }
@@ -164,6 +170,5 @@ class DisplayNode: UIView {
     override func layoutSubviews() {
         // Size to fit content
         frame.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-//        frame.size.height = 200
     }
 }
