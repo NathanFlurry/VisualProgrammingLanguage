@@ -9,30 +9,27 @@
 import UIKit
 
 enum DisplayNodeSocketType {
-    case controlFlow, dataFlow
+    case controlFlow(NodeTrigger), dataFlow(NodeValue)
     
     var socketColor: UIColor {
         switch self {
-        case .controlFlow:
+        case .controlFlow(_):
             return UIColor.orange
-        case .dataFlow:
+        case .dataFlow(_):
             return UIColor.blue
         }
     }
 }
 
 class DisplayNodeSocket: UIView {
-    private static let socketSize: CGFloat = 16
-    
     var type: DisplayNodeSocketType
     
-    init(type: DisplayNodeSocketType) {
+    init(frame: CGRect, type: DisplayNodeSocketType) {
         self.type = type
         
-        super.init(frame: CGRect(x: 0, y: 0, width: DisplayNodeSocket.socketSize, height: DisplayNodeSocket.socketSize))
+        super.init(frame: frame)
         
         backgroundColor = type.socketColor
-        layer.cornerRadius = 6
     }
     
     required init?(coder aDecoder: NSCoder) {

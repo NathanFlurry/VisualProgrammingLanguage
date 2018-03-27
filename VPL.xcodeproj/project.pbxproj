@@ -70,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
+				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
 				BF24CA14206A1CB9007AB6F2 /* TempNodes.swift */,
 			);
 			path = Node;
@@ -123,7 +124,6 @@
 				BF24CA0E2069BBA5007AB6F2 /* Node */,
 				BF56DED02058631A007E2483 /* CanvasViewController.swift */,
 				BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */,
-				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
 				BF56DED62058693E007E2483 /* DrawingCanvas.swift */,
 			);
 			path = Rendering;
