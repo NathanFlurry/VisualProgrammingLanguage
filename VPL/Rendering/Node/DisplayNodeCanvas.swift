@@ -35,9 +35,29 @@ class DisplayNodeCanvasOverlay: UIView {
         }
         
         for node in canvas.nodes {
+            // Draw temp circle
             ctx.addEllipse(in: CGRect(x: node.frame.origin.x - 20, y: node.frame.origin.y - 20, width: 40, height: 40))
             ctx.setFillColor(red: 1, green: 1, blue: 0, alpha: 1)
             ctx.fillPath()
+            
+            // Draw path
+            for socket in node.sockets {
+                if let target = socket.draggingTarget {
+                    guard let startPosition = socket.superview?.convert(socket.frame.origin, to: self) else {
+                        print("Failed to convert start position for node socket.")
+                        return
+                    }
+                    
+                    ctx.setLineCap(.round)
+                    ctx.setLineWidth(6)
+                    ctx.setStrokeColor(red: 1, green: 0, blue: 0, alpha: 1)
+                    ctx.addLines(between: [
+                        CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
+                        CGPoint(x: startPosition.x + target.x, y: startPosition.y + target.y)
+                    ])
+                    ctx.strokePath()
+                }
+            }
         }
     }
 }

@@ -24,9 +24,14 @@ extension DisplayableNode {
 }
 
 class DisplayNode: UIView {
+    /// The underlying node data.
     var node: DisplayableNode
     
+    /// Canvas that this node is displayed in.
     weak var canvas: DisplayNodeCanvas?
+    
+    /// List of all sockets on the node.
+    var sockets: [DisplayNodeSocket] = []
     
     init(node: DisplayableNode) {
         // Save the node and canvas
@@ -110,10 +115,12 @@ class DisplayNode: UIView {
     }
     
     func addProperty(parent: UIStackView, leftAlign: Bool, socket socketType: DisplayNodeSocketType, name: String, type: String?) {
+        
         let view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
 
-        let socket = DisplayNodeSocket(frame: CGRect.zero, type: socketType)
+        let socket = DisplayNodeSocket(frame: CGRect.zero, type: socketType, node: self)
+        sockets.append(socket) // Save the socket
         view.addSubview(socket)
         socket.translatesAutoresizingMaskIntoConstraints = false
         socket.topAnchor.constraint(equalTo: view.topAnchor).activate()
@@ -156,13 +163,13 @@ class DisplayNode: UIView {
     
     @objc func panned(sender: UIPanGestureRecognizer) {
         if sender.state == .began || sender.state == .changed {
-            // Notify the canvas the node was updated
-            canvas?.updatedNode(node: self)
-            
             // Drag the view
             let translation = sender.translation(in: self)
             center = CGPoint(x: center.x + translation.x, y: center.y + translation.y)
             sender.setTranslation(CGPoint.zero, in: self)
+            
+            // Notify the canvas the node was updated
+            canvas?.updatedNode(node: self)
         }
     }
     
