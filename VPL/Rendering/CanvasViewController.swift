@@ -41,6 +41,15 @@ class CanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add navigation items
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(title: "Load", style: .plain, target: nil, action: nil),
+            UIBarButtonItem(title: "Save", style: .plain, target: nil, action: nil)
+        ]
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "Copy", style: .plain, target: nil, action: nil)
+        ]
+        
         // Add the node canvas
         nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
         
