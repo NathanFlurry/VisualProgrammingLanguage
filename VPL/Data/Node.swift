@@ -125,7 +125,17 @@ final class NodeValue {
     
     /// If this value can be connected to another value.
     func canConnect(to target: NodeValue) -> Bool {
-        return target !== self && location.compliments(location: target.location) && target.target == nil && type == target.type
+        // Check casting
+        var validCast: Bool
+        switch location {
+        case .input:
+            validCast = target.type.canCast(to: type)
+        case .output:
+            validCast = type.canCast(to: target.type)
+        }
+        
+        // Check everything else
+        return target !== self && location.compliments(location: target.location) && target.target == nil && validCast
     }
     
     /// Resets the socket so there is no target.

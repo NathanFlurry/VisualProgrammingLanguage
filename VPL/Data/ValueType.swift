@@ -27,4 +27,12 @@ indirect enum ValueType: CustomStringConvertible {
 //            return inner.description + "?"
         }
     }
+    
+    func canCast(to other: ValueType) -> Bool {
+        if self == .any || other == .any {
+            return true
+        } else {
+            return self == other
+        }
+    }
 }

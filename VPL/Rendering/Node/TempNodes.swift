@@ -38,8 +38,6 @@ class FunctionNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        print("assembling function")
-        
         var out = ""
         
         // Add the function declaration
@@ -121,8 +119,6 @@ class SetVariableNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        print("assembling set variable")
-        
         let assembledInput = inputValues[0].assemble()
         let out = "\(variable.id) = \(assembledInput)\n"
         return out + assembleOutputTrigger()
@@ -144,8 +140,6 @@ class IfNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        print("assembling if")
-        
         let assembledInput = inputValues[0].assemble()
         var out = "if (\(assembledInput)) {\n"
         out += extraOutputTriggers[0].assemble() + "\n"
@@ -170,8 +164,6 @@ class PrintNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        print("assembling print")
-        
         let assembledInput = inputValues[0].assemble()
         return "print(\(assembledInput))\n" + assembleOutputTrigger()
     }
@@ -190,8 +182,6 @@ class ModNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        print("assembling mod")
-        
         let assembledInputA = inputValues[0].assemble()
         let assembledInputB = inputValues[1].assemble()
         return "(\(assembledInputA) % \(assembledInputB))"
@@ -211,8 +201,6 @@ class EqualsNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        print("assembling equals")
-        
         let assembledInputA = inputValues[0].assemble()
         let assembledInputB = inputValues[1].assemble()
         return "(\(assembledInputA) == \(assembledInputB))"

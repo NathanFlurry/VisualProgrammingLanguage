@@ -32,6 +32,9 @@ class CanvasViewController: UIViewController {
         }
     }
     
+    /// Output of the code.
+    var outputView: UITextView!
+    
     /// Canvas that holds all of the nodes
     var nodeCanvas: DisplayNodeCanvas!
     
@@ -44,11 +47,32 @@ class CanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add the text
+        outputView = UITextView(frame: CGRect.zero)
+        outputView.isEditable = false
+        outputView.isSelectable = true
+        view.addSubview(outputView)
+        outputView.translatesAutoresizingMaskIntoConstraints = false
+        outputView.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
+        outputView.topAnchor.constraint(equalTo: view.topAnchor).activate()
+        outputView.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
+        outputView.widthAnchor.constraint(equalToConstant: 180).activate()
+        
         // Add the node canvas
         nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
+        nodeCanvas.updateCallback = {
+            let assembled = self.nodeCanvas.assemble()
+            self.outputView.text = assembled
+        }
+        view.addSubview(nodeCanvas)
+        nodeCanvas.translatesAutoresizingMaskIntoConstraints = false
+        nodeCanvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+        nodeCanvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
+        nodeCanvas.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
+        nodeCanvas.rightAnchor.constraint(equalTo: outputView.leftAnchor).activate()
         
         // Add drawing canvas
-        drawingCanvas = DrawingCanvas(frame: CGRect.zero)
+        drawingCanvas = DrawingCanvas(frame: view.bounds)
         drawingCanvas.onInputStart = {
             // Cancel the timer
             self.commitDrawingTimer?.invalidate()
@@ -115,20 +139,18 @@ class CanvasViewController: UIViewController {
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
             self.commitDrawingTimer = timer
         }
-        
-        // Add the views
         view.addSubview(drawingCanvas)
-        view.addSubview(nodeCanvas)
+        view.bringSubview(toFront: nodeCanvas)
+        drawingCanvas.translatesAutoresizingMaskIntoConstraints = false
+        drawingCanvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+        drawingCanvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
+        drawingCanvas.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
+        drawingCanvas.rightAnchor.constraint(equalTo: outputView.leftAnchor).activate()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    override func viewWillLayoutSubviews() {
-        nodeCanvas.frame = view.bounds
-        drawingCanvas.frame = view.bounds
     }
 
     @discardableResult

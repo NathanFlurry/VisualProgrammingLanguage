@@ -124,6 +124,8 @@ class DisplayNodeCanvas: UIView {
     
     var overlay: DisplayNodeCanvasOverlay!
     
+    var updateCallback: (() -> Void)?
+    
     override init(frame: CGRect) {
         // Create new node list
         nodes = []
@@ -151,6 +153,22 @@ class DisplayNodeCanvas: UIView {
         return result
     }
     
+    /// Assembles all of the code.
+    func assemble() -> String {
+        var output = ""
+        
+        // Assemble each function
+        for node in nodes {
+            if let node = node.node as? FunctionNode {
+                output += node.assemble()
+                
+                output += "\n\n"
+            }
+        }
+        
+        return output
+    }
+    
     /// Adds a node to the canvas.
     func insertNode(node: DisplayNode) {
         assert(!nodes.contains(node))
@@ -176,6 +194,9 @@ class DisplayNodeCanvas: UIView {
         
         // Redraw overlay
         overlay.setNeedsDisplay()
+        
+        // Call update
+        updateCallback?()
     }
     
     func finishConnection(socket: DisplayNodeSocket) {
@@ -200,5 +221,8 @@ class DisplayNodeCanvas: UIView {
         
         // Remove the target
         socket.draggingTarget = nil
+        
+        // Update
+        updateCallback?()
     }
 }
