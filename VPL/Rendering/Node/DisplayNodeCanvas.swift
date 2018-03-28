@@ -35,11 +35,6 @@ class DisplayNodeCanvasOverlay: UIView {
         }
         
         for node in canvas.nodes {
-            // Draw temp circle
-            ctx.addEllipse(in: CGRect(x: node.frame.origin.x - 20, y: node.frame.origin.y - 20, width: 40, height: 40))
-            ctx.setFillColor(red: 1, green: 1, blue: 0, alpha: 1)
-            ctx.fillPath()
-            
             for socket in node.sockets {
                 // Draw a connection
                 if let target = socket.draggingTarget {
@@ -170,7 +165,7 @@ class DisplayNodeCanvas: UIView {
     }
     
     /// Adds a node to the canvas.
-    func insertNode(node: DisplayNode) {
+    func insert(node: DisplayNode) {
         assert(!nodes.contains(node))
         assert(node.canvas == nil)
         
@@ -182,12 +177,12 @@ class DisplayNodeCanvas: UIView {
         addSubview(node)
         
         // Perform updated
-        updatedNode(node: node)
+        updated(node: node)
     }
     
     /// Called when any interaction occurs with the node and it needs to be
     /// updated.
-    func updatedNode(node: DisplayNode) {
+    func updated(node: DisplayNode) {
         // Bring node to front under overlay
         bringSubview(toFront: node)
         bringSubview(toFront: overlay)
@@ -199,6 +194,29 @@ class DisplayNodeCanvas: UIView {
         updateCallback?()
     }
     
+    /// Removes a ndoe from the canvas.
+    func remove(node: DisplayNode) {
+        assert(nodes.contains(node))
+        assert(node.canvas == self)
+        
+        // Remove the node from the list
+        guard let nodeIndex = nodes.index(where: { $0 === node }) else {
+            print("Failed to find node in list.")
+            return
+        }
+        nodes.remove(at: nodeIndex)
+        node.removeFromSuperview()
+        
+        // Destroy the node
+        node.node.destroy()
+        
+        // Update
+        overlay.setNeedsDisplay()
+        updateCallback?()
+    }
+    
+    /// Creates a connection between sockets based on the current dragging
+    /// position.
     func finishConnection(socket: DisplayNodeSocket) {
         guard let target = socket.draggingTarget else {
             print("No target for socket.")

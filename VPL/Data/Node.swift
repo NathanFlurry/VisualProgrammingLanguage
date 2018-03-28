@@ -215,4 +215,12 @@ extension Node {
         guard let connection = connection else { return }
         connection.owner = self
     }
+    
+    func destroy() {
+        inputTrigger?.reset()
+        outputTrigger?.reset()
+        for trigger in extraOutputTriggers { trigger.reset() }
+        for value in inputValues { value.reset() }
+        for value in outputValues { value.reset() }
+    }
 }

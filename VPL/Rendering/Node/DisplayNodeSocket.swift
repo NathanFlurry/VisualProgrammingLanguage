@@ -113,6 +113,6 @@ class DisplayNodeSocket: UIView {
         }
         
         // Notify the canvas the node was updated
-        canvas.updatedNode(node: node)
+        canvas.updated(node: node)
     }
 }

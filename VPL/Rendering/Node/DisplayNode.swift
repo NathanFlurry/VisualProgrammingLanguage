@@ -100,6 +100,11 @@ class DisplayNode: UIView {
         // Add drag gesture
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
         addGestureRecognizer(dragGesture)
+        
+        // Add remove gesture
+        let removeGesture = UITapGestureRecognizer(target: self, action: #selector(remove(sender:)))
+        removeGesture.numberOfTapsRequired = 2
+        addGestureRecognizer(removeGesture)
     }
     
     required init(coder: NSCoder) {
@@ -169,8 +174,12 @@ class DisplayNode: UIView {
             sender.setTranslation(CGPoint.zero, in: self)
             
             // Notify the canvas the node was updated
-            canvas?.updatedNode(node: self)
+            canvas?.updated(node: self)
         }
+    }
+    
+    @objc func remove(sender: UIPanGestureRecognizer) {
+        canvas?.remove(node: self)
     }
     
     override func layoutSubviews() {
