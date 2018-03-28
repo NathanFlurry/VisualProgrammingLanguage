@@ -14,13 +14,13 @@ protocol DisplayableNode: Node {
     
     /// View that can be used to represent the view's interactable content. This
     /// allows for things like constant nodes to have dynamic content.
-    var nodeContent: UIView? { get }
+    var contentView: UIView? { get }
 }
 
 extension DisplayableNode {
     static var shortcutCharacter: String? { return nil }
     
-    var nodeContent: UIView? { return nil }
+    var contentView: UIView? { return nil }
 }
 
 class DisplayNode: UIView {
@@ -52,6 +52,22 @@ class DisplayNode: UIView {
         titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
         titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).activate()
         
+        // Add content view
+        var panelBottomAnchor = bottomAnchor // Anchor to attatch the panels to
+        if let contentView = node.contentView {
+            // Add the view
+            addSubview(contentView)
+            
+            // Size it
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).activate()
+            contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).activate()
+            
+            // Position it below the panels
+            panelBottomAnchor = contentView.topAnchor
+        }
+        
         // Create panels
         let leftPanel = UIStackView(frame: CGRect.zero)
         let rightPanel = UIStackView(frame: CGRect.zero)
@@ -68,13 +84,13 @@ class DisplayNode: UIView {
         leftPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).activate()
         leftPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
         leftPanel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).activate()
-        leftPanel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8).activate()
+        leftPanel.bottomAnchor.constraint(lessThanOrEqualTo: panelBottomAnchor, constant: -8).activate()
         
         rightPanel.translatesAutoresizingMaskIntoConstraints = false
         rightPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).activate()
         rightPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
         rightPanel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
-        rightPanel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8).activate()
+        rightPanel.bottomAnchor.constraint(lessThanOrEqualTo: panelBottomAnchor, constant: -8).activate()
         
         leftPanel.rightAnchor.constraint(equalTo: rightPanel.leftAnchor, constant: -8).activate()
         

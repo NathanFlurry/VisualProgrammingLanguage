@@ -45,17 +45,20 @@ class ConstNode: DisplayableNode {
     let id: String = "const"
     let name: String = "Constant"
     let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
+    var contentView: UIView? { return valueView }
     
-    var value: String
+    var valueView: UIView
     
     required init() {
-        self.value = "TEMP"
+        valueView = UIView(frame: CGRect.zero)
+        valueView.backgroundColor = .red
+        valueView.heightAnchor.constraint(equalToConstant: 100).activate()
         
         self.setupConnections()
     }
     
     func assemble() -> String {
-        return value
+        return "<const>"
     }
 }
 
@@ -70,7 +73,7 @@ class GetVariableNode: DisplayableNode {
     
     required init() {
         // TODO: Point `variable` to the correct reference
-        self.variable = VariableInstance(id: "TEMP", type: .any, defaultValue: "TEMP")
+        self.variable = VariableInstance(id: "TEMP", type: .any)
         
         self.setupConnections()
     }
@@ -93,7 +96,7 @@ class SetVariableNode: DisplayableNode {
     
     required init() {
         // TODO: Point `variable` to the correct reference
-        self.variable = VariableInstance(id: "TEMP", type: .any, defaultValue: "TEMP")
+        self.variable = VariableInstance(id: "TEMP", type: .any)
         
         self.setupConnections()
     }
