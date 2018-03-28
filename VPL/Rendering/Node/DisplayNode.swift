@@ -37,7 +37,7 @@ class DisplayNode: UIView {
         // Save the node and canvas
         self.node = node
         
-        super.init(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+        super.init(frame: CGRect(x: 0, y: 0, width: 99999, height: 9999)) // Need large frame so the layout can be made
         
         // Setup the view
         backgroundColor = .green

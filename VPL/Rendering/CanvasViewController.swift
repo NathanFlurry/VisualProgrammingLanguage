@@ -143,6 +143,7 @@ class CanvasViewController: UIViewController {
         
         // Create and insert the display node
         let displayNode = DisplayNode(node: node)
+        displayNode.layoutIfNeeded()
         displayNode.center = position
         nodeCanvas.insertNode(node: displayNode)
         
