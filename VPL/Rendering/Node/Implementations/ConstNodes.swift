@@ -11,7 +11,7 @@ import UIKit
 class EvalConstNode: DisplayableNode {
     static let shortcutCharacter: String? = "C"
     
-    static let id: String = "eval-const"
+    static let id: String = "evalconst"
     static let name: String = "Eval Constant"
     let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
     var contentView: DisplayableNodeContentView? { return inputView }

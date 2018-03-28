@@ -12,11 +12,18 @@
 import Foundation
 
 class VariableInstance {
-    let id: String // TODO: Check for duplicates by checking all parents and just append "-2" or something
+    /// A UUID that represents this variable in the code itself.
+    let id: String
+    
+    /// Label for human readability.
+    let name: String
+    
+    /// The type of variable.
     let type: ValueType
     
-    init(id: String, type: ValueType) {
-        self.id = id
+    init(name: String, type: ValueType) {
+        self.id = UUID().uuidString
+        self.name = name
         self.type = type
     }
 }
@@ -68,8 +75,8 @@ final class NodeTrigger {
     }
     
     /// Creates a new output trigger.
-    static func outputTrigger() -> NodeTrigger {
-        return NodeTrigger(id: "out")
+    static func outputTrigger(exposedVariables: [VariableInstance] = []) -> NodeTrigger {
+        return NodeTrigger(id: "out", exposedVariables: exposedVariables)
     }
     
     /// Creates a new trigger with a given ID.
@@ -212,10 +219,31 @@ extension Node {
 }
 
 extension Node {
-    /// Variables that this node can use.
-    var availableVariables: [VariableInstance] {
-        return (inputTrigger?.target?.exposedVariables ?? []) + (inputTrigger?.target?.owner.availableVariables ?? [])
-    }
+//    /// Finds the first available input trigger. If this node has an input
+//    /// trigger, it returns that. Othwerise, it follows the output value until
+//    /// it finds an input trigger.
+//    var closestInputTrigger: NodeTrigger? {
+//        return inputTrigger?
+//    }
+//    
+//    /// Variables that this node can use.
+//    var availableVariables: [VariableInstance] {
+//        var v = [VariableInstance]()
+//        
+//        // Add variables from the trigger connected to the input trigger
+//        if let vars = inputTrigger?.target?.exposedVariables {
+//            v += vars
+//        }
+//        
+//        // Add varaibles on the connected parent nodes
+//        if let vars = inputTrigger?.target?.owner.availableVariables {
+//            v += vars
+//        }
+//        
+//        // Add variables from any
+//        
+//        return v
+//    }
     
     func setupConnections() {
         setupTrigger(connection: inputTrigger)
