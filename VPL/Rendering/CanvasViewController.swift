@@ -9,14 +9,8 @@
 import UIKit
 
 class CanvasViewController: UIViewController {
-    /// Shortcut for help.
-    var helpShortcut: String = "H"
-    
     /// Shortcut for custom node popover.
     var customNodeShortcut: String = "X"
-    
-    /// Shortcut for loading/saving.
-    var loadShortcut: String = "L"
     
     /// View nodes that can be created.
     var spawnableNodes: [DisplayableNode.Type] = [] {
@@ -108,61 +102,16 @@ class CanvasViewController: UIViewController {
                     // Overlay the breakdown for debug info
                     self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
                     
-                    // Present help
-                    if character == self.helpShortcut {
-                        let alert = UIAlertController(title: "Help", message: nil, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
-                        self.present(alert, animated: true)
-                        return
-                    }
-                    
                     // Present custom node popover
                     if character == self.customNodeShortcut {
-                        // Create the controller
-                        let alert = UIAlertController(
-                            title: "Custom Node",
-                            message: "Node shortcuts are displayed in parentheses.",
-                            preferredStyle: .actionSheet
-                        )
-                        
-                        // Configure the popover
-                        alert.popoverPresentationController?.sourceView = self.view
-                        alert.popoverPresentationController?.sourceRect = charBox
-                        
-                        // Add all of the nodes (alphabetically)
-                        let sortedNodes = self.spawnableNodes.sorted { $0.name < $1.name }
-                        for node in sortedNodes {
-                            // Create the title with the shortcut
-                            var title = node.name
-                            if let shortcut = node.shortcutCharacter {
-                                title += " (\(shortcut))"
-                            }
-                            
-                            // Create an action to spawn the node
-                            let action = UIAlertAction(title: title, style: .default) { _ in
-                                self.create(node: node, position: charCenter)
-                            }
-                            alert.addAction(action)
+                        self.customNodePopover(character: character, charBox: charBox)
+                    } else {
+                        // Find and create the node
+                        guard let nodeType = self.spawnableNodes.first(where: { $0.shortcutCharacter == character }) else {
+                            return
                         }
-                        
-                        // Present it
-                        self.present(alert, animated: true)
-                        return
+                        self.create(node: nodeType, position: charCenter)
                     }
-                    
-                    // Present custom node popover
-                    if character == self.loadShortcut {
-                        let alert = UIAlertController(title: "Load", message: nil, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
-                        self.present(alert, animated: true)
-                        return
-                    }
-                    
-                    // Find and create the node
-                    guard let nodeType = self.spawnableNodes.first(where: { $0.shortcutCharacter == character }) else {
-                        return
-                    }
-                    self.create(node: nodeType, position: charCenter)
                 }
             }
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
@@ -194,5 +143,38 @@ class CanvasViewController: UIViewController {
         nodeCanvas.insert(node: displayNode)
         
         return displayNode
+    }
+    
+    /// Creates a popover to create a custom node.
+    func customNodePopover(character: String, charBox: CGRect) {
+        // Create the controller
+        let alert = UIAlertController(
+            title: "Custom Node",
+            message: "Node shortcuts are displayed in parentheses.",
+            preferredStyle: .actionSheet
+        )
+        
+        // Configure the popover
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = charBox
+        
+        // Add all of the nodes (alphabetically)
+        let sortedNodes = self.spawnableNodes.sorted { $0.name < $1.name }
+        for node in sortedNodes {
+            // Create the title with the shortcut
+            var title = node.name
+            if let shortcut = node.shortcutCharacter {
+                title += " (\(shortcut))"
+            }
+            
+            // Create an action to spawn the node
+            let action = UIAlertAction(title: title, style: .default) { _ in
+                self.create(node: node, position: CGPoint(x: charBox.midX, y: charBox.midY))
+            }
+            alert.addAction(action)
+        }
+        
+        // Present it
+        self.present(alert, animated: true)
     }
 }
