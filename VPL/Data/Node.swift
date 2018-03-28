@@ -12,14 +12,12 @@
 import Foundation
 
 class VariableInstance {
-    var id: String // TODO: Check for duplicates by checking all parents and just append "-2" or something
-    var type: ValueType
-    var defaultValue: String
+    let id: String // TODO: Check for duplicates by checking all parents and just append "-2" or something
+    let type: ValueType
     
-    init(id: String, type: ValueType, defaultValue: String) {
+    init(id: String, type: ValueType) {
         self.id = id
         self.type = type
-        self.defaultValue = defaultValue
     }
 }
 
