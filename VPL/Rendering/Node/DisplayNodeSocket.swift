@@ -45,10 +45,34 @@ class DisplayNodeSocket: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// If this socket can be connected to another socket.
+    func canConnectTo(socket other: DisplayNodeSocket) -> Bool {
+        switch type {
+        case .controlFlow(let trigger):
+            if case let .controlFlow(otherTrigger) = other.type {
+                return trigger.canConnect(to: otherTrigger)
+            }
+        case .dataFlow(let value):
+            if case let .dataFlow(otherValue) = other.type {
+                return value.canConnect(to: otherValue)
+            }
+        }
+        
+        return false
+    }
+    
     @objc func panned(sender: UIPanGestureRecognizer) {
         guard let node = node, let canvas = node.canvas else {
             print("Missing node or canvas for socket.")
             return
+        }
+        
+        // Remove the target
+        switch type {
+        case .controlFlow(let trigger):
+            trigger.reset()
+        case .dataFlow(let value):
+            value.reset()
         }
         
         // Update the dragging to position

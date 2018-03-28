@@ -40,25 +40,82 @@ class DisplayNodeCanvasOverlay: UIView {
             ctx.setFillColor(red: 1, green: 1, blue: 0, alpha: 1)
             ctx.fillPath()
             
-            // Draw path
             for socket in node.sockets {
+                // Draw a connection
                 if let target = socket.draggingTarget {
-                    guard let startPosition = socket.superview?.convert(socket.frame.origin, to: self) else {
-                        print("Failed to convert start position for node socket.")
-                        return
-                    }
-                    
-                    ctx.setLineCap(.round)
-                    ctx.setLineWidth(6)
-                    ctx.setStrokeColor(red: 1, green: 0, blue: 0, alpha: 1)
-                    ctx.addLines(between: [
-                        CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
-                        CGPoint(x: startPosition.x + target.x, y: startPosition.y + target.y)
-                    ])
-                    ctx.strokePath()
+                    // Draw a line to where the user is currently dragging
+                    let startPosition = socket.convert(CGPoint.zero, to: self)
+                    drawSocketConnection(
+                        context: ctx,
+                        from: CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
+                        to: CGPoint(x: startPosition.x + target.x, y: startPosition.y + target.y)
+                    )
+                } else if let targetSocket = findTarget(forSocketType: socket.type) {
+                    // Draw a line between the sockets
+                    let startPosition = socket.convert(CGPoint.zero, to: self)
+                    let endPosition = targetSocket.convert(CGPoint.zero, to: self)
+                    drawSocketConnection(
+                        context: ctx,
+                        from: CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
+                        to: CGPoint(x: endPosition.x + targetSocket.frame.width / 2, y: endPosition.y + targetSocket.frame.height / 2)
+                    )
                 }
             }
         }
+    }
+    
+    /// Finds a display node socket that matches a socket type.
+    func findTarget(forSocketType socketType: DisplayNodeSocketType) -> DisplayNodeSocket? {
+        guard let canvas = canvas else {
+            print("Missing canvas.")
+            return nil
+        }
+        
+        // Find another socket with the same type
+        switch socketType {
+        case .controlFlow(let trigger):
+            guard let triggerTarget = trigger.target else {
+                return nil
+            }
+            
+            // Search nodes for a target that matches this target
+            for node in canvas.nodes {
+                for socket in node.sockets {
+                    if case let .controlFlow(otherTrigger) = socket.type {
+                        if triggerTarget === otherTrigger {
+                            return socket
+                        }
+                    }
+                }
+            }
+        case .dataFlow(let value):
+            guard let valueTarget = value.target else {
+                return nil
+            }
+            
+            // Search nodes for a target that matches this target
+            for node in canvas.nodes {
+                for socket in node.sockets {
+                    if case let .dataFlow(otherValue) = socket.type {
+                        if valueTarget === otherValue {
+                            return socket
+                        }
+                    }
+                }
+            }
+        }
+        
+        // No match
+        return nil
+    }
+    
+    /// Draws a line between two points indicating a socket position
+    func drawSocketConnection(context ctx: CGContext, from: CGPoint, to: CGPoint) {
+        ctx.setLineCap(.round)
+        ctx.setLineWidth(6)
+        ctx.setStrokeColor(red: 1, green: 0, blue: 0, alpha: 1)
+        ctx.addLines(between: [from, to])
+        ctx.strokePath()
     }
 }
 

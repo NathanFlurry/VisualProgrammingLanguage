@@ -11,15 +11,43 @@
 
 import Foundation
 
+enum SocketLocation {
+    case input, output
+    
+    /// If this location compliments another; e.g. this is an input and the
+    /// other is an output and vice versa.
+    func compliments(location: SocketLocation) -> Bool {
+        switch self {
+        case .input:
+            return location == .output
+        case .output:
+            return location == .input
+        }
+    }
+}
+
 final class NodeTrigger {
     /// Reference to the node that owns this trigger.
-    var owner: Node!
+    weak var owner: Node!
     
     /// An ID for the trigger.
     var id: String
     
     /// The trigger that this points to.
     var target: NodeTrigger? = nil
+    
+    /// If this is an input or output trigger.
+    var location: SocketLocation {
+        if let input = owner.inputTrigger, input === self {
+            return .input
+        } else if let output = owner.outputTrigger, output === self {
+            return .output
+        } else if owner.extraOutputTriggers.contains(where: { $0 === self }) {
+            return .output
+        } else {
+            fatalError("Trigger is neither an input or output.")
+        }
+    }
     
     /// Creates a new input trigger.
     static func inputTrigger() -> NodeTrigger {
@@ -34,6 +62,18 @@ final class NodeTrigger {
     /// Creates a new trigger with a given ID.
     init(id: String) {
         self.id = id
+    }
+    
+    /// If this trigger can be connected to another trigger.
+    func canConnect(to target: NodeTrigger) -> Bool {
+        // Make sure they can be connected and the target is not already connected to something else
+        return location.compliments(location: target.location) && target.target == nil
+    }
+    
+    /// Resets the socket so there is no target.
+    func reset() {
+        target?.target = nil
+        target = nil
     }
     
     func connect(to target: NodeTrigger) {
@@ -62,14 +102,36 @@ final class NodeTrigger {
 }
 
 final class NodeValue {
-    var owner: Node!
+    weak var owner: Node!
     let id: String
     let type: ValueType
     var target: NodeValue? = nil
     
+    /// If this is an input or output value.
+    var location: SocketLocation {
+        if owner.inputValues.contains(where: { $0 === self }) {
+            return .input
+        } else if owner.outputValues.contains(where: { $0 === self }) {
+            return .output
+        } else {
+            fatalError("Value is neither an input or output.")
+        }
+    }
+    
     init(id: String, type: ValueType) {
         self.id = id
         self.type = type
+    }
+    
+    /// If this value can be connected to another value.
+    func canConnect(to target: NodeValue) -> Bool {
+        return location.compliments(location: target.location) && target.target == nil && type == target.type
+    }
+    
+    /// Resets the socket so there is no target.
+    func reset() {
+        target?.target = nil
+        target = nil
     }
     
     func connect(to target: NodeValue) {
@@ -97,7 +159,7 @@ final class NodeValue {
     }
 }
 
-protocol Node {
+protocol Node: class {
     var id: String { get }
     var name: String { get }
     var inputTrigger: NodeTrigger? { get }
