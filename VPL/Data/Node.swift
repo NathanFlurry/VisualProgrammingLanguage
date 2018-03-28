@@ -67,7 +67,7 @@ final class NodeTrigger {
     /// If this trigger can be connected to another trigger.
     func canConnect(to target: NodeTrigger) -> Bool {
         // Make sure they can be connected and the target is not already connected to something else
-        return target !== self && location.compliments(location: target.location) && target.target == nil
+        return owner !== target.owner && target !== self && location.compliments(location: target.location) && target.target == nil
     }
     
     /// Resets the socket so there is no target.
@@ -135,7 +135,7 @@ final class NodeValue {
         }
         
         // Check everything else
-        return target !== self && location.compliments(location: target.location) && target.target == nil && validCast
+        return owner !== target.owner && target !== self && location.compliments(location: target.location) && target.target == nil && validCast
     }
     
     /// Resets the socket so there is no target.
