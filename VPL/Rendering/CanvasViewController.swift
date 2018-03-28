@@ -105,6 +105,9 @@ class CanvasViewController: UIViewController {
                     }
                     let charCenter = CGPoint(x: charBox.midX, y: charBox.midY)
                     
+                    // Overlay the breakdown for debug info
+                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
+                    
                     // Present help
                     if character == self.helpShortcut {
                         let alert = UIAlertController(title: "Help", message: nil, preferredStyle: .alert)
@@ -115,8 +118,34 @@ class CanvasViewController: UIViewController {
                     
                     // Present custom node popover
                     if character == self.customNodeShortcut {
-                        let alert = UIAlertController(title: "Custom Node", message: nil, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in alert.dismiss(animated: true) }))
+                        // Create the controller
+                        let alert = UIAlertController(
+                            title: "Custom Node",
+                            message: "Node shortcuts are displayed in parentheses.",
+                            preferredStyle: .actionSheet
+                        )
+                        
+                        // Configure the popover
+                        alert.popoverPresentationController?.sourceView = self.view
+                        alert.popoverPresentationController?.sourceRect = charBox
+                        
+                        // Add all of the nodes (alphabetically)
+                        let sortedNodes = self.spawnableNodes.sorted { $0.name < $1.name }
+                        for node in sortedNodes {
+                            // Create the title with the shortcut
+                            var title = node.name
+                            if let shortcut = node.shortcutCharacter {
+                                title += " (\(shortcut))"
+                            }
+                            
+                            // Create an action to spawn the node
+                            let action = UIAlertAction(title: title, style: .default) { _ in
+                                self.create(node: node, position: charCenter)
+                            }
+                            alert.addAction(action)
+                        }
+                        
+                        // Present it
                         self.present(alert, animated: true)
                         return
                     }
@@ -129,11 +158,11 @@ class CanvasViewController: UIViewController {
                         return
                     }
                     
-                    // Create the node
-                    self.createNode(character: character, position: charCenter)
-                    
-                    // Overlay the breakdown for debug info
-                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
+                    // Find and create the node
+                    guard let nodeType = self.spawnableNodes.first(where: { $0.shortcutCharacter == character }) else {
+                        return
+                    }
+                    self.create(node: nodeType, position: charCenter)
                 }
             }
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
@@ -154,12 +183,7 @@ class CanvasViewController: UIViewController {
     }
 
     @discardableResult
-    func createNode(character: String, position: CGPoint) -> DisplayNode? {
-        // Find the node
-        guard let nodeType = spawnableNodes.first(where: { $0.shortcutCharacter == character }) else {
-            return nil
-        }
-        
+    func create(node nodeType: DisplayableNode.Type, position: CGPoint) -> DisplayNode? {
         // Create the node
         let node = nodeType.init()
         

@@ -11,8 +11,8 @@ import UIKit
 class IfNode: DisplayableNode {
     static let shortcutCharacter: String? = "I"
     
-    let id: String = "if"
-    let name: String = "If"
+    static let id: String = "if"
+    static let name: String = "If"
     let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
     let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     let extraOutputTriggers: [NodeTrigger] = [NodeTrigger(id: "true"), NodeTrigger(id: "false")]

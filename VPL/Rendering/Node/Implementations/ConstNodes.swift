@@ -11,8 +11,8 @@ import UIKit
 class EvalConstNode: DisplayableNode {
     static let shortcutCharacter: String? = "Z"
     
-    let id: String = "eval-const"
-    let name: String = "Eval Constant"
+    static let id: String = "eval-const"
+    static let name: String = "Eval Constant"
     let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
     var contentView: DisplayableNodeContentView? { return inputView }
     
@@ -32,8 +32,8 @@ class EvalConstNode: DisplayableNode {
 class ConstNode: DisplayableNode {
     static let shortcutCharacter: String? = "C"
     
-    let id: String = "const"
-    let name: String = "Constant"
+    static let id: String = "const"
+    static let name: String = "Constant"
     let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
     var contentView: UIView? { return valueView }
     

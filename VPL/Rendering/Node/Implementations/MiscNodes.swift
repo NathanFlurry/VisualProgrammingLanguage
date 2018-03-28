@@ -11,8 +11,8 @@ import UIKit
 class PrintNode: DisplayableNode {
     static let shortcutCharacter: String? = "P"
     
-    let id: String = "print"
-    let name = "Print"
+    static let id: String = "print"
+    static let name: String = "Print"
     let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
     let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     let inputValues: [NodeValue] = [NodeValue(id: "value", type: .string)]

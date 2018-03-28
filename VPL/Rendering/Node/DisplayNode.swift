@@ -31,7 +31,7 @@ class DisplayNode: UIView {
         let titleLabel = UILabel(frame: CGRect.zero)
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        titleLabel.text = node.name
+        titleLabel.text = type(of: node).name
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()

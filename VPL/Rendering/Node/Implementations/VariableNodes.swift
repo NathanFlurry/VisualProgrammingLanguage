@@ -11,8 +11,8 @@ import UIKit
 class GetVariableNode: DisplayableNode {
     static let shortcutCharacter: String? = "V"
     
-    let id: String = "get variable"
-    let name = "Get Variable"
+    static let id: String = "get variable"
+    static let name: String = "Get Variable"
     let outputValues: [NodeValue] = [NodeValue(id: "get value", type: .any)]
     
     var variable: VariableInstance
@@ -32,8 +32,8 @@ class GetVariableNode: DisplayableNode {
 class SetVariableNode: DisplayableNode {
     static let shortcutCharacter: String? = "S"
     
-    let id: String = "set variable"
-    let name: String = "Set Variable"
+    static let id: String = "set variable"
+    static let name: String = "Set Variable"
     let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
     let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     let inputValues: [NodeValue] = [NodeValue(id: "set value", type: .any)]

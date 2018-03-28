@@ -11,8 +11,8 @@ import UIKit
 class FunctionNode: DisplayableNode {
     static let shortcutCharacter: String? = "F"
     
-    let id: String = "function"
-    let name: String = "Function"
+    static let id: String = "function"
+    static let name: String = "Function"
     let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     
     var functionName: String
@@ -27,10 +27,10 @@ class FunctionNode: DisplayableNode {
         var out = ""
         
         // Add the function declaration
-        out += "func \(self.name) {\n"
+        out += "func \(type(of: self).name) {\n"
         
         // Add the next
-        out += (outputTrigger?.target?.owner.assemble() ?? "// No body")
+        out += outputTrigger?.target?.owner.assemble() ?? "// No body"
         
         // End the funciton
         out += "}"

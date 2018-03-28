@@ -184,8 +184,8 @@ final class NodeValue {
 }
 
 protocol Node: class {
-    var id: String { get }
-    var name: String { get }
+    static var id: String { get }
+    static var name: String { get }
     var inputTrigger: NodeTrigger? { get }
     var outputTrigger: NodeTrigger? { get }
     var extraOutputTriggers: [NodeTrigger] { get }
