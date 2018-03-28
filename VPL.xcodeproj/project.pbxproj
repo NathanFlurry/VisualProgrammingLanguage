@@ -20,6 +20,8 @@
 		BF24CA2B206C3AAA007AB6F2 /* GenericInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */; };
 		BF24CA2D206C4D1D007AB6F2 /* ValueChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2C206C4D1D007AB6F2 /* ValueChooserView.swift */; };
 		BF24CA2F206C4DF8007AB6F2 /* DisplayNodeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */; };
+		BF24CA31206C5966007AB6F2 /* NodeTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */; };
+		BF24CA33206C596F007AB6F2 /* NodeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA32206C596F007AB6F2 /* NodeValue.swift */; };
 		BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* chars74k.mlmodel */; };
 		BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEB1205862B2007E2483 /* AppDelegate.swift */; };
 		BF56DEB9205862B2007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEB8205862B2007E2483 /* Assets.xcassets */; };
@@ -48,6 +50,8 @@
 		BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericInputView.swift; sourceTree = "<group>"; };
 		BF24CA2C206C4D1D007AB6F2 /* ValueChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueChooserView.swift; sourceTree = "<group>"; };
 		BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeContentView.swift; sourceTree = "<group>"; };
+		BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTrigger.swift; sourceTree = "<group>"; };
+		BF24CA32206C596F007AB6F2 /* NodeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValue.swift; sourceTree = "<group>"; };
 		BF313B702066FFF7006EEA83 /* chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = chars74k.mlmodel; sourceTree = "<group>"; };
 		BF56DEAE205862B2007E2483 /* VPL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DEB1205862B2007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				BF24CA082067623A007AB6F2 /* ValueType.swift */,
+				BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */,
+				BF24CA32206C596F007AB6F2 /* NodeValue.swift */,
 				BF24CA0A2069B6E5007AB6F2 /* Node.swift */,
 			);
 			path = Data;
@@ -248,7 +254,9 @@
 				BF24CA24206C39DA007AB6F2 /* MathNodes.swift in Sources */,
 				BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */,
 				BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */,
+				BF24CA33206C596F007AB6F2 /* NodeValue.swift in Sources */,
 				BF24CA20206C39B5007AB6F2 /* VariableNodes.swift in Sources */,
+				BF24CA31206C5966007AB6F2 /* NodeTrigger.swift in Sources */,
 				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
 				BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */,
 				BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */,
