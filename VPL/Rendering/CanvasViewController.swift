@@ -13,18 +13,7 @@ class CanvasViewController: UIViewController {
     var customNodeShortcut: String = "X"
     
     /// View nodes that can be created.
-    var spawnableNodes: [DisplayableNode.Type] = [] {
-        willSet {
-            // Make sure there are no duplicate shortcuts
-            for (i, node) in newValue.enumerated() {
-                if let shortcut = node.shortcutCharacter {
-                    for j in (i+1)..<newValue.count {
-                        assert(shortcut != newValue[j].shortcutCharacter)
-                    }
-                }
-            }
-        }
-    }
+    var spawnableNodes: [DisplayableNode.Type] = []
     
     /// Output of the code.
     var outputView: UITextView!
@@ -104,13 +93,19 @@ class CanvasViewController: UIViewController {
                     
                     // Present custom node popover
                     if character == self.customNodeShortcut {
-                        self.customNodePopover(character: character, charBox: charBox)
+                        self.nodeListPopover(nodes: self.spawnableNodes, charBox: charBox, showShortcuts: true)
                     } else {
-                        // Find and create the node
-                        guard let nodeType = self.spawnableNodes.first(where: { $0.shortcutCharacter == character }) else {
-                            return
+                        // Find the nodes for the character
+                        let availableNodes = self.spawnableNodes.filter { $0.shortcutCharacter == character }
+                        
+                        // Create the node or popup a list
+                        if availableNodes.count > 1 {
+                            self.nodeListPopover(nodes: availableNodes, charBox: charBox, showShortcuts: false)
+                        } else if let node = availableNodes.first {
+                            self.create(node: node, position: charCenter)
+                        } else {
+                            print("No nodes with shortcut: \(character)")
                         }
-                        self.create(node: nodeType, position: charCenter)
                     }
                 }
             }
@@ -145,12 +140,12 @@ class CanvasViewController: UIViewController {
         return displayNode
     }
     
-    /// Creates a popover to create a custom node.
-    func customNodePopover(character: String, charBox: CGRect) {
+    /// Creates a popover to create a node.
+    func nodeListPopover(nodes: [DisplayableNode.Type], charBox: CGRect, showShortcuts: Bool) {
         // Create the controller
         let alert = UIAlertController(
-            title: "Custom Node",
-            message: "Node shortcuts are displayed in parentheses.",
+            title: "Spawn Node",
+            message: showShortcuts ? "Node shortcuts are displayed in parentheses." : nil,
             preferredStyle: .actionSheet
         )
         
@@ -158,12 +153,12 @@ class CanvasViewController: UIViewController {
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = charBox
         
-        // Add all of the nodes (alphabetically)
-        let sortedNodes = self.spawnableNodes.sorted { $0.name < $1.name }
+        // Display the nodes
+        let sortedNodes = nodes.sorted { $0.name < $1.name }
         for node in sortedNodes {
-            // Create the title with the shortcut
+            // Create the title with the shortcut (only if listing all nodes)
             var title = node.name
-            if let shortcut = node.shortcutCharacter {
+            if let shortcut = node.shortcutCharacter, showShortcuts {
                 title += " (\(shortcut))"
             }
             

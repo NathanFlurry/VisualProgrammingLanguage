@@ -9,7 +9,7 @@
 import UIKit
 
 class EvalConstNode: DisplayableNode {
-    static let shortcutCharacter: String? = "Z"
+    static let shortcutCharacter: String? = "C"
     
     static let id: String = "eval-const"
     static let name: String = "Eval Constant"
@@ -29,26 +29,23 @@ class EvalConstNode: DisplayableNode {
     }
 }
 
-class ConstNode: DisplayableNode {
+class ConstNode: DisplayableNode { // TEMP: Need const for each type
     static let shortcutCharacter: String? = "C"
     
     static let id: String = "const"
     static let name: String = "Constant"
     let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
-    var contentView: UIView? { return valueView }
+    var contentView: DisplayableNodeContentView? { return inputView }
     
-    var valueView: UIView
+    let inputView: GenericInputView
     
     required init() {
-        valueView = UIView(frame: CGRect.zero)
-        valueView.backgroundColor = .red
-        valueView.heightAnchor.constraint(equalToConstant: 100).activate()
+        inputView = GenericInputView(frame: CGRect.zero, defaultValue: "0")
         
         self.setupConnections()
     }
     
     func assemble() -> String {
-        return "<const>"
+        return "(\(inputView.value))"
     }
 }
-
