@@ -61,6 +61,25 @@ class DisplayNodeSocket: UIView {
         return false
     }
     
+    /// Connects this socket to another socket.
+    func connectTo(socket other: DisplayNodeSocket) {
+        switch type {
+        case .controlFlow(let trigger):
+            if case let .controlFlow(otherTrigger) = other.type {
+                trigger.reset()
+                otherTrigger.reset()
+                trigger.connect(to: otherTrigger)
+                return
+            }
+        case .dataFlow(let value):
+            if case let .dataFlow(otherValue) = other.type {
+                value.reset()
+                otherValue.reset()
+                value.connect(to: otherValue)
+            }
+        }
+    }
+    
     @objc func panned(sender: UIPanGestureRecognizer) {
         guard let node = node, let canvas = node.canvas else {
             print("Missing node or canvas for socket.")
@@ -86,6 +105,10 @@ class DisplayNodeSocket: UIView {
             // Save the translation
             draggingTarget = sender.translation(in: self)
         } else {
+            // Finish the connection
+            canvas.finishConnection(socket: self)
+            
+            // Remove the target
             draggingTarget = nil
         }
         

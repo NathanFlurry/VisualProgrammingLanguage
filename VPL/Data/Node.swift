@@ -34,7 +34,7 @@ final class NodeTrigger {
     var id: String
     
     /// The trigger that this points to.
-    var target: NodeTrigger? = nil
+    private(set) var target: NodeTrigger? = nil
     
     /// If this is an input or output trigger.
     var location: SocketLocation {
@@ -67,7 +67,7 @@ final class NodeTrigger {
     /// If this trigger can be connected to another trigger.
     func canConnect(to target: NodeTrigger) -> Bool {
         // Make sure they can be connected and the target is not already connected to something else
-        return location.compliments(location: target.location) && target.target == nil
+        return target !== self && location.compliments(location: target.location) && target.target == nil
     }
     
     /// Resets the socket so there is no target.
@@ -105,7 +105,7 @@ final class NodeValue {
     weak var owner: Node!
     let id: String
     let type: ValueType
-    var target: NodeValue? = nil
+    private(set) var target: NodeValue? = nil
     
     /// If this is an input or output value.
     var location: SocketLocation {
@@ -125,7 +125,7 @@ final class NodeValue {
     
     /// If this value can be connected to another value.
     func canConnect(to target: NodeValue) -> Bool {
-        return location.compliments(location: target.location) && target.target == nil && type == target.type
+        return target !== self && location.compliments(location: target.location) && target.target == nil && type == target.type
     }
     
     /// Resets the socket so there is no target.

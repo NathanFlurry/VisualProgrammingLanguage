@@ -176,4 +176,32 @@ class DisplayNodeCanvas: UIView {
         // Redraw overlay
         overlay.setNeedsDisplay()
     }
+    
+    func finishConnection(socket: DisplayNodeSocket) {
+        guard let target = socket.draggingTarget else {
+            print("No target for socket.")
+            return
+        }
+        
+        print("attempting finish")
+        
+        // Find a socket dislplay that matches the point
+        for node in nodes {
+            if node.point(inside: node.convert(target, from: socket), with: nil) {
+                print("found node")
+                for targetSocket in node.sockets {
+                    if targetSocket.point(inside: targetSocket.convert(target, from: socket), with: nil) {
+                        print("found socket")
+                        // Attempt to connect the sockets
+                        if socket.canConnectTo(socket: targetSocket) {
+                            socket.connectTo(socket: targetSocket)
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Remove the target
+        socket.draggingTarget = nil
+    }
 }
