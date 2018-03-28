@@ -8,18 +8,6 @@
 
 import UIKit
 
-class VariableInstance {
-    var id: String
-    var type: ValueType
-    var defaultValue: String
-    
-    init(id: String, type: ValueType, defaultValue: String) {
-        self.id = id
-        self.type = type
-        self.defaultValue = defaultValue
-    }
-}
-
 class FunctionNode: DisplayableNode {
     static let shortcutCharacter: String? = "F"
     
@@ -28,11 +16,9 @@ class FunctionNode: DisplayableNode {
     let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
     
     var functionName: String
-    var variables: [VariableInstance]
     
     required init() {
         self.functionName = "TEMP"
-        self.variables = [] // TODO: This
         
         self.setupConnections()
     }
@@ -42,12 +28,6 @@ class FunctionNode: DisplayableNode {
         
         // Add the function declaration
         out += "func \(self.name) {\n"
-        
-        // Add the variables
-        for variable in variables {
-            out += "var \(variable.id) = \(variable.defaultValue)\n"
-        }
-        out += "\n"
         
         // Add the next
         out += (outputTrigger?.target?.owner.assemble() ?? "// No body")

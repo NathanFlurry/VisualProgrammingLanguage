@@ -11,6 +11,18 @@
 
 import Foundation
 
+class VariableInstance {
+    var id: String // TODO: Check for duplicates by checking all parents and just append "-2" or something
+    var type: ValueType
+    var defaultValue: String
+    
+    init(id: String, type: ValueType, defaultValue: String) {
+        self.id = id
+        self.type = type
+        self.defaultValue = defaultValue
+    }
+}
+
 enum SocketLocation {
     case input, output
     
@@ -31,10 +43,13 @@ final class NodeTrigger {
     weak var owner: Node!
     
     /// An ID for the trigger.
-    var id: String
+    private(set) var id: String
     
     /// The trigger that this points to.
     private(set) var target: NodeTrigger? = nil
+    
+    /// Variables that are available to any nodes in the following control flow.
+    private(set) var exposedVariables: [VariableInstance]
     
     /// If this is an input or output trigger.
     var location: SocketLocation {
@@ -60,8 +75,9 @@ final class NodeTrigger {
     }
     
     /// Creates a new trigger with a given ID.
-    init(id: String) {
+    init(id: String, exposedVariables: [VariableInstance] = []) {
         self.id = id
+        self.exposedVariables = exposedVariables
     }
     
     /// If this trigger can be connected to another trigger.
@@ -198,6 +214,11 @@ extension Node {
 }
 
 extension Node {
+    /// Variables that this node can use.
+    var availableVariables: [VariableInstance] {
+        return (inputTrigger?.target?.exposedVariables ?? []) + (inputTrigger?.target?.owner.availableVariables ?? [])
+    }
+    
     func setupConnections() {
         setupTrigger(connection: inputTrigger)
         setupTrigger(connection: outputTrigger)
