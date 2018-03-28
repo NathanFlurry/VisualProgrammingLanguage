@@ -172,6 +172,11 @@ class DisplayNodeCanvas: UIView {
         // Set the canvas
         node.canvas = self
         
+        // Add callabck on content change
+        node.node.contentView?.onChangeCallback = { _ in
+            self.updated(node: node)
+        }
+        
         // Insert into the list and view
         nodes.append(node)
         addSubview(node)

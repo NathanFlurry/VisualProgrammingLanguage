@@ -8,6 +8,27 @@
 
 import UIKit
 
+class EvalConstNode: DisplayableNode {
+    static let shortcutCharacter: String? = "Z"
+    
+    let id: String = "eval-const"
+    let name: String = "Eval Constant"
+    let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
+    var contentView: DisplayableNodeContentView? { return inputView }
+    
+    let inputView: GenericInputView
+    
+    required init() {
+        inputView = GenericInputView(frame: CGRect.zero, defaultValue: "0")
+        
+        self.setupConnections()
+    }
+    
+    func assemble() -> String {
+        return "(\(inputView.value))"
+    }
+}
+
 class ConstNode: DisplayableNode {
     static let shortcutCharacter: String? = "C"
     

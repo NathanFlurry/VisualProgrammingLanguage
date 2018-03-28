@@ -17,6 +17,7 @@
 		BF24CA22206C39CA007AB6F2 /* ControlFlowNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */; };
 		BF24CA24206C39DA007AB6F2 /* MathNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA23206C39D9007AB6F2 /* MathNodes.swift */; };
 		BF24CA28206C3A13007AB6F2 /* MiscNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */; };
+		BF24CA2B206C3AAA007AB6F2 /* GenericInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */; };
 		BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* chars74k.mlmodel */; };
 		BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEB1205862B2007E2483 /* AppDelegate.swift */; };
 		BF56DEB9205862B2007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEB8205862B2007E2483 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 		BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlFlowNodes.swift; sourceTree = "<group>"; };
 		BF24CA23206C39D9007AB6F2 /* MathNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathNodes.swift; sourceTree = "<group>"; };
 		BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscNodes.swift; sourceTree = "<group>"; };
+		BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericInputView.swift; sourceTree = "<group>"; };
 		BF313B702066FFF7006EEA83 /* chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = chars74k.mlmodel; sourceTree = "<group>"; };
 		BF56DEAE205862B2007E2483 /* VPL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DEB1205862B2007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				BF24CA18206C395F007AB6F2 /* Implementations */,
+				BF24CA29206C3A7F007AB6F2 /* Helpers */,
 				BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */,
 				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
 				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
@@ -112,6 +115,14 @@
 				BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */,
 			);
 			path = Implementations;
+			sourceTree = "<group>";
+		};
+		BF24CA29206C3A7F007AB6F2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		BF56DEA5205862B2007E2483 = {
@@ -242,6 +253,7 @@
 				BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */,
 				BF24CA22206C39CA007AB6F2 /* ControlFlowNodes.swift in Sources */,
 				BF24CA1E206C39A4007AB6F2 /* ConstNodes.swift in Sources */,
+				BF24CA2B206C3AAA007AB6F2 /* GenericInputView.swift in Sources */,
 				BF56DECC20586313007E2483 /* Utils.swift in Sources */,
 				BF24CA092067623A007AB6F2 /* ValueType.swift in Sources */,
 				BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */,
