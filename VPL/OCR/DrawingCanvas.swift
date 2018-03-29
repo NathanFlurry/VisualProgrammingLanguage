@@ -105,7 +105,7 @@ class DrawingCanvas: UIView {
         self.lastPoint = currentPoint
     }
     
-    func handledTouchesFinished(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let lastPoint = lastPoint, let touch = touches.first else {
             print("No touch or already missing last point.")
             return
@@ -144,12 +144,12 @@ class DrawingCanvas: UIView {
         onInputFinish?()
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        handledTouchesFinished(touches, with: event)
-    }
-    
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        handledTouchesFinished(touches, with: event)
+        // Clear the temp image and ignroe the stroke
+        tempImageView.image = nil
+        
+        // Remove the last point
+        self.lastPoint = nil
     }
     
     /// Draw a line between two points.

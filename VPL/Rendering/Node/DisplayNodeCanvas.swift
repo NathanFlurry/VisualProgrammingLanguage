@@ -144,9 +144,14 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         delegate = self
         contentSize = CGSize(width: 10000, height: 10000)
         for recognizer in gestureRecognizers ?? [] {
+            print("gesture recognizer", NSStringFromClass(type(of: recognizer)))
             if let recognizer = recognizer as? UIPanGestureRecognizer {
+                // Only allow scrolling with two fingers
                 recognizer.minimumNumberOfTouches = 2
                 recognizer.maximumNumberOfTouches = 2
+            } else if NSStringFromClass(type(of: recognizer)) == "UIScrollViewDelayedTouchesBeganGestureRecognizer" {
+                // Don't delay touches to the drawing canvas
+                recognizer.isEnabled = false
             }
         }
         
@@ -179,6 +184,9 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         // Move the background and overlay with the view
         backgroundView?.frame.origin = scrollView.contentOffset
         overlayView.frame.origin = scrollView.contentOffset
+        
+        // Update overlay
+        overlayView.setNeedsDisplay()
     }
     
     /// Assembles all of the code.
