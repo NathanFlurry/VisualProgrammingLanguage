@@ -25,7 +25,11 @@ class DisplayNode: UIView {
         super.init(frame: CGRect(x: 0, y: 0, width: 99999, height: 9999)) // Need large frame so the layout can be made
         
         // Setup the view
-        backgroundColor = .green
+        backgroundColor = UIColor(white: 0.95, alpha: 1.0)
+        layer.cornerRadius = 8
+        layer.shadowOpacity = 0.15
+        layer.shadowOffset = CGSize(width: 0, height: 5)
+        layer.shadowRadius = 10
         
         // Add label
         let titleLabel = UILabel(frame: CGRect.zero)
@@ -177,5 +181,11 @@ class DisplayNode: UIView {
     override func layoutSubviews() {
         // Size to fit content
         frame.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+    }
+    
+    func updateState() {
+        for socket in sockets {
+            socket.updateState()
+        }
     }
 }

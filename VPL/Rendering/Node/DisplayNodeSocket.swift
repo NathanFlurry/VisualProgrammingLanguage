@@ -20,6 +20,19 @@ enum DisplayNodeSocketType: Equatable {
         }
     }
     
+    var isConnected: Bool {
+        switch self {
+        case .inputTrigger(let trigger):
+            return trigger.target != nil
+        case .outputTrigger(let trigger):
+            return trigger.target != nil
+        case .inputValue(let value):
+            return value.target != nil
+        case .outputValue(let value):
+            return value.target != nil
+        }
+    }
+    
     static func == (lhs: DisplayNodeSocketType, rhs: DisplayNodeSocketType) -> Bool {
         switch lhs {
         case .inputTrigger(let lhsTrigger):
@@ -51,17 +64,32 @@ class DisplayNodeSocket: UIView {
     
     var draggingTarget: CGPoint?
     
+    var shapeView: UIView = UIView()
+    
     init(frame: CGRect, type: DisplayNodeSocketType, node: DisplayNode) {
         self.type = type
         self.node = node
         
         super.init(frame: frame)
         
-        backgroundColor = type.socketColor
+        // Style the view
+        backgroundColor = .clear
+        
+        // Add the shape view
+        shapeView.backgroundColor = type.socketColor
+        addSubview(shapeView)
+        shapeView.translatesAutoresizingMaskIntoConstraints = false
+        shapeView.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
+        shapeView.centerYAnchor.constraint(equalTo: centerYAnchor).activate()
+        shapeView.widthAnchor.constraint(equalToConstant: 22).activate()
+        shapeView.heightAnchor.constraint(equalTo: shapeView.widthAnchor).activate()
         
         // Add drag gesture
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
         addGestureRecognizer(dragGesture)
+        
+        // Update state
+        updateState()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,6 +122,7 @@ class DisplayNodeSocket: UIView {
     
     /// Connects this socket to another socket.
     func connect(to other: DisplayNodeSocket) {
+        // Set the connection.
         switch type {
         case .inputTrigger(let trigger):
             if case let .outputTrigger(otherTrigger) = other.type {
@@ -112,6 +141,10 @@ class DisplayNodeSocket: UIView {
                 value.connect(to: otherValue)
             }
         }
+        
+        // Update the socket
+        updateState()
+        other.updateState()
     }
     
     @objc func panned(sender: UIPanGestureRecognizer) {
@@ -146,7 +179,15 @@ class DisplayNodeSocket: UIView {
             draggingTarget = nil
         }
         
-        // Notify the canvas the node was updated
+        // Notify updates
+        updateState()
         canvas.updated(node: node)
+    }
+    
+    func updateState() {
+        UIView.animate(withDuration: 0.4) {
+            let isCircle = self.type.isConnected || self.draggingTarget != nil
+            self.shapeView.layer.cornerRadius = isCircle ? self.shapeView.frame.width / 2 : 8
+        }
     }
 }
