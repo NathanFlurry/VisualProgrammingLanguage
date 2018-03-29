@@ -109,6 +109,15 @@ class DisplayNode: UIView {
         let removeGesture = UITapGestureRecognizer(target: self, action: #selector(remove(sender:)))
         removeGesture.numberOfTapsRequired = 2
         addGestureRecognizer(removeGesture)
+        
+        // Add intro effect
+        layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        transform = CGAffineTransform(scaleX: 0, y: 0)
+        alpha = 0
+        UIView.animate(withDuration: 0.4) {
+            self.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.alpha = 1
+        }
     }
     
     required init(coder: NSCoder) {
@@ -175,6 +184,7 @@ class DisplayNode: UIView {
     }
     
     @objc func remove(sender: UIPanGestureRecognizer) {
+        // Remove this node
         canvas?.remove(node: self)
     }
     

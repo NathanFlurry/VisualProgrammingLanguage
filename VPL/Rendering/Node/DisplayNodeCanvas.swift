@@ -220,7 +220,18 @@ class DisplayNodeCanvas: UIView {
             return
         }
         nodes.remove(at: nodeIndex)
-        node.removeFromSuperview()
+        
+        // Add destory animation
+        UIView.animate(
+            withDuration: 0.4,
+            animations: {
+                node.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                node.alpha = 0
+            },
+            completion: { _ in
+                node.removeFromSuperview()
+            }
+        )
         
         // Destroy the node
         node.node.destroy()
