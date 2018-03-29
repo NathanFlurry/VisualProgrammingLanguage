@@ -38,7 +38,7 @@ class CanvasViewController: UIViewController {
         outputView.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
         outputView.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
         outputView.heightAnchor.constraint(equalToConstant: 180).activate()
-        
+
         // Add the node canvas
         nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
         nodeCanvas.updateCallback = {
@@ -53,7 +53,8 @@ class CanvasViewController: UIViewController {
         nodeCanvas.bottomAnchor.constraint(equalTo: outputView.topAnchor).activate()
         
         // Add drawing canvas
-        drawingCanvas = DrawingCanvas(frame: view.bounds)
+        drawingCanvas = DrawingCanvas(frame: nodeCanvas.bounds)
+        nodeCanvas.backgroundView = drawingCanvas
         drawingCanvas.onInputStart = {
             // Cancel the timer
             self.commitDrawingTimer?.invalidate()
@@ -119,13 +120,6 @@ class CanvasViewController: UIViewController {
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
             self.commitDrawingTimer = timer
         }
-        view.addSubview(drawingCanvas)
-        view.bringSubview(toFront: nodeCanvas)
-        drawingCanvas.translatesAutoresizingMaskIntoConstraints = false
-        drawingCanvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
-        drawingCanvas.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
-        drawingCanvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
-        drawingCanvas.bottomAnchor.constraint(equalTo: outputView.topAnchor).activate()
     }
 
     override func didReceiveMemoryWarning() {

@@ -106,11 +106,28 @@ class DisplayNodeCanvasOverlay: UIView {
     }
 }
 
-class DisplayNodeCanvas: UIView {
+class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
+    /// List of all nodes in the canvas.
     var nodes: [DisplayNode]
     
-    var overlay: DisplayNodeCanvasOverlay!
+    /// View that is drawn behind all other views.
+    var backgroundView: UIView? {
+        didSet {
+            // Remove the old value
+            oldValue?.removeFromSuperview()
+            
+            // Add the new vlaue
+            if let backgroundView = backgroundView {
+                addSubview(backgroundView)
+                sendSubview(toBack: backgroundView)
+            }
+        }
+    }
     
+    /// View that overlays the canvas and draws connections between nodes.
+    private var overlayView: DisplayNodeCanvasOverlay!
+    
+    /// Called every time the nodes are updated.
     var updateCallback: (() -> Void)?
     
     /// The starting node that all other nodes build off of.
@@ -122,14 +139,24 @@ class DisplayNodeCanvas: UIView {
         
         super.init(frame: frame)
         
+        // Configure the scroll view to be large & only allow panning with two
+        // touches
+        delegate = self
+        contentSize = CGSize(width: 10000, height: 10000)
+        for recognizer in gestureRecognizers ?? [] {
+            if let recognizer = recognizer as? UIPanGestureRecognizer {
+                recognizer.minimumNumberOfTouches = 2
+                recognizer.maximumNumberOfTouches = 2
+            }
+        }
+        
         // Style the view
         clipsToBounds = true
         backgroundColor = .clear
         
         // Add the overlay
-        overlay = DisplayNodeCanvasOverlay(frame: bounds, canvas: self)
-        overlay.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(UIViewAutoresizing.flexibleHeight)
-        addSubview(overlay)
+        overlayView = DisplayNodeCanvasOverlay(frame: bounds, canvas: self)
+        addSubview(overlayView)
         
         // Create and insert the display node
         baseNode = DisplayNode(node: BaseNode())
@@ -142,12 +169,16 @@ class DisplayNodeCanvas: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        // Only allow user interaction if interacting with subviews. This way
-        // the drawing canvas behind this view can still be interacted with.
-        let result = super.hitTest(point, with: event)
-        if result == self { return nil }
-        return result
+    override func layoutSubviews() {
+        // Resize all views
+        backgroundView?.frame.size = bounds.size
+        overlayView.frame.size = bounds.size
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Move the background and overlay with the view
+        backgroundView?.frame.origin = scrollView.contentOffset
+        overlayView.frame.origin = scrollView.contentOffset
     }
     
     /// Assembles all of the code.
@@ -192,10 +223,10 @@ class DisplayNodeCanvas: UIView {
     func updated(node: DisplayNode) {
         // Bring node to front under overlay
         bringSubview(toFront: node)
-        bringSubview(toFront: overlay)
+        bringSubview(toFront: overlayView)
         
         // Redraw overlay
-        overlay.setNeedsDisplay()
+        overlayView.setNeedsDisplay()
         
         // Update the state
         node.updateState()
@@ -237,7 +268,7 @@ class DisplayNodeCanvas: UIView {
         node.node.destroy()
         
         // Update
-        overlay.setNeedsDisplay()
+        overlayView.setNeedsDisplay()
         updateCallback?()
     }
     
