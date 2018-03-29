@@ -66,11 +66,6 @@ final class InputTrigger {
             tmpTarget?.reset()
         }
     }
-    
-    /// Assembles the code.
-    func assemble() -> String {
-        return target?.owner.assemble() ?? ""
-    }
 }
 
 final class OutputTrigger {
@@ -86,7 +81,7 @@ final class OutputTrigger {
     /// Variables availables to any other nodes further along the control flow.
     var exposedVariables: [VariableInstance]
     
-    init(id: String, exposedVariables: [VariableInstance] = []) {
+    init(id: String = "out", exposedVariables: [VariableInstance] = []) {
         self.id = id
         self.exposedVariables = exposedVariables
     }

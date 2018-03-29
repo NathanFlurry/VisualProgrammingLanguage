@@ -9,7 +9,7 @@
 import Foundation
 
 enum NodeOutput {
-    case triggers([OutputTrigger]), value(OutputValue)
+    case triggers([OutputTrigger]), value(OutputValue), none
 }
 
 protocol Node: class {
@@ -25,70 +25,75 @@ protocol Node: class {
 }
 
 extension Node {
-    func assembleOutputTrigger() -> String {
-        return outputTrigger?.assemble() ?? ""
-    }
-}
-
-extension Node {
-    var inputTrigger: NodeTrigger? { return nil }
-    var outputTrigger: NodeTrigger? { return nil }
-    var extraOutputTriggers: [NodeTrigger] { return [] }
-    var inputValues: [NodeValue] { return [] }
-    var outputValues: [NodeValue] { return [] }
+    var inputTrigger: InputTrigger? { return nil }
+    var inputValues: [InputValue] { return [] }
+    var output: NodeOutput { return .none }
 }
 
 extension Node {
     /// Finds the first available input trigger. If this node has an input
     /// trigger, it returns that. Othwerise, it follows the output value until
     /// it finds an input trigger.
-    var closestInputTrigger: NodeTrigger? {
-//        return inputTrigger?
-        fatalError("Unimplemented.")
+    var closestInputTrigger: InputTrigger? {
+        if let trigger = inputTrigger {
+            return trigger
+        } else if case let .value(value) = output {
+            return value.target?.owner.closestInputTrigger
+        } else {
+            return nil
+        }
     }
     
     /// Variables that this node can use.
     var availableVariables: [VariableInstance] {
-        var v = [VariableInstance]()
-        
-        // Add variables from the trigger connected to the input trigger
-        if let vars = inputTrigger?.target?.exposedVariables {
-            v += vars
-        }
-        
-        // Add varaibles on the connected parent nodes
-        if let vars = inputTrigger?.target?.owner.availableVariables {
-            v += vars
-        }
-        
-        // Add variables from any
-        
-        return v
+        // Add variables available from all parent triggers
+        let trigger  = closestInputTrigger
+        return (trigger?.target?.exposedVariables ?? []) + (trigger?.target?.owner.availableVariables ?? [])
     }
     
     func setupConnections() {
-        setupTrigger(connection: inputTrigger)
-        setupTrigger(connection: outputTrigger)
-        for trigger in extraOutputTriggers { setupTrigger(connection: trigger) }
-        for value in inputValues { setupValue(connection: value) }
-        for value in outputValues { setupValue(connection: value) }
-    }
-    
-    private func setupTrigger(connection: NodeTrigger?) {
-        guard let connection = connection else { return }
-        connection.owner = self
-    }
-    
-    private func setupValue(connection: NodeValue?) {
-        guard let connection = connection else { return }
-        connection.owner = self
+        inputTrigger?.owner = self
+        for value in inputValues { value.owner = self }
+        switch output {
+        case .triggers(let triggers):
+            for trigger in triggers { trigger.owner = self }
+        case .value(let value):
+            value.owner = self
+        case .none:
+            break
+        }
     }
     
     func destroy() {
         inputTrigger?.reset()
-        outputTrigger?.reset()
-        for trigger in extraOutputTriggers { trigger.reset() }
         for value in inputValues { value.reset() }
-        for value in outputValues { value.reset() }
+        switch output {
+        case .triggers(let triggers):
+            for trigger in triggers { trigger.reset() }
+        case .value(let value):
+            value.reset()
+        case .none:
+            break
+        }
+    }
+    
+    func assembleOutputTrigger(id: String? = nil) -> String {
+        if case let .triggers(triggers) = output {
+            if let id = id {
+                if let trigger = triggers.first(where: { $0.id == id }) {
+                    return trigger.assemble()
+                } else {
+                    fatalError("No trigger with id \(id).")
+                }
+            } else {
+                if let trigger = triggers.first {
+                    return trigger.assemble()
+                } else {
+                    fatalError("No output triggers provided.")
+                }
+            }
+        } else {
+            fatalError("Missing output trigger, can't assemble it.")
+        }
     }
 }

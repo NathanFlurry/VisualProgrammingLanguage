@@ -13,7 +13,7 @@ class FunctionNode: DisplayableNode {
     
     static let id: String = "function"
     static let name: String = "Function"
-    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
+    var output: NodeOutput = .triggers([OutputTrigger()])
     
     var functionName: String
     
@@ -30,7 +30,7 @@ class FunctionNode: DisplayableNode {
         out += "func \(type(of: self).name) {\n"
         
         // Add the next
-        out += outputTrigger?.target?.owner.assemble() ?? "// No body"
+        out += assembleOutputTrigger()
         
         // End the funciton
         out += "}"

@@ -13,7 +13,7 @@ class EvalConstNode: DisplayableNode {
     
     static let id: String = "evalconst"
     static let name: String = "Eval Constant"
-    let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
+    var output: NodeOutput = .value(OutputValue(type: .any))
     var contentView: DisplayableNodeContentView? { return inputView }
     
     let inputView: GenericInputView
@@ -34,7 +34,7 @@ class ConstNode: DisplayableNode { // TEMP: Need const for each type
     
     static let id: String = "const"
     static let name: String = "Constant"
-    let outputValues: [NodeValue] = [NodeValue(id: "value", type: .any)]
+    var output: NodeOutput = .value(OutputValue(type: .any))
     var contentView: DisplayableNodeContentView? { return inputView }
     
     let inputView: GenericInputView

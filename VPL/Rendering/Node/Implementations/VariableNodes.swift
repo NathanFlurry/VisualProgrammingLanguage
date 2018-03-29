@@ -13,7 +13,7 @@ class GetVariableNode: DisplayableNode {
     
     static let id: String = "get variable"
     static let name: String = "Get Variable"
-    let outputValues: [NodeValue] = [NodeValue(id: "get value", type: .any)]
+    var output: NodeOutput = .value(OutputValue(type: .any))
     var contentView: DisplayableNodeContentView? { return variablePicker }
     
     var variablePicker: ValueChooserView<VariableInstance?>!
@@ -23,8 +23,7 @@ class GetVariableNode: DisplayableNode {
         variablePicker = ValueChooserView<VariableInstance?>(
             defaultValue: nil,
             getValues: {
-//                return self.availableVariables.map { Optional.some($0) }
-                return []
+                return self.availableVariables.map { Optional.some($0) }
             },
             valueLabel: { v in v?.name ?? "No Variable" }
         )
@@ -42,14 +41,18 @@ class SetVariableNode: DisplayableNode {
     
     static let id: String = "set variable"
     static let name: String = "Set Variable"
-    let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
-    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger(exposedVariables: [
-        VariableInstance(name: "Test A", type: .int)
+    var inputTrigger: InputTrigger? = InputTrigger()
+    var inputValues: [InputValue] = [ InputValue(id: "set value", type: .any) ]
+    var output: NodeOutput = .triggers([
+        OutputTrigger(exposedVariables: [ VariableInstance(name: "Test A", type: .int) ])
     ])
-    let inputValues: [NodeValue] = [NodeValue(id: "set value", type: .any)]
     
     var variable: VariableInstance {
-        return outputTrigger!.exposedVariables[0]
+        if case let .triggers(triggers) = output {
+            return triggers[0].exposedVariables[0]
+        } else {
+            fatalError("Missing exposed variable.")
+        }
     }
     
     required init() {

@@ -13,9 +13,9 @@ class PrintNode: DisplayableNode {
     
     static let id: String = "print"
     static let name: String = "Print"
-    let inputTrigger: NodeTrigger? = NodeTrigger.inputTrigger()
-    let outputTrigger: NodeTrigger? = NodeTrigger.outputTrigger()
-    let inputValues: [NodeValue] = [NodeValue(id: "value", type: .string)]
+    var inputTrigger: InputTrigger? = InputTrigger()
+    var inputValues: [InputValue] = [InputValue(id: "value", type: .string)]
+    var output: NodeOutput = .triggers([OutputTrigger()])
     
     required init() {
         self.setupConnections()
