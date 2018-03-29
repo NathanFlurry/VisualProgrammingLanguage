@@ -82,7 +82,7 @@ class CanvasViewController: UIViewController {
                 UIGraphicsEndImageContext()
                 
                 // Process
-                try! OCRRequest(image: nonRetinaImage, singleCharacter: true) { (result, breakdown) in
+                try! OCRRequest(dataset: .alphanum, image: nonRetinaImage, singleCharacter: true) { (result, breakdown) in
                     assert(breakdown.count == 1)
                     
                     // Get the character's center
@@ -97,7 +97,7 @@ class CanvasViewController: UIViewController {
                     let charCenter = CGPoint(x: charBox.midX, y: charBox.midY)
                     
                     // Overlay the breakdown for debug info
-//                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
+                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
                     
                     // Present custom node popover
                     if character == self.customNodeShortcut {

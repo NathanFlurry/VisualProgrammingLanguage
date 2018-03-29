@@ -47,7 +47,6 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         decelerationRate = UIScrollViewDecelerationRateFast
         contentSize = CGSize(width: 10000, height: 10000)
         for recognizer in gestureRecognizers ?? [] {
-            print("gesture recognizer", NSStringFromClass(type(of: recognizer)))
             if let recognizer = recognizer as? UIPanGestureRecognizer {
                 // Only allow scrolling with two fingers
                 recognizer.minimumNumberOfTouches = 2

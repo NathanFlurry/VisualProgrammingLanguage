@@ -21,15 +21,49 @@ enum OCRResult {
     case loading, some(String, UIImage, CGRect), failure
 }
 
+enum OCRDataset {
+    case digits, alphanum, chars74k
+    
+    func createModel() throws -> VNCoreMLModel {
+        switch self {
+        case .digits:
+            return try VNCoreMLModel(for: MNIST().model)
+        case .alphanum:
+            return try VNCoreMLModel(for: Alphanum_28x28().model)
+        case .chars74k:
+            return try VNCoreMLModel(for: Chars74k().model)
+        }
+    }
+    
+    func preprocess(input: UIImage) -> UIImage {
+        switch self {
+        case .digits:
+            return preProcess(image: input, size: CGSize(width: 28, height: 28), invert: true)
+        case .alphanum:
+            return preProcess(image: input, size: CGSize(width: 28, height: 28))
+        case .chars74k:
+            return preProcess(image: input, size: CGSize(width: 128, height: 128))
+        }
+    }
+}
+
 class OCRRequest {
+    /// The dataset being used by the request.
+    private let dataset: OCRDataset
+    
+    /// Model used for the request
     private let model: VNCoreMLModel
     
+    /// Image that was given to the request.
     private let image: UIImage
     
+    /// Results of the request.
     private var queryResults = [Int: [Int: OCRResult]]()
     
+    /// Callback for when the request is complete.
     private let onComplete: (String, OCRResultBreakdown) -> Void
     
+    /// If the request is complete.
     public var completed: Bool {
         // Check if there are still any nil values
         for (_, wordData) in queryResults {
@@ -44,15 +78,15 @@ class OCRRequest {
     }
     
     @discardableResult
-    public init(image: UIImage, singleCharacter: Bool, onComplete: @escaping (String, OCRResultBreakdown) -> Void) throws {
+    public init(dataset: OCRDataset, image: UIImage, singleCharacter: Bool, onComplete: @escaping (String, OCRResultBreakdown) -> Void) throws {
         // Save the image
+        self.dataset = dataset
         let convertedImage = image |> adjustColors |> convertToGrayscale
         self.image = image
         self.onComplete = onComplete
         
         // Save the model
-        self.model = try VNCoreMLModel(for: Alphanum_28x28().model)
-//        self.model = try VNCoreMLModel(for: chars74k().model)
+        self.model = try dataset.createModel()
         
         if singleCharacter {
             // Set the query results
@@ -62,7 +96,7 @@ class OCRRequest {
             let charBox = image.trimWhiteRect()
             if let cropped = crop(image: image, rectangle: charBox) {
                 // Classify the image
-                let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
+                let processedImage = dataset.preprocess(input: cropped)
                 self.classifyImage(image: processedImage, charBox: charBox, wordIndex: 0, characterIndex: 0)
             } else {
                 print("Failed to clip character.")
@@ -118,8 +152,7 @@ class OCRRequest {
                 let charBox = charBox.applyTo(size: image.size)
                 if let cropped = crop(image: image, rectangle: charBox) {
                     // Classify the image
-                     let processedImage = preProcess(image: cropped, size: CGSize(width: 28, height: 28))
-//                    let processedImage = preProcess(image: cropped, size: CGSize(width: 128, height: 128))
+                    let processedImage = dataset.preprocess(input: cropped)
                     self.classifyImage(image: processedImage, charBox: charBox, wordIndex: wordIndex, characterIndex: charIndex)
                 } else {
                     print("Failed to clip character.")

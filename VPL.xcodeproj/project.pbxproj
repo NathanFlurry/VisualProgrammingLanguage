@@ -24,7 +24,7 @@
 		BF24CA33206C596F007AB6F2 /* NodeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA32206C596F007AB6F2 /* NodeValue.swift */; };
 		BF24CA35206CE04A007AB6F2 /* VariableChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA34206CE04A007AB6F2 /* VariableChooserView.swift */; };
 		BF24CA37206CEC19007AB6F2 /* CodeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */; };
-		BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* chars74k.mlmodel */; };
+		BF313B712066FFF7006EEA83 /* Chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* Chars74k.mlmodel */; };
 		BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEB1205862B2007E2483 /* AppDelegate.swift */; };
 		BF56DEB9205862B2007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEB8205862B2007E2483 /* Assets.xcassets */; };
 		BF56DEBC205862B2007E2483 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEBA205862B2007E2483 /* LaunchScreen.storyboard */; };
@@ -33,6 +33,7 @@
 		BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED02058631A007E2483 /* CanvasViewController.swift */; };
 		BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
 		BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED62058693E007E2483 /* DrawingCanvas.swift */; };
+		BF62C25A206D9B7A002A148F /* MNIST.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF62C259206D9B7A002A148F /* MNIST.mlmodel */; };
 		BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */; };
 		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
 		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
@@ -57,7 +58,7 @@
 		BF24CA32206C596F007AB6F2 /* NodeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValue.swift; sourceTree = "<group>"; };
 		BF24CA34206CE04A007AB6F2 /* VariableChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableChooserView.swift; sourceTree = "<group>"; };
 		BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeOutputView.swift; sourceTree = "<group>"; };
-		BF313B702066FFF7006EEA83 /* chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = chars74k.mlmodel; sourceTree = "<group>"; };
+		BF313B702066FFF7006EEA83 /* Chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Chars74k.mlmodel; sourceTree = "<group>"; };
 		BF56DEAE205862B2007E2483 /* VPL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DEB1205862B2007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF56DEB8205862B2007E2483 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		BF56DED02058631A007E2483 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		BF56DED420586439007E2483 /* DisplayNodeSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeSocket.swift; sourceTree = "<group>"; };
 		BF56DED62058693E007E2483 /* DrawingCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvas.swift; sourceTree = "<group>"; };
+		BF62C259206D9B7A002A148F /* MNIST.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MNIST.mlmodel; sourceTree = "<group>"; };
 		BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvasOverlay.swift; sourceTree = "<group>"; };
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
@@ -112,8 +114,9 @@
 		BF24CA13206A1C58007AB6F2 /* OCR */ = {
 			isa = PBXGroup;
 			children = (
+				BF62C259206D9B7A002A148F /* MNIST.mlmodel */,
 				BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */,
-				BF313B702066FFF7006EEA83 /* chars74k.mlmodel */,
+				BF313B702066FFF7006EEA83 /* Chars74k.mlmodel */,
 				BF56DED62058693E007E2483 /* DrawingCanvas.swift */,
 				BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */,
 				BF86B73C205F0144006AEEA7 /* ImageUtils.swift */,
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF24CA2F206C4DF8007AB6F2 /* DisplayNodeContentView.swift in Sources */,
+				BF62C25A206D9B7A002A148F /* MNIST.mlmodel in Sources */,
 				BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */,
 				BF24CA24206C39DA007AB6F2 /* MathNodes.swift in Sources */,
 				BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */,
@@ -272,7 +276,7 @@
 				BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */,
 				BF24CA28206C3A13007AB6F2 /* MiscNodes.swift in Sources */,
 				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
-				BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */,
+				BF313B712066FFF7006EEA83 /* Chars74k.mlmodel in Sources */,
 				BF24CA2D206C4D1D007AB6F2 /* ValueChooserView.swift in Sources */,
 				BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,

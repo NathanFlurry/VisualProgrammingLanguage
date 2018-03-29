@@ -172,17 +172,48 @@ func crop(image: UIImage, rectangle: CGRect) -> UIImage? {
     return nil
 }
 
-func preProcess(image: UIImage, size: CGSize) -> UIImage {
+func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false, addInsets: Bool = true) -> UIImage {
+    // Calculate properties
     let width = image.size.width
     let height = image.size.height
     let addToHeight2 = height / 2
     let addToWidth2 = ((6 * height) / 3 - width) / 2
-    let imageWithInsets = insertInsets(image: image,
-                                       insetWidthDimension: addToWidth2,
-                                       insetHeightDimension: addToHeight2)
-    let resizedImage = resize(image: imageWithInsets, targetSize: size)
-    let grayScaleImage = convertToGrayscale(image: resizedImage)
-    return grayScaleImage
+    
+    // Process the image
+    var image = image
+    if shouldInvert {
+        image = invert(image: image)
+    }
+    if addInsets {
+        image = insertInsets(image: image, insetWidthDimension: addToWidth2, insetHeightDimension: addToHeight2)
+    }
+    image = resize(image: image, targetSize: size)
+    image = convertToGrayscale(image: image)
+    
+    return image
+}
+
+func invert(image: UIImage) -> UIImage {
+    // Get the filter and image
+    guard let filter = CIFilter(name: "CIColorInvert") else {
+        print("Failed to find CIColorInvert.")
+        return UIImage()
+    }
+    guard let cgImage = image.cgImage else {
+        print("Failed to get CGImage.")
+        return UIImage()
+    }
+    
+    // Invert the image
+    let img = CIImage(cgImage: cgImage)
+    filter.setDefaults()
+    filter.setValue(img, forKey: kCIInputImageKey)
+    let ctx = CIContext(options: nil)
+    guard let imageRef = ctx.createCGImage(filter.outputImage!, from: img.extent) else {
+        print("Failed to get CGImage from CoreImage.")
+        return UIImage()
+    }
+    return UIImage(cgImage: imageRef)
 }
 
 // From: https://gist.github.com/marchinram/3675efc96bf1cc2c02a5
