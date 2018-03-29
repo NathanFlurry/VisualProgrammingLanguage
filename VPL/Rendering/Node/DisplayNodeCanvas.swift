@@ -111,6 +111,9 @@ class DisplayNodeCanvas: UIView {
     
     var updateCallback: (() -> Void)?
     
+    /// The starting node that all other nodes build off of.
+    var baseNode: DisplayNode!
+    
     override init(frame: CGRect) {
         // Create new node list
         nodes = []
@@ -124,6 +127,12 @@ class DisplayNodeCanvas: UIView {
         overlay = DisplayNodeCanvasOverlay(frame: bounds, canvas: self)
         overlay.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(UIViewAutoresizing.flexibleHeight)
         addSubview(overlay)
+        
+        // Create and insert the display node
+        baseNode = DisplayNode(node: BaseNode())
+        baseNode.layoutIfNeeded()
+        baseNode.center = CGPoint(x: 200, y: 200)
+        insert(node: baseNode)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -144,7 +153,7 @@ class DisplayNodeCanvas: UIView {
         
         // Assemble each function
         for node in nodes {
-            if let node = node.node as? FunctionNode {
+            if let node = node.node as? BaseNode {
                 output += node.assemble()
                 
                 output += "\n\n"
@@ -193,6 +202,11 @@ class DisplayNodeCanvas: UIView {
     func remove(node: DisplayNode) {
         assert(nodes.contains(node))
         assert(node.canvas == self)
+        
+        // Make sure the node is destroyable
+        guard type(of: node.node).destroyable else {
+            return
+        }
         
         // Remove the node from the list
         guard let nodeIndex = nodes.index(where: { $0 === node }) else {

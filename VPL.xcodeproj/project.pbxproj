@@ -11,7 +11,7 @@
 		BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
 		BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */; };
 		BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */; };
-		BF24CA1C206C398F007AB6F2 /* FunctionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1B206C398F007AB6F2 /* FunctionNode.swift */; };
+		BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1B206C398F007AB6F2 /* BaseNode.swift */; };
 		BF24CA1E206C39A4007AB6F2 /* ConstNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */; };
 		BF24CA20206C39B5007AB6F2 /* VariableNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */; };
 		BF24CA22206C39CA007AB6F2 /* ControlFlowNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */; };
@@ -42,7 +42,7 @@
 		BF24CA0A2069B6E5007AB6F2 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
 		BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableNode.swift; sourceTree = "<group>"; };
-		BF24CA1B206C398F007AB6F2 /* FunctionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionNode.swift; sourceTree = "<group>"; };
+		BF24CA1B206C398F007AB6F2 /* BaseNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNode.swift; sourceTree = "<group>"; };
 		BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstNodes.swift; sourceTree = "<group>"; };
 		BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableNodes.swift; sourceTree = "<group>"; };
 		BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlFlowNodes.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */,
-				BF24CA1B206C398F007AB6F2 /* FunctionNode.swift */,
+				BF24CA1B206C398F007AB6F2 /* BaseNode.swift */,
 				BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */,
 				BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */,
 				BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */,
@@ -267,7 +267,7 @@
 				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
 				BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */,
 				BF24CA2D206C4D1D007AB6F2 /* ValueChooserView.swift in Sources */,
-				BF24CA1C206C398F007AB6F2 /* FunctionNode.swift in Sources */,
+				BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */,
 				BF24CA22206C39CA007AB6F2 /* ControlFlowNodes.swift in Sources */,

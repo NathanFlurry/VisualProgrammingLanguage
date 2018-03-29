@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Create view controller
         let viewController = CanvasViewController()
         viewController.spawnableNodes = [
-            FunctionNode.self,
             EvalConstNode.self,
             ConstNode.self,
             DeclareVariableNode.self,
