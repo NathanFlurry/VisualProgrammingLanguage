@@ -30,7 +30,7 @@ class CodeOutputView: UIView {
         super.init(frame: CGRect.zero)
         
         // Style the view
-        backgroundColor = UIColor(white: 0.975, alpha: 1.0)
+        backgroundColor = UIColor(white: 0.96, alpha: 1.0)
         
         // Create text view
         let inset: CGFloat = 16
