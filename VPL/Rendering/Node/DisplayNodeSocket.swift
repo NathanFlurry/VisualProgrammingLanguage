@@ -8,16 +8,39 @@
 
 import UIKit
 
-enum DisplayNodeSocketType {
-    case controlFlow(NodeTrigger), dataFlow(NodeValue)
+enum DisplayNodeSocketType: Equatable {
+    case inputTrigger(InputTrigger), outputTrigger(OutputTrigger), inputValue(InputValue), outputValue(OutputValue)
     
     var socketColor: UIColor {
         switch self {
-        case .controlFlow(_):
+        case .inputTrigger(_), .outputTrigger(_):
             return UIColor.orange
-        case .dataFlow(_):
+        case .inputValue(_), .outputValue(_):
             return UIColor.blue
         }
+    }
+    
+    static func == (lhs: DisplayNodeSocketType, rhs: DisplayNodeSocketType) -> Bool {
+        switch lhs {
+        case .inputTrigger(let lhsTrigger):
+            if case let .inputTrigger(rhsTrigger) = rhs {
+                return lhsTrigger === rhsTrigger
+            }
+        case .outputTrigger(let lhsTrigger):
+            if case let .outputTrigger(rhsTrigger) = rhs {
+                return lhsTrigger === rhsTrigger
+            }
+        case .inputValue(let lhsValue):
+            if case let .inputTrigger(rhsValue) = rhs {
+                return lhsValue === rhsValue
+            }
+        case .outputValue(let lhsValue):
+            if case let .outputTrigger(rhsValue) = rhs {
+                return lhsValue === rhsValue
+            }
+        }
+        
+        return false
     }
 }
 
@@ -48,12 +71,20 @@ class DisplayNodeSocket: UIView {
     /// If this socket can be connected to another socket.
     func canConnectTo(socket other: DisplayNodeSocket) -> Bool {
         switch type {
-        case .controlFlow(let trigger):
-            if case let .controlFlow(otherTrigger) = other.type {
+        case .inputTrigger(let trigger):
+            if case let .outputTrigger(otherTrigger) = other.type {
                 return trigger.canConnect(to: otherTrigger)
             }
-        case .dataFlow(let value):
-            if case let .dataFlow(otherValue) = other.type {
+        case .outputTrigger(let trigger):
+            if case let .inputTrigger(otherTrigger) = other.type {
+                return trigger.canConnect(to: otherTrigger)
+            }
+        case .inputValue(let value):
+            if case let .outputValue(otherValue) = other.type {
+                return value.canConnect(to: otherValue)
+            }
+        case .outputValue(let value):
+            if case let .inputValue(otherValue) = other.type {
                 return value.canConnect(to: otherValue)
             }
         }
@@ -62,19 +93,22 @@ class DisplayNodeSocket: UIView {
     }
     
     /// Connects this socket to another socket.
-    func connectTo(socket other: DisplayNodeSocket) {
+    func connect(to other: DisplayNodeSocket) {
         switch type {
-        case .controlFlow(let trigger):
-            if case let .controlFlow(otherTrigger) = other.type {
-                trigger.reset()
-                otherTrigger.reset()
+        case .inputTrigger(let trigger):
+            if case let .outputTrigger(otherTrigger) = other.type {
                 trigger.connect(to: otherTrigger)
-                return
             }
-        case .dataFlow(let value):
-            if case let .dataFlow(otherValue) = other.type {
-                value.reset()
-                otherValue.reset()
+        case .outputTrigger(let trigger):
+            if case let .inputTrigger(otherTrigger) = other.type {
+                trigger.connect(to: otherTrigger)
+            }
+        case .inputValue(let value):
+            if case let .outputValue(otherValue) = other.type {
+                value.connect(to: otherValue)
+            }
+        case .outputValue(let value):
+            if case let .inputValue(otherValue) = other.type {
                 value.connect(to: otherValue)
             }
         }
@@ -88,10 +122,10 @@ class DisplayNodeSocket: UIView {
         
         // Remove the target
         switch type {
-        case .controlFlow(let trigger):
-            trigger.reset()
-        case .dataFlow(let value):
-            value.reset()
+        case .inputTrigger(let trigger): trigger.reset()
+        case .outputTrigger(let trigger): trigger.reset()
+        case .inputValue(let value): value.reset()
+        case .outputValue(let value): value.reset()
         }
         
         // Update the dragging to position

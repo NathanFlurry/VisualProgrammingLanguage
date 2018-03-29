@@ -44,12 +44,10 @@ final class InputTrigger {
     
     /// Connects this trigger to another trigger.
     func connect(to newTarget: OutputTrigger) {
-        assert(canConnect(to: newTarget))
-        
         // Set the new target
         target = newTarget
         
-        // Connect if needed
+        // Connect the other node
         if newTarget.target !== self {
             newTarget.connect(to: self)
         }
@@ -93,12 +91,10 @@ final class OutputTrigger {
     
     /// Connects this trigger to another trigger.
     func connect(to newTarget: InputTrigger) {
-        assert(canConnect(to: newTarget))
-        
         // Set the new target
         target = newTarget
         
-        // Connect if needed
+        // Connect the other node
         if newTarget.target !== self {
             newTarget.connect(to: self)
         }

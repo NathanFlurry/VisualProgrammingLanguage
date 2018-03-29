@@ -66,35 +66,25 @@ class DisplayNodeCanvasOverlay: UIView {
             return nil
         }
         
-        // Find another socket with the same type
-        switch socketType {
-        case .controlFlow(let trigger):
-            guard let triggerTarget = trigger.target else {
-                return nil
-            }
-            
-            // Search nodes for a target that matches this target
-            for node in canvas.nodes {
-                for socket in node.sockets {
-                    if case let .controlFlow(otherTrigger) = socket.type {
-                        if triggerTarget === otherTrigger {
-                            return socket
-                        }
+        // Find a socket that matches the target of this view
+        for node in canvas.nodes {
+            for otherSocket in node.sockets {
+                switch socketType {
+                case .inputTrigger(let trigger):
+                    if case let .outputTrigger(otherTrigger) = otherSocket.type {
+                        if trigger.target === otherTrigger { return otherSocket }
                     }
-                }
-            }
-        case .dataFlow(let value):
-            guard let valueTarget = value.target else {
-                return nil
-            }
-            
-            // Search nodes for a target that matches this target
-            for node in canvas.nodes {
-                for socket in node.sockets {
-                    if case let .dataFlow(otherValue) = socket.type {
-                        if valueTarget === otherValue {
-                            return socket
-                        }
+                case .outputTrigger(let trigger):
+                    if case let .inputTrigger(otherTrigger) = otherSocket.type {
+                        if trigger.target === otherTrigger { return otherSocket }
+                    }
+                case .inputValue(let value):
+                    if case let .outputValue(otherValue) = otherSocket.type {
+                        if value.target === otherValue { return otherSocket }
+                    }
+                case .outputValue(let value):
+                    if case let .inputValue(otherValue) = otherSocket.type {
+                        if value.target === otherValue { return otherSocket }
                     }
                 }
             }
@@ -229,13 +219,14 @@ class DisplayNodeCanvas: UIView {
         }
         
         // Find a socket dislplay that matches the point
-        for node in nodes {
+        nodeLoop: for node in nodes {
             if node.point(inside: node.convert(target, from: socket), with: nil) {
                 for targetSocket in node.sockets {
                     if targetSocket.point(inside: targetSocket.convert(target, from: socket), with: nil) {
                         // Attempt to connect the sockets
                         if socket.canConnectTo(socket: targetSocket) {
-                            socket.connectTo(socket: targetSocket)
+                            socket.connect(to: targetSocket)
+                            break nodeLoop
                         }
                     }
                 }

@@ -24,9 +24,9 @@ class IfNode: DisplayableNode {
     func assemble() -> String {
         let assembledInput = inputValues[0].assemble()
         var out = "if (\(assembledInput)) {\n"
-        out += extraOutputTriggers[0].assemble() + "\n"
+        out += assembleOutputTrigger(id: "true") + "\n"
         out += "} else {"
-        out += extraOutputTriggers[1].assemble() + "\n"
+        out += assembleOutputTrigger(id: "false") + "\n"
         out += "}\n"
         return out + assembleOutputTrigger()
     }

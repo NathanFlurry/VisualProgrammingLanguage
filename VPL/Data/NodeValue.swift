@@ -33,12 +33,10 @@ final class InputValue {
     
     /// Connects this value to another value.
     func connect(to newTarget: OutputValue) {
-        assert(canConnect(to: newTarget))
-        
         // Set the new target
         target = newTarget
         
-        // Connect if needed
+        // Connect the other node
         if newTarget.target !== self {
             newTarget.connect(to: self)
         }
@@ -83,12 +81,10 @@ final class OutputValue {
     
     /// Connects this value to another value.
     func connect(to newTarget: InputValue) {
-        assert(canConnect(to: newTarget))
-        
         // Set the new target
         target = newTarget
         
-        // Connect if needed
+        // Connect the other node
         if newTarget.target !== self {
             newTarget.connect(to: self)
         }

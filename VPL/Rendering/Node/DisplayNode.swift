@@ -66,36 +66,35 @@ class DisplayNode: UIView {
         addSubview(rightPanel)
         
         leftPanel.translatesAutoresizingMaskIntoConstraints = false
-        leftPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).activate()
+        leftPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).activate()
         leftPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
         leftPanel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).activate()
         leftPanel.bottomAnchor.constraint(lessThanOrEqualTo: panelBottomAnchor, constant: -8).activate()
         
         rightPanel.translatesAutoresizingMaskIntoConstraints = false
-        rightPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 150).activate()
+        rightPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).activate()
         rightPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
         rightPanel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
         rightPanel.bottomAnchor.constraint(lessThanOrEqualTo: panelBottomAnchor, constant: -8).activate()
         
         leftPanel.rightAnchor.constraint(equalTo: rightPanel.leftAnchor, constant: -8).activate()
         
-        // Add left properies
+        // Add properties
         if let trigger = node.inputTrigger {
-            addTrigger(parent: leftPanel, leftAlign: true, trigger: trigger)
+            addProperty(parent: leftPanel, leftAlign: true, socket: .inputTrigger(trigger), name: "Input", type: nil)
         }
         for value in node.inputValues {
-            addValue(parent: leftPanel, leftAlign: true, value: value)
+            addProperty(parent: leftPanel, leftAlign: true, socket: .inputValue(value), name: value.id, type: value.type.description)
         }
-        
-        // Add right properties
-        if let trigger = node.outputTrigger {
-            addTrigger(parent: rightPanel, leftAlign: false, trigger: trigger)
-        }
-        for trigger in node.extraOutputTriggers {
-            addTrigger(parent: rightPanel, leftAlign: false, trigger: trigger)
-        }
-        for value in node.outputValues {
-            addValue(parent: rightPanel, leftAlign: false, value: value)
+        switch node.output {
+        case .triggers(let triggers):
+            for trigger in triggers {
+                addProperty(parent: rightPanel, leftAlign: false, socket: .outputTrigger(trigger), name: trigger.id, type: nil)
+            }
+        case .value(let value):
+            addProperty(parent: rightPanel, leftAlign: false, socket: .outputValue(value), name: "Output", type: value.type.description)
+        case .none:
+            break
         }
         
         // Add drag gesture
@@ -110,14 +109,6 @@ class DisplayNode: UIView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func addTrigger(parent: UIStackView, leftAlign: Bool, trigger: NodeTrigger) {
-        addProperty(parent: parent, leftAlign: leftAlign, socket: .controlFlow(trigger), name: trigger.id, type: nil)
-    }
-    
-    func addValue(parent: UIStackView, leftAlign: Bool, value: NodeValue) {
-        addProperty(parent: parent, leftAlign: leftAlign, socket: .dataFlow(value), name: value.id, type: value.type.description)
     }
     
     func addProperty(parent: UIStackView, leftAlign: Bool, socket socketType: DisplayNodeSocketType, name: String, type: String?) {
