@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SetVariableNode.self,
             GetVariableNode.self,
             IfNode.self,
+            ForLoopNode.self,
             PrintNode.self,
             ModNode.self,
             EqualsNode.self

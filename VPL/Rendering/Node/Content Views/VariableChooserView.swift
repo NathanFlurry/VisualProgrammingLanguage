@@ -17,7 +17,13 @@ class VariableChooserView: ValueChooserView<VariableInstance?> {
         super.init(
             defaultValue: nil,
             getValues: { owner.availableVariables.map { Optional.some($0) } },
-            valueLabel: { $0?.name ?? "No Variable" }
+            valueLabel: { v in
+                if let v = v {
+                    return "\(v.name) (\(v.type.description))"
+                } else {
+                    return "No Variable"
+                }
+            }
         )
         
     }

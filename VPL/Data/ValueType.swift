@@ -27,7 +27,7 @@ indirect enum ValueType: CustomStringConvertible {
     static var int: ValueType { return .type("Int") }
     static var float: ValueType { return .type("Float") }
     static var string: ValueType { return .type("String") }
-    
+        
     var description: String {
         switch self {
         case .type(let type):
