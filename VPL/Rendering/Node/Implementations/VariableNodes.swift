@@ -32,8 +32,8 @@ class DeclareVariableNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        let assembledInput = inputValues[0].assemble()
-        let out = "var \(variable.id) = \(assembledInput)\n"
+        var out = ""
+        out !+= "var \(variable.id) = \(inputValues[0].assemble())"
         return out + assembleOutputTrigger()
     }
 }

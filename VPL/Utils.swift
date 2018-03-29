@@ -25,3 +25,24 @@ extension NSLayoutConstraint {
         return self
     }
 }
+
+extension String {
+    mutating func append(code: String, indent: Int = 0) {
+        let indentString = String(repeating: "    ", count: indent)
+        for line in code.split(separator: "\n") {
+            self.append(indentString + line + "\n")
+        }
+    }
+}
+
+// Appent code
+infix operator !+=
+func !+=(lhs: inout String, rhs: String) {
+    lhs.append(code: rhs)
+}
+
+// Appent code with 1 indent
+infix operator !!+=
+func !!+=(lhs: inout String, rhs: String) {
+    lhs.append(code: rhs, indent: 1)
+}

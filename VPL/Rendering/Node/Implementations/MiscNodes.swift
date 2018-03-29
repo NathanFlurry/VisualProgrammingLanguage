@@ -22,7 +22,8 @@ class PrintNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        let assembledInput = inputValues[0].assemble()
-        return "print(\(assembledInput))\n" + assembleOutputTrigger()
+        var out = ""
+        out !+= "print(\(inputValues[0].assemble()))"
+        return out + assembleOutputTrigger()
     }
 }

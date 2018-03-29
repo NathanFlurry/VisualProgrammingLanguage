@@ -22,11 +22,12 @@ class IfNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        var out = "if \(inputValues[0].assemble()) {\n"
-        out += assembleOutputTrigger(id: "true") + "\n"
-        out += "} else {"
-        out += assembleOutputTrigger(id: "false") + "\n"
-        out += "}\n"
+        var out = ""
+        out !+= "if \(inputValues[0].assemble()) {"
+        out !!+= assembleOutputTrigger(id: "true")
+        out !+= "} else {"
+        out !!+= assembleOutputTrigger(id: "false")
+        out !+= "}"
         return out + assembleOutputTrigger()
     }
 }
@@ -56,9 +57,10 @@ class ForLoopNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        var out = "for \(indexVariable.id) in (\(inputValues[0].assemble()))..<(\(inputValues[1].assemble())) {\n"
-        out += assembleOutputTrigger(id: "loop")
-        out += "\n}\n"
+        var out = ""
+        out !+= "for \(indexVariable.id) in (\(inputValues[0].assemble()))..<(\(inputValues[1].assemble())) {"
+        out !!+= assembleOutputTrigger(id: "loop")
+        out !+= "}"
         return out + assembleOutputTrigger()
     }
     
