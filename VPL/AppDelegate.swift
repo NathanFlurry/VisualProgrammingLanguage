@@ -26,7 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             IfNode.self,
             ForLoopNode.self,
             PrintNode.self,
-            ModNode.self,
+            
+            AddNode.self,
+            SubtractNode.self,
+            MultiplyNode.self,
+            DivideNode.self,
+            ModuloNode.self,
+            
             EqualsNode.self
         ]
         

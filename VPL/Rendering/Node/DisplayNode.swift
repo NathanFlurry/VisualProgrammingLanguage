@@ -27,9 +27,7 @@ class DisplayNode: UIView {
         // Setup the view
         backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         layer.cornerRadius = 8
-        layer.shadowOpacity = 0.15
-        layer.shadowOffset = CGSize(width: 0, height: 5)
-        layer.shadowRadius = 10
+        updateShadow(lifted: false)
         
         // Add label
         let titleLabel = UILabel(frame: CGRect.zero)
@@ -114,7 +112,7 @@ class DisplayNode: UIView {
         layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         transform = CGAffineTransform(scaleX: 0, y: 0)
         alpha = 0
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.2) {
             self.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.alpha = 1
         }
@@ -172,6 +170,7 @@ class DisplayNode: UIView {
     }
     
     @objc func panned(sender: UIPanGestureRecognizer) {
+        // Handle movement
         if sender.state == .began || sender.state == .changed {
             // Drag the view
             let translation = sender.translation(in: self)
@@ -180,6 +179,16 @@ class DisplayNode: UIView {
             
             // Notify the canvas the node was updated
             canvas?.updated(node: self)
+        }
+        
+        // Update shadow
+        switch sender.state {
+        case .began:
+            self.updateShadow(lifted: true)
+        case .ended, .cancelled, .failed:
+            self.updateShadow(lifted: false)
+        default:
+            break
         }
     }
     
@@ -191,6 +200,33 @@ class DisplayNode: UIView {
     override func layoutSubviews() {
         // Size to fit content
         frame.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+    }
+    
+    func updateShadow(lifted: Bool) {
+        // Show shadow
+        layer.shadowOpacity = 0.15
+        
+        // Remove previous animations
+        layer.removeAllAnimations()
+        
+        // Animate properties
+        let presentation = layer.presentation()
+        
+        let offsetAnim = CABasicAnimation(keyPath: "shadowOffset")
+        offsetAnim.fromValue = presentation?.shadowOffset ?? CGSize.zero
+        offsetAnim.toValue = lifted ? CGSize(width: 0, height: 12) : CGSize(width: 0, height: 5)
+        
+        let shadowAnim = CABasicAnimation(keyPath: "shadowRadius")
+        shadowAnim.fromValue = presentation?.shadowRadius ?? 0
+        shadowAnim.toValue = lifted ? 20 : 10
+        
+        let groupAnim = CAAnimationGroup()
+        groupAnim.duration = 0.2
+        groupAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        groupAnim.animations = [ offsetAnim, shadowAnim ]
+        groupAnim.fillMode = kCAFillModeForwards
+        groupAnim.isRemovedOnCompletion = false
+        layer.add(groupAnim, forKey: "shadowAnim")
     }
     
     func updateState() {

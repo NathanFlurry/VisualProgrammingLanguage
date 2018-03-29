@@ -96,7 +96,7 @@ class CanvasViewController: UIViewController {
                     let charCenter = CGPoint(x: charBox.midX, y: charBox.midY)
                     
                     // Overlay the breakdown for debug info
-                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
+//                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
                     
                     // Present custom node popover
                     if character == self.customNodeShortcut {

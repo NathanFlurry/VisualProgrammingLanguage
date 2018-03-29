@@ -194,7 +194,7 @@ class DisplayNodeSocket: UIView {
     }
     
     func updateState() {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.2) {
             let isCircle = self.type.isConnected || self.draggingTarget != nil
             self.shapeView.layer.cornerRadius = isCircle ? self.shapeView.frame.width / 2 : 8
         }
