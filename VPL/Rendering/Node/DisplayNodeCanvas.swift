@@ -67,9 +67,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         
         // Create and insert the display node
         baseNode = DisplayNode(node: BaseNode())
-        baseNode.layoutIfNeeded()
-        baseNode.center = CGPoint(x: 200, y: 200)
-        insert(node: baseNode)
+        insert(node: baseNode, at: CGPoint(x: 200, y: 200))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -108,7 +106,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     }
     
     /// Adds a node to the canvas.
-    func insert(node: DisplayNode) {
+    func insert(node: DisplayNode, at position: CGPoint, absolutePosition: Bool = false) {
         assert(!nodes.contains(node))
         assert(node.canvas == nil)
         
@@ -123,6 +121,14 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         // Insert into the list and view
         nodes.append(node)
         addSubview(node)
+        
+        // Position the node
+        node.layoutIfNeeded()
+        node.center = position
+        if !absolutePosition {
+            node.frame.origin.x += contentOffset.x
+            node.frame.origin.y += contentOffset.y
+        }
         
         // Perform updated
         updated(node: node)
