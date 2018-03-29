@@ -43,7 +43,7 @@ class CanvasViewController: UIViewController {
         nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
         nodeCanvas.updateCallback = {
             let assembled = self.nodeCanvas.assemble()
-            self.outputView.render(code: assembled)
+            self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         view.addSubview(nodeCanvas)
         nodeCanvas.translatesAutoresizingMaskIntoConstraints = false

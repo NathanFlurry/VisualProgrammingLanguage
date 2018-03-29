@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CodeOutputView: UITextView {
+class CodeOutputView: UIView {
     // From: https://www.dotnetperls.com/keyword-swift
     let keywords: [String] = [
             "associativity", "break", "case", "catch", "class", "continue",
@@ -24,11 +24,33 @@ class CodeOutputView: UITextView {
     
     let splitCharacters: [String] = [ " ", "{", "}", "(", ")", "[", "]" ]
     
+    var textView: UITextView = UITextView(frame: CGRect.zero)
+    
     init() {
-        super.init(frame: CGRect.zero, textContainer: nil)
+        super.init(frame: CGRect.zero)
         
-        isEditable = false
-        isSelectable = true
+        // Style the view
+        backgroundColor = UIColor(white: 0.975, alpha: 1.0)
+        
+        // Create text view
+        let inset: CGFloat = 16
+        textView.textContainerInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.isSelectable = true
+        addSubview(textView)
+        
+        // Add constraints
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.topAnchor.constraint(equalTo: topAnchor).activate()
+        textView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        textView.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
+        textView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 64).activate()
+        textView.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: 64).activate()
+        textView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600).activate().setPriority(.defaultLow)
+        
+        // Render the code
+        render(code: "")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,8 +58,11 @@ class CodeOutputView: UITextView {
     }
     
     func render(code: String) {
+        // Get the code
+        let code = code.count > 0 ? code : "No assembled code."
+        
         // Update attributed text
-        attributedText = stylize(code: code)
+        textView.attributedText = stylize(code: code)
     }
     
     private func stylize(code: String) -> NSMutableAttributedString {
