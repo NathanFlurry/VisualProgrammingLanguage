@@ -121,6 +121,7 @@ class DisplayNodeCanvas: UIView {
         super.init(frame: frame)
         
         // Style the view
+        clipsToBounds = true
         backgroundColor = .clear
         
         // Add the overlay

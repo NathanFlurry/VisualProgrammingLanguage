@@ -16,7 +16,7 @@ class CanvasViewController: UIViewController {
     var spawnableNodes: [DisplayableNode.Type] = []
     
     /// Output of the code.
-    var outputView: UITextView!
+    var outputView: CodeOutputView!
     
     /// Canvas that holds all of the nodes
     var nodeCanvas: DisplayNodeCanvas!
@@ -31,28 +31,26 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         
         // Add the text
-        outputView = UITextView(frame: CGRect.zero)
-        outputView.isEditable = false
-        outputView.isSelectable = true
+        outputView = CodeOutputView()
         view.addSubview(outputView)
         outputView.translatesAutoresizingMaskIntoConstraints = false
         outputView.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
-        outputView.topAnchor.constraint(equalTo: view.topAnchor).activate()
+        outputView.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
         outputView.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
-        outputView.widthAnchor.constraint(equalToConstant: 180).activate()
+        outputView.heightAnchor.constraint(equalToConstant: 180).activate()
         
         // Add the node canvas
         nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
         nodeCanvas.updateCallback = {
             let assembled = self.nodeCanvas.assemble()
-            self.outputView.text = assembled
+            self.outputView.render(code: assembled)
         }
         view.addSubview(nodeCanvas)
         nodeCanvas.translatesAutoresizingMaskIntoConstraints = false
         nodeCanvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+        nodeCanvas.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
         nodeCanvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
-        nodeCanvas.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
-        nodeCanvas.rightAnchor.constraint(equalTo: outputView.leftAnchor).activate()
+        nodeCanvas.bottomAnchor.constraint(equalTo: outputView.topAnchor).activate()
         
         // Add drawing canvas
         drawingCanvas = DrawingCanvas(frame: view.bounds)
@@ -116,9 +114,9 @@ class CanvasViewController: UIViewController {
         view.bringSubview(toFront: nodeCanvas)
         drawingCanvas.translatesAutoresizingMaskIntoConstraints = false
         drawingCanvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+        drawingCanvas.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
         drawingCanvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
-        drawingCanvas.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
-        drawingCanvas.rightAnchor.constraint(equalTo: outputView.leftAnchor).activate()
+        drawingCanvas.bottomAnchor.constraint(equalTo: outputView.topAnchor).activate()
     }
 
     override func didReceiveMemoryWarning() {

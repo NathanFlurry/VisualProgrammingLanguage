@@ -15,9 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Create view controller
-        let viewController = CanvasViewController()
-        viewController.spawnableNodes = [
+        // Create canvas view controller
+        let canvasViewController = CanvasViewController()
+        canvasViewController.spawnableNodes = [
             EvalConstNode.self,
             ConstNode.self,
             DeclareVariableNode.self,
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Create the window
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = viewController
+        window!.rootViewController = canvasViewController
         window!.makeKeyAndVisible()
         
         return true

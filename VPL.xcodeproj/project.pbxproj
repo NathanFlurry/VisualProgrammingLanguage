@@ -23,6 +23,7 @@
 		BF24CA31206C5966007AB6F2 /* NodeTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */; };
 		BF24CA33206C596F007AB6F2 /* NodeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA32206C596F007AB6F2 /* NodeValue.swift */; };
 		BF24CA35206CE04A007AB6F2 /* VariableChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA34206CE04A007AB6F2 /* VariableChooserView.swift */; };
+		BF24CA37206CEC19007AB6F2 /* CodeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */; };
 		BF313B712066FFF7006EEA83 /* chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* chars74k.mlmodel */; };
 		BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DEB1205862B2007E2483 /* AppDelegate.swift */; };
 		BF56DEB9205862B2007E2483 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF56DEB8205862B2007E2483 /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 		BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTrigger.swift; sourceTree = "<group>"; };
 		BF24CA32206C596F007AB6F2 /* NodeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValue.swift; sourceTree = "<group>"; };
 		BF24CA34206CE04A007AB6F2 /* VariableChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableChooserView.swift; sourceTree = "<group>"; };
+		BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeOutputView.swift; sourceTree = "<group>"; };
 		BF313B702066FFF7006EEA83 /* chars74k.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = chars74k.mlmodel; sourceTree = "<group>"; };
 		BF56DEAE205862B2007E2483 /* VPL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF56DEB1205862B2007E2483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */,
 				BF313B702066FFF7006EEA83 /* chars74k.mlmodel */,
+				BF56DED62058693E007E2483 /* DrawingCanvas.swift */,
 				BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */,
 				BF86B73C205F0144006AEEA7 /* ImageUtils.swift */,
 			);
@@ -176,7 +179,7 @@
 			children = (
 				BF24CA0E2069BBA5007AB6F2 /* Node */,
 				BF56DED02058631A007E2483 /* CanvasViewController.swift */,
-				BF56DED62058693E007E2483 /* DrawingCanvas.swift */,
+				BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */,
+				BF24CA37206CEC19007AB6F2 /* CodeOutputView.swift in Sources */,
 				BF24CA22206C39CA007AB6F2 /* ControlFlowNodes.swift in Sources */,
 				BF24CA1E206C39A4007AB6F2 /* ConstNodes.swift in Sources */,
 				BF24CA35206CE04A007AB6F2 /* VariableChooserView.swift in Sources */,
