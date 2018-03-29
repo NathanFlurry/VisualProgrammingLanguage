@@ -15,14 +15,18 @@ final class InputValue {
     /// An identifier for this value.
     var id: String
     
+    /// Name for this value.
+    var name: String
+    
     /// The type of value this holds.
     let type: ValueType
     
     /// The connected value.
     private(set) var target: OutputValue?
     
-    init(id: String, type: ValueType) {
+    init(id: String, name: String, type: ValueType) {
         self.id = id
+        self.name = name
         self.type = type
     }
     

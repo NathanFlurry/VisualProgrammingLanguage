@@ -66,13 +66,13 @@ class DisplayNode: UIView {
         addSubview(rightPanel)
         
         leftPanel.translatesAutoresizingMaskIntoConstraints = false
-        leftPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).activate()
+        leftPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 20).activate()
         leftPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
         leftPanel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).activate()
         leftPanel.bottomAnchor.constraint(lessThanOrEqualTo: panelBottomAnchor, constant: -8).activate()
         
         rightPanel.translatesAutoresizingMaskIntoConstraints = false
-        rightPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).activate()
+        rightPanel.widthAnchor.constraint(greaterThanOrEqualToConstant: 20).activate()
         rightPanel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).activate()
         rightPanel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
         rightPanel.bottomAnchor.constraint(lessThanOrEqualTo: panelBottomAnchor, constant: -8).activate()
@@ -84,12 +84,12 @@ class DisplayNode: UIView {
             addProperty(parent: leftPanel, leftAlign: true, socket: .inputTrigger(trigger), name: "Input", type: nil)
         }
         for value in node.inputValues {
-            addProperty(parent: leftPanel, leftAlign: true, socket: .inputValue(value), name: value.id, type: value.type.description)
+            addProperty(parent: leftPanel, leftAlign: true, socket: .inputValue(value), name: value.name, type: value.type.description)
         }
         switch node.output {
         case .triggers(let triggers):
             for trigger in triggers {
-                addProperty(parent: rightPanel, leftAlign: false, socket: .outputTrigger(trigger), name: trigger.id, type: nil)
+                addProperty(parent: rightPanel, leftAlign: false, socket: .outputTrigger(trigger), name: trigger.name, type: nil)
             }
         case .value(let value):
             addProperty(parent: rightPanel, leftAlign: false, socket: .outputValue(value), name: "Output", type: value.type.description)

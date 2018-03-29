@@ -13,7 +13,7 @@ class ModNode: DisplayableNode {
     
     static let id: String = "mod"
     static let name: String = "Modulo"
-    var inputValues: [InputValue] = [InputValue(id: "a", type: .int), InputValue(id: "b", type: .int)]
+    var inputValues: [InputValue] = [InputValue(id: "a", name: "A", type: .int), InputValue(id: "b", name: "B", type: .int)]
     var output: NodeOutput = .value(OutputValue(type: .int))
     
     required init() {
@@ -32,7 +32,7 @@ class EqualsNode: DisplayableNode {
     
     static let id: String = "equals"
     static let name: String = "Equals"
-    var inputValues: [InputValue] = [InputValue(id: "a", type: .int), InputValue(id: "b", type: .int)]
+    var inputValues: [InputValue] = [InputValue(id: "a", name: "A", type: .int), InputValue(id: "b", name: "B", type: .int)]
     var output: NodeOutput = .value(OutputValue(type: .bool))
     
     required init() {

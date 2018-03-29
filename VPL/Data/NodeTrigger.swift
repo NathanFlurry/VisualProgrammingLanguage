@@ -73,14 +73,18 @@ final class OutputTrigger {
     /// An identifier for this trigger.
     var id: String
     
+    /// Name for this trigger.
+    var name: String
+    
     /// The connected trigger.
     private(set) var target: InputTrigger?
     
     /// Variables availables to any other nodes further along the control flow.
     var exposedVariables: [VariableInstance]
     
-    init(id: String = "out", exposedVariables: [VariableInstance] = []) {
+    init(id: String = "out", name: String = "Out", exposedVariables: [VariableInstance] = []) {
         self.id = id
+        self.name = name
         self.exposedVariables = exposedVariables
     }
     

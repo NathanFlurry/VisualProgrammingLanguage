@@ -14,7 +14,7 @@ class PrintNode: DisplayableNode {
     static let id: String = "print"
     static let name: String = "Print"
     var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [InputValue(id: "value", type: .string)]
+    var inputValues: [InputValue] = [InputValue(id: "value", name: "Value", type: .string)]
     var output: NodeOutput = .triggers([OutputTrigger()])
     
     required init() {

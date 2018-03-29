@@ -42,7 +42,7 @@ class SetVariableNode: DisplayableNode {
     static let id: String = "set variable"
     static let name: String = "Set Variable"
     var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [ InputValue(id: "set value", type: .any) ]
+    var inputValues: [InputValue] = [ InputValue(id: "set value", name: "Set Value", type: .any) ]
     var output: NodeOutput = .triggers([
         OutputTrigger(exposedVariables: [ VariableInstance(name: "Test A", type: .int) ])
     ])
