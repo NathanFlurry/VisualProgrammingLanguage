@@ -9,6 +9,9 @@
 import Foundation
 
 class VariableInstance {
+    /// The trigger that owns this variable.
+    weak var owner: OutputTrigger!
+    
     /// A UUID that represents this variable in the code itself.
     let id: String
     
@@ -28,7 +31,7 @@ class VariableInstance {
 
 final class InputTrigger {
     /// The node that owns this trigger.
-    var owner: Node!
+    weak var owner: Node!
     
     /// The connected trigger.
     private(set) var target: OutputTrigger?
@@ -68,7 +71,7 @@ final class InputTrigger {
 
 final class OutputTrigger {
     /// The node that owns this trigger
-    var owner: Node!
+    weak var owner: Node!
     
     /// An identifier for this trigger.
     var id: String
@@ -82,10 +85,19 @@ final class OutputTrigger {
     /// Variables availables to any other nodes further along the control flow.
     var exposedVariables: [VariableInstance]
     
-    init(id: String = "out", name: String = "Out", exposedVariables: [VariableInstance] = []) {
+    init(id: String, name: String, exposedVariables: [VariableInstance] = []) {
         self.id = id
         self.name = name
         self.exposedVariables = exposedVariables
+        
+        // Set owner on variables
+        for variable in exposedVariables {
+            variable.owner = self
+        }
+    }
+    
+    convenience init(exposedVariables: [VariableInstance] = []) {
+        self.init(id: "out", name: "Out", exposedVariables: exposedVariables)
     }
     
     /// Determines if two triggers can be connected.

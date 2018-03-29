@@ -8,43 +8,15 @@
 
 import UIKit
 
-class GetVariableNode: DisplayableNode {
-    static let shortcutCharacter: String? = "V"
+class DeclareVariableNode: DisplayableNode {
+    static let shortcutCharacter: String? = "D"
     
-    static let id: String = "get variable"
-    static let name: String = "Get Variable"
-    var output: NodeOutput = .value(OutputValue(type: .any))
-    var contentView: DisplayableNodeContentView? { return variablePicker }
-    
-    var variablePicker: ValueChooserView<VariableInstance?>!
-    
-    required init() {
-        // Create the picker
-        variablePicker = ValueChooserView<VariableInstance?>(
-            defaultValue: nil,
-            getValues: {
-                return self.availableVariables.map { Optional.some($0) }
-            },
-            valueLabel: { $0?.name ?? "No Variable" }
-        )
-        
-        self.setupConnections()
-    }
-    
-    func assemble() -> String {
-        return "(\(variablePicker.value?.id ?? "NO SELECTED VARIABLE"))"
-    }
-}
-
-class SetVariableNode: DisplayableNode {
-    static let shortcutCharacter: String? = "S"
-    
-    static let id: String = "set variable"
-    static let name: String = "Set Variable"
+    static let id: String = "declare variable"
+    static let name: String = "Declare Variable"
     var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [ InputValue(id: "set value", name: "Set Value", type: .any) ]
+    var inputValues: [InputValue] = [ InputValue(id: "init value", name: "Init Value", type: .unknown) ]
     var output: NodeOutput = .triggers([
-        OutputTrigger(exposedVariables: [ VariableInstance(name: "Test A", type: .int) ])
+        OutputTrigger(exposedVariables: [ VariableInstance(name: "Variable", type: .unknown) ])
     ])
     
     var variable: VariableInstance {
@@ -61,8 +33,53 @@ class SetVariableNode: DisplayableNode {
     
     func assemble() -> String {
         let assembledInput = inputValues[0].assemble()
-        let out = "\(variable.id) = \(assembledInput)\n"
+        let out = "var \(variable.id) = \(assembledInput)\n"
         return out + assembleOutputTrigger()
     }
 }
 
+class SetVariableNode: DisplayableNode {
+    static let shortcutCharacter: String? = "S"
+    
+    static let id: String = "set variable"
+    static let name: String = "Set Variable"
+    var inputTrigger: InputTrigger? = InputTrigger()
+    var inputValues: [InputValue] = [ InputValue(id: "set value", name: "Set Value", type: .unknown) ]
+    var output: NodeOutput = .triggers([OutputTrigger()])
+    var contentView: DisplayableNodeContentView? { return variableChooser }
+    
+    var variableChooser: VariableChooserView!
+    
+    required init() {
+        variableChooser = VariableChooserView(owner: self)
+        
+        self.setupConnections()
+    }
+    
+    func assemble() -> String {
+        let assembledInput = inputValues[0].assemble()
+        let out = "\(variableChooser.value?.id ?? "NO SELECTED VARIABLE") = \(assembledInput)\n"
+        return out + assembleOutputTrigger()
+    }
+}
+
+class GetVariableNode: DisplayableNode {
+    static let shortcutCharacter: String? = "V"
+    
+    static let id: String = "get variable"
+    static let name: String = "Get Variable"
+    var output: NodeOutput = .value(OutputValue(type: .unknown))
+    var contentView: DisplayableNodeContentView? { return variableChooser }
+    
+    var variableChooser: VariableChooserView!
+    
+    required init() {
+        variableChooser = VariableChooserView(owner: self)
+        
+        self.setupConnections()
+    }
+    
+    func assemble() -> String {
+        return "(\(variableChooser.value?.id ?? "NO SELECTED VARIABLE"))"
+    }
+}

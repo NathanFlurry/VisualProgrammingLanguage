@@ -10,7 +10,7 @@ import Foundation
 
 final class InputValue {
     /// The node that owns this value.
-    var owner: Node!
+    weak var owner: Node!
     
     /// An identifier for this value.
     var id: String
@@ -66,7 +66,7 @@ final class InputValue {
 
 final class OutputValue {
     /// The node that owns this value
-    var owner: Node!
+    weak var owner: Node!
     
     /// The type of value this holds.
     let type: ValueType

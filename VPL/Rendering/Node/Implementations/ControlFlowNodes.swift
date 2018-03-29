@@ -15,7 +15,7 @@ class IfNode: DisplayableNode {
     static let name: String = "If"
     var inputTrigger: InputTrigger? = InputTrigger()
     var inputValues: [InputValue] = [InputValue(id: "condition", name: "Condition", type: .bool)]
-    var output: NodeOutput = .triggers([OutputTrigger(), OutputTrigger(id: "true"), OutputTrigger(id: "false")])
+    var output: NodeOutput = .triggers([OutputTrigger(), OutputTrigger(id: "true", name: "True"), OutputTrigger(id: "false", name: "False")])
     
     required init() {
         self.setupConnections()
