@@ -25,14 +25,14 @@ class GetVariableNode: DisplayableNode {
             getValues: {
                 return self.availableVariables.map { Optional.some($0) }
             },
-            valueLabel: { v in v?.name ?? "No Variable" }
+            valueLabel: { $0?.name ?? "No Variable" }
         )
         
         self.setupConnections()
     }
     
     func assemble() -> String {
-        return "GET VARIALBLE"
+        return "(\(variablePicker.value?.id ?? "NO SELECTED VARIABLE"))"
     }
 }
 

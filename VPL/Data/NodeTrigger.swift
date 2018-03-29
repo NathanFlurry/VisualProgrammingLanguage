@@ -19,7 +19,7 @@ class VariableInstance {
     let type: ValueType
     
     init(name: String, type: ValueType) {
-        self.id = UUID().uuidString
+        self.id = String(format: "v%06x", Int(arc4random() % 65535))
         self.name = name
         self.type = type
     }

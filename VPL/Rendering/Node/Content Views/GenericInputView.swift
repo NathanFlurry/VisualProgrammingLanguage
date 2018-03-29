@@ -9,7 +9,7 @@
 import UIKit
 
 class GenericInputView: DisplayableNodeContentView {
-    override var value: String {
+    var value: String {
         return textField.text ?? ""
     }
     

@@ -163,7 +163,7 @@ class DisplayNodeCanvas: UIView {
         node.canvas = self
         
         // Add callabck on content change
-        node.node.contentView?.onChangeCallback = { _ in
+        node.node.contentView?.onChangeCallback = {
             self.updated(node: node)
         }
         

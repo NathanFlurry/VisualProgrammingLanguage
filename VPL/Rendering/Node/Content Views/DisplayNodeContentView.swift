@@ -9,18 +9,12 @@
 import UIKit
 
 class DisplayableNodeContentView: UIView {
-    /// Overriden by `DisplayableNodeContentView` subclasses that returns
-    /// the current value of the view.
-    var value: String {
-        fatalError("`DisplayableNodeContentView.value` is not implemented.")
-    }
-    
     /// Set by the graph to observe changes in the node's content.
-    var onChangeCallback: ((String) -> Void)?
+    var onChangeCallback: (() -> Void)?
     
     /// Called by subclasses of `DisplayableNodeContentView` when the value
     /// changes.
     func contentValueChanged() {
-        onChangeCallback?(value)
+        onChangeCallback?()
     }
 }

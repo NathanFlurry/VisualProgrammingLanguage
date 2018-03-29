@@ -10,7 +10,7 @@ import UIKit
 
 class ValueChooserView<T>: DisplayableNodeContentView {
     /// The currently selected item.
-    var selectedValue: T
+    var value: T
     
     /// Returns all of the options for this time chooser.
     var getValues: () -> [T]
@@ -30,7 +30,7 @@ class ValueChooserView<T>: DisplayableNodeContentView {
         valueLabel: @escaping (T) -> String,
         chooseCallback: @escaping (T) -> Void = { _ in }
     ) {
-        self.selectedValue = defaultValue
+        self.value = defaultValue
         self.getValues = getValues
         self.valueLabel = valueLabel
         self.chooseCallback = chooseCallback
@@ -38,11 +38,11 @@ class ValueChooserView<T>: DisplayableNodeContentView {
         super.init(frame: CGRect.zero)
         
         selectionLabel = UILabel(frame: CGRect.zero)
-        selectionLabel.text = valueLabel(selectedValue)
+        selectionLabel.text = valueLabel(value)
         addSubview(selectionLabel)
         
         pickButton = UIButton(frame: CGRect.zero)
-        pickButton.titleLabel?.text = "Pick..."
+        pickButton.setTitle("Pick...", for: .normal)
         addSubview(pickButton)
         
         // Add constraints (this is ugly af... ew)
@@ -54,16 +54,6 @@ class ValueChooserView<T>: DisplayableNodeContentView {
         pickButton.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
         selectionLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
         pickButton.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
-        
-//        selectionLabel.rightAnchor.constraint(equalTo: rightAnchor).activate()
-//        pickButton.rightAnchor.constraint(equalTo: rightAnchor).activate()
-//        selectionLabel.topAnchor.constraint(equalTo: topAnchor).activate()
-//        pickButton.topAnchor.constraint(equalTo: topAnchor).activate()
-//        selectionLabel.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
-//        pickButton.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
-//        selectionLabel.leftAnchor.constraint(equalTo: leftAnchor).activate()
-//        pickButton.leftAnchor.constraint(equalTo: leftAnchor).activate()
-//        selectionLabel.bottomAnchor.constraint(equalTo: pickButton.topAnchor).activate()
         
         // Add action to picked
         pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: .touchUpInside)
@@ -92,7 +82,7 @@ class ValueChooserView<T>: DisplayableNodeContentView {
             let label = valueLabel(value)
             let action = UIAlertAction(title: label, style: .default) { _ in
                 // Set selected item
-                self.selectedValue = value
+                self.value = value
                 
                 // Update label
                 self.selectionLabel.text = label
