@@ -40,7 +40,7 @@ class CanvasViewController: UIViewController {
         outputView.heightAnchor.constraint(equalToConstant: 180).activate()
 
         // Add the node canvas
-        nodeCanvas = DisplayNodeCanvas(frame: CGRect.zero)
+        nodeCanvas = DisplayNodeCanvas(frame: view.bounds)
         nodeCanvas.updateCallback = {
             let assembled = self.nodeCanvas.assemble()
             self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))

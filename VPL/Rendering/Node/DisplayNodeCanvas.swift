@@ -44,6 +44,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         // Configure the scroll view to be large & only allow panning with two
         // touches
         delegate = self
+        decelerationRate = UIScrollViewDecelerationRateFast
         contentSize = CGSize(width: 10000, height: 10000)
         for recognizer in gestureRecognizers ?? [] {
             print("gesture recognizer", NSStringFromClass(type(of: recognizer)))
@@ -67,7 +68,10 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         
         // Create and insert the display node
         baseNode = DisplayNode(node: BaseNode())
-        insert(node: baseNode, at: CGPoint(x: 200, y: 200))
+        insert(node: baseNode, at: CGPoint(x: contentSize.width / 2, y: contentSize.height / 2))
+        
+        // Scroll to the center
+        contentOffset = CGPoint(x: contentSize.width / 2 - frame.width / 2, y: contentSize.height / 2 - frame.width / 2)
     }
     
     required init?(coder aDecoder: NSCoder) {
