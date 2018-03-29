@@ -33,6 +33,7 @@
 		BF56DED32058631A007E2483 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED02058631A007E2483 /* CanvasViewController.swift */; };
 		BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
 		BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED62058693E007E2483 /* DrawingCanvas.swift */; };
+		BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */; };
 		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
 		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
 		BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73C205F0144006AEEA7 /* ImageUtils.swift */; };
@@ -67,6 +68,7 @@
 		BF56DED02058631A007E2483 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		BF56DED420586439007E2483 /* DisplayNodeSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeSocket.swift; sourceTree = "<group>"; };
 		BF56DED62058693E007E2483 /* DrawingCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvas.swift; sourceTree = "<group>"; };
+		BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvasOverlay.swift; sourceTree = "<group>"; };
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
 		BF86B73C205F0144006AEEA7 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				BF24CA18206C395F007AB6F2 /* Implementations */,
 				BF24CA29206C3A7F007AB6F2 /* Content Views */,
 				BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */,
+				BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */,
 				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
 				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
 			);
@@ -262,6 +265,7 @@
 				BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */,
 				BF24CA33206C596F007AB6F2 /* NodeValue.swift in Sources */,
 				BF24CA20206C39B5007AB6F2 /* VariableNodes.swift in Sources */,
+				BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */,
 				BF24CA31206C5966007AB6F2 /* NodeTrigger.swift in Sources */,
 				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
 				BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */,
