@@ -20,7 +20,7 @@ class DrawingCanvas: UIView {
     /// Overlay image.
     public let overlayImageView: UIImageView = UIImageView()
     
-    /// Brush thickness
+    /// Brush thickness.
     var brushWidth: CGFloat = 12
     
     /// Last point at which the user touched. This is used to draw the path
@@ -34,7 +34,7 @@ class DrawingCanvas: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor(patternImage: UIImage(imageLiteralResourceName: "GeometryBackground"))
         
         imageView.frame = bounds
         tempImageView.frame = bounds
@@ -52,7 +52,24 @@ class DrawingCanvas: UIView {
         // TODO: Clip the text to visible
         
         // Get the result
-        let result = imageView.image
+        guard let transparentResult = imageView.image else {
+            return nil
+        }
+        
+        // Add a white background
+        UIGraphicsBeginImageContext(frame.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        context.setFillColor(gray: 1.0, alpha: 1.0)
+        context.fill(imageView.bounds)
+        
+        // Draw the image on top of it
+        transparentResult.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
+        
+        // Get the final output
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
         // Clear the image
         imageView.image = nil
@@ -107,8 +124,7 @@ class DrawingCanvas: UIView {
             UIGraphicsEndImageContext()
             return
         }
-        context.setFillColor(gray: 1, alpha: 1.0)
-        context.fill(imageView.bounds)
+        context.clear(imageView.bounds)
         
         // Draw the images into the new context
         imageView.image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
