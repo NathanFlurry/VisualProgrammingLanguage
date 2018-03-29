@@ -57,7 +57,7 @@ class DrawingCanvas: UIView {
         }
         
         // Add a white background
-        UIGraphicsBeginImageContext(frame.size)
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         guard let context = UIGraphicsGetCurrentContext() else {
             return nil
         }
@@ -116,7 +116,7 @@ class DrawingCanvas: UIView {
         drawLine(from: lastPoint, to: currentPoint)
         
         // Begin new context
-        UIGraphicsBeginImageContext(imageView.frame.size)
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         
         // Fill a blank background
         guard let context = UIGraphicsGetCurrentContext() else {
@@ -124,7 +124,7 @@ class DrawingCanvas: UIView {
             UIGraphicsEndImageContext()
             return
         }
-        context.clear(imageView.bounds)
+        context.clear(bounds)
         
         // Draw the images into the new context
         imageView.image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
@@ -155,7 +155,7 @@ class DrawingCanvas: UIView {
     /// Draw a line between two points.
     func drawLine(from fromPoint: CGPoint, to toPoint: CGPoint) {
         // Start a new context
-        UIGraphicsBeginImageContext(frame.size)
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         guard let context = UIGraphicsGetCurrentContext() else {
             print("Failed to get graphics context.")
             UIGraphicsEndImageContext()
@@ -188,5 +188,6 @@ class DrawingCanvas: UIView {
         // Clear other images
         tempImageView.image = nil
         imageView.image = nil
+        overlayImageView.image = nil
     }
 }

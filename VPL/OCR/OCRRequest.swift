@@ -225,7 +225,7 @@ class OCRRequest {
 extension DrawingCanvas {
     func overlayOCRBreakdown(breakdown: OCRResultBreakdown) {
         // Create new context
-        UIGraphicsBeginImageContext(overlayImageView.frame.size)
+        UIGraphicsBeginImageContextWithOptions(overlayImageView.frame.size, false, UIScreen.main.scale)
         guard let context = UIGraphicsGetCurrentContext() else {
             print("Failed to create overlay context.")
             return
