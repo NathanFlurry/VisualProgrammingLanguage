@@ -34,6 +34,7 @@ class DisplayNodeCanvasOverlay: UIView {
             return
         }
         
+        // Draw all node connections
         for node in canvas.nodes {
             for socket in node.sockets {
                 // Draw a connection
@@ -56,6 +57,18 @@ class DisplayNodeCanvasOverlay: UIView {
                         to: CGPoint(x: endPosition.x + targetSocket.frame.width / 2, y: endPosition.y + targetSocket.frame.height / 2),
                         color: socket.type.connectionColor
                     )
+                }
+            }
+        }
+        
+        // Draw socket caps over where the lines meet; this makes it so it
+        // doesn't feel clunky when multiple lines join at the same position
+        for node in canvas.nodes {
+            for socket in node.sockets {
+                // Draw the cap if it has a connection
+                if socket.draggingTarget != nil || findTarget(forSocketType: socket.type) != nil {
+                    let centerPosition = socket.convert(CGPoint(x: socket.frame.width / 2, y: socket.frame.height / 2), to: self)
+                    drawSocketCap(context: ctx, center: centerPosition, color: socket.type.connectionColor)
                 }
             }
         }
@@ -102,10 +115,23 @@ class DisplayNodeCanvasOverlay: UIView {
     
     /// Draws a line between two points indicating a socket position
     func drawSocketConnection(context ctx: CGContext, from: CGPoint, to: CGPoint, color: UIColor) {
+        // Draw the line
         ctx.setLineCap(.round)
-        ctx.setLineWidth(10)
+        ctx.setLineWidth(8)
         ctx.setStrokeColor(color.cgColor)
         ctx.addLines(between: [from, to])
         ctx.strokePath()
+    }
+    
+    /// Draws a cap over the socket.
+    func drawSocketCap(context ctx: CGContext, center: CGPoint, color: UIColor) {
+        // Draw circle over the cap of the base node
+        let capSize: CGFloat = 12
+        ctx.setFillColor(color.cgColor)
+        ctx.addEllipse(in: CGRect(
+            x: center.x - capSize / 2, y: center.y - capSize / 2,
+            width: capSize, height: capSize)
+        )
+        ctx.fillPath()
     }
 }
