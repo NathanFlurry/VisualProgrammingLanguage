@@ -89,7 +89,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         
         // Add properties
         if let trigger = node.inputTrigger {
-            addProperty(parent: leftPanel, leftAlign: true, socket: .inputTrigger(trigger), name: "Input", type: nil)
+            addProperty(parent: leftPanel, leftAlign: true, socket: .inputTrigger(trigger), name: "Previous", type: nil)
         }
         for value in node.inputValues {
             addProperty(parent: leftPanel, leftAlign: true, socket: .inputValue(value), name: value.name, type: value.type.description)
@@ -222,11 +222,11 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         
         let offsetAnim = CABasicAnimation(keyPath: "shadowOffset")
         offsetAnim.fromValue = presentation?.shadowOffset ?? CGSize.zero
-        offsetAnim.toValue = lifted ? CGSize(width: 0, height: 12) : CGSize(width: 0, height: 5)
+        offsetAnim.toValue = lifted ? CGSize(width: 0, height: 25) : CGSize(width: 0, height: 5)
         
         let shadowAnim = CABasicAnimation(keyPath: "shadowRadius")
         shadowAnim.fromValue = presentation?.shadowRadius ?? 0
-        shadowAnim.toValue = lifted ? 20 : 10
+        shadowAnim.toValue = lifted ? 30 : 10
         
         let groupAnim = CAAnimationGroup()
         groupAnim.duration = 0.2

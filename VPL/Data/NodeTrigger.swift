@@ -97,7 +97,7 @@ final class OutputTrigger {
     }
     
     convenience init(exposedVariables: [VariableInstance] = []) {
-        self.init(id: "out", name: "Out", exposedVariables: exposedVariables)
+        self.init(id: "next", name: "Next", exposedVariables: exposedVariables)
     }
     
     /// Determines if two triggers can be connected.
