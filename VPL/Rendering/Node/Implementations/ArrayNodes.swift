@@ -13,7 +13,7 @@ class CreateArrayNode: DisplayableNode {
     
     static let id: String = "create-array"
     static let name: String = "Create Array"
-    var output: NodeOutput = .value(OutputValue(type: .int))
+    var output: NodeOutput = .value(OutputValue(type: .generic("Array", [.unknown])))
     var contentView: DisplayableNodeContentView? { return input }
     
     var input: GenericInputView!

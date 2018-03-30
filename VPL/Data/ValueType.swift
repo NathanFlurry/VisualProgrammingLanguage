@@ -44,7 +44,7 @@ indirect enum ValueType: CustomStringConvertible {
         case .type(let type):
             return type
         case .generic(let type, let subtypes):
-            return "\(type)<\(subtypes.map { $0.description }.joined(separator: ", "))"
+            return "\(type)<\(subtypes.map { $0.description }.joined(separator: ", "))>"
         case .unknown:
             return "unknown"
         }

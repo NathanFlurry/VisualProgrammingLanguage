@@ -35,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DivideNode.self,
             ModuloNode.self,
             
-            EqualsNode.self
+            CreateArrayNode.self,
+            
+            EqualsNode.self,
+            SwapNode.self
         ]
         
         // Create the window
