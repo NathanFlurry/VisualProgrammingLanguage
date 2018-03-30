@@ -13,14 +13,14 @@ class ArrayCreateNode: DisplayableNode {
     
     static let id: String = "array-create"
     static let name: String = "Create Array"
-    var output: NodeOutput = .value(OutputValue(type: .generic("Array", [.unknown])))
+    var output: NodeOutput = .value(OutputValue(type: .array(.unknown)))
     var contentView: DisplayableNodeContentView? { return input }
     
     var input: GenericInputView!
     
     required init() {
         input = GenericInputView(node: self, fields: [
-            GenericInputViewField(name: "Content Type", defaultValue: "Int")
+            GenericInputViewField(name: "Value Type", defaultValue: "Int")
         ])
         
         self.setupConnections()
@@ -125,7 +125,7 @@ class ArrayCountNode: DisplayableNode {
     static let shortcutCharacter: String? = "A"
     
     static let id: String = "array-count"
-    static let name: String = "Item Count"
+    static let name: String = "Value Count"
     var inputValues: [InputValue] = [InputValue(id: "array", name: "Array", type: .array(.unknown))]
     var output: NodeOutput = .value(OutputValue(type: .int))
     

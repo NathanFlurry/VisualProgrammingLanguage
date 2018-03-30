@@ -35,7 +35,7 @@ indirect enum ValueType: CustomStringConvertible {
         return .generic("Array", [inner])
         
     }
-    static func dictionary(_ a: ValueType, b: ValueType) -> ValueType {
+    static func dictionary(_ a: ValueType, _ b: ValueType) -> ValueType {
         return .generic("Dictionary", [a, b])
     }
         

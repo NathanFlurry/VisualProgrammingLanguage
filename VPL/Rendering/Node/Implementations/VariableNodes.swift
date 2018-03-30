@@ -9,7 +9,7 @@
 import UIKit
 
 class DeclareVariableNode: DisplayableNode {
-    static let shortcutCharacter: String? = "D"
+    static let shortcutCharacter: String? = "S"
     
     static let id: String = "declare variable"
     static let name: String = "Declare Variable"

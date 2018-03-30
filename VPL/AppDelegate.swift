@@ -42,6 +42,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ArrayRemoveAtNode.self,
             ArrayCountNode.self,
             
+            DictionaryCreateNode.self,
+            DictionarySetAtNode.self,
+            DictionaryGetAtNode.self,
+            DictionaryContainsKeyNode.self,
+            DictionaryRemoveAtNode.self,
+            
             EqualsNode.self,
             SwapNode.self
         ]
