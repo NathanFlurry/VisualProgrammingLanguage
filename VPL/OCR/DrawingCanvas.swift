@@ -27,9 +27,15 @@ class DrawingCanvas: UIView {
     /// between the last point.
     private var lastPoint: CGPoint?
     
+    /// Min position of the current stroke.
+    private var strokeMinPosition: CGPoint?
+    
+    /// Max position of the current stroke.
+    private var strokeMaxPosition: CGPoint?
+    
     /// Event that gets called on input
     public var onInputStart: (() -> Void)?
-    public var onInputFinish: (() -> Void)?
+    public var onInputFinish: ((_ charBox: CGRect) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,6 +92,8 @@ class DrawingCanvas: UIView {
         
         // Save the last position
         lastPoint = touch.location(in: self)
+        strokeMinPosition = lastPoint
+        strokeMaxPosition = lastPoint
         
         // Call input start
         onInputStart?()
@@ -103,6 +111,14 @@ class DrawingCanvas: UIView {
         
         // Save the point
         self.lastPoint = currentPoint
+        if let strokeMinPosition = strokeMinPosition {
+            self.strokeMinPosition?.x = min(strokeMinPosition.x, lastPoint.x)
+            self.strokeMinPosition?.y = min(strokeMinPosition.y, lastPoint.y)
+        }
+        if let strokeMaxPosition = strokeMinPosition {
+            self.strokeMaxPosition?.x = max(strokeMaxPosition.x, lastPoint.x)
+            self.strokeMaxPosition?.y = max(strokeMaxPosition.y, lastPoint.y)
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -137,11 +153,22 @@ class DrawingCanvas: UIView {
         // Clear the temp image view
         tempImageView.image = nil
         
+        // Calculate the character box
+        var charBox: CGRect = CGRect.zero
+        if let strokeMinPosition = strokeMinPosition, let strokeMaxPosition = strokeMaxPosition {
+            charBox = CGRect(
+                x: strokeMinPosition.x, y: strokeMinPosition.y,
+                width: strokeMaxPosition.x - strokeMinPosition.x, height: strokeMaxPosition.y - strokeMinPosition.y
+            )
+        }
+        
         // Remove the last point
         self.lastPoint = nil
+        strokeMinPosition = nil
+        strokeMaxPosition = nil
         
         // Call input finish
-        onInputFinish?()
+        onInputFinish?(charBox)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {

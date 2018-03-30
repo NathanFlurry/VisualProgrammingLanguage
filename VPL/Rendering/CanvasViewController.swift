@@ -60,7 +60,7 @@ class CanvasViewController: UIViewController {
             self.commitDrawingTimer?.invalidate()
             self.commitDrawingTimer = nil
         }
-        drawingCanvas.onInputFinish = {
+        drawingCanvas.onInputFinish = { _ in
             // Start a timer to commit the drawing
             let timer = Timer(timeInterval: 0.5, repeats: false) { _ in
                 // Remove the timer
@@ -73,7 +73,7 @@ class CanvasViewController: UIViewController {
                 }
                 
                 // Process
-                try! OCRRequest(dataset: .alphanum, image: removeRetinaData(image: output), singleCharacter: true) { (result, breakdown) in
+                try! OCRRequest(dataset: .alphanum, image: removeRetinaData(image: output), singleCharacter: false) { (result, breakdown) in
                     assert(breakdown.count == 1)
                     
                     // Get the character's center

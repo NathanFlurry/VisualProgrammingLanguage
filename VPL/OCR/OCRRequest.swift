@@ -121,7 +121,7 @@ class OCRRequest {
             print("No results.")
             return
         }
-        
+                
         // Setup query results
         for (wordIndex, observation) in observations.enumerated() {
             guard let charBoxes = observation.characterBoxes else {
