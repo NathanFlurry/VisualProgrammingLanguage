@@ -45,20 +45,16 @@ class SetVariableNode: DisplayableNode {
     static let name: String = "Set Variable"
     var inputTrigger: InputTrigger? = InputTrigger()
     var inputValues: [InputValue] = [ InputValue(id: "set value", name: "Set Value", type: .unknown) ]
+    var inputVariables: [InputVariable] = [ InputVariable(id: "target", name: "Target", type: .unknown) ]
     var output: NodeOutput = .triggers([OutputTrigger()])
-    var contentView: DisplayableNodeContentView? { return variableChooser }
-    
-    var variableChooser: VariableChooserView!
     
     required init() {
-        variableChooser = VariableChooserView(owner: self)
-        
         self.setupConnections()
     }
     
     func assemble() -> String {
         let assembledInput = inputValues[0].assemble()
-        let out = "\(variableChooser.value?.id ?? "NO SELECTED VARIABLE") = \(assembledInput)\n"
+        let out = "\(inputVariables[0].target?.id ?? "NO SELECTED VARIABLE") = \(assembledInput)\n"
         return out + assembleOutputTrigger()
     }
 }
@@ -68,18 +64,14 @@ class GetVariableNode: DisplayableNode {
     
     static let id: String = "get variable"
     static let name: String = "Get Variable"
+    var inputVariables: [InputVariable] = [ InputVariable(id: "target", name: "Target", type: .unknown) ]
     var output: NodeOutput = .value(OutputValue(type: .unknown))
-    var contentView: DisplayableNodeContentView? { return variableChooser }
-    
-    var variableChooser: VariableChooserView!
     
     required init() {
-        variableChooser = VariableChooserView(owner: self)
-        
         self.setupConnections()
     }
     
     func assemble() -> String {
-        return "(\(variableChooser.value?.id ?? "NO SELECTED VARIABLE"))"
+        return "(\(inputVariables[0].target?.id ?? "NO SELECTED VARIABLE"))"
     }
 }

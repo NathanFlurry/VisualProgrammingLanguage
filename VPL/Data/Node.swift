@@ -17,6 +17,7 @@ protocol Node: class {
     static var name: String { get }
     var inputTrigger: InputTrigger? { get }
     var inputValues: [InputValue] { get }
+    var inputVariables: [InputVariable] { get }
     var output: NodeOutput { get }
     
     init()
@@ -27,6 +28,7 @@ protocol Node: class {
 extension Node {
     var inputTrigger: InputTrigger? { return nil }
     var inputValues: [InputValue] { return [] }
+    var inputVariables: [InputVariable] { return [] }
     var output: NodeOutput { return .none }
 }
 
