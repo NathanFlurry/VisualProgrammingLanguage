@@ -144,8 +144,7 @@ class CanvasViewController: UIViewController {
         alert.popoverPresentationController?.sourceRect = charBox
         
         // Display the nodes
-        let sortedNodes = nodes.sorted { $0.name < $1.name }
-        for node in sortedNodes {
+        for node in nodes {
             // Create the title with the shortcut (only if listing all nodes)
             var title = node.name
             if let shortcut = node.shortcutCharacter, showShortcuts {

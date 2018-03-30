@@ -42,7 +42,7 @@ class SwapNode: DisplayableNode {
     func assemble() -> String {
         let tmpVariableId = NodeVariable.variableId
         var out = ""
-        out !+= "let \(tmpVariableId) = \(inputVariables[0].id ?? "NO VARIABLE SELECTED")"
+        out !+= "let \(tmpVariableId) = \(inputVariables[0].target?.id ?? "NO VARIABLE SELECTED")"
         out !+= "\(inputVariables[0].target?.id ?? "NO VARIABLE SELECTED") = \(inputVariables[1].target?.id ?? "NO VARIABLE SELECTED")"
         out !+= "\(inputVariables[1].target?.id ?? "NO VARIABLE SELECTED") = \(tmpVariableId)"
         return out + assembleOutputTrigger()

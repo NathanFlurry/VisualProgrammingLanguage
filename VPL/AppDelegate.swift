@@ -35,7 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DivideNode.self,
             ModuloNode.self,
             
-            CreateArrayNode.self,
+            ArrayCreateNode.self,
+            ArrayAppendNode.self,
+            ArraySetAtNode.self,
+            ArrayGetAtNode.self,
+            ArrayRemoveAtNode.self,
+            ArrayCountNode.self,
             
             EqualsNode.self,
             SwapNode.self
