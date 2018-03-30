@@ -37,10 +37,10 @@ class IntConstNode: DisplayableNode {
     var output: NodeOutput = .value(OutputValue(type: .int))
     var contentView: DisplayableNodeContentView? { return inputView }
     
-    let inputView: DrawCanvasNodeView
+    var inputView: DrawCanvasNodeView!
     
     required init() {
-        inputView = DrawCanvasNodeView(defaultValue: "0", inputType: .digits)
+        inputView = DrawCanvasNodeView(node: self, defaultValue: "0", inputType: .digits)
         
         self.setupConnections()
     }
@@ -65,16 +65,19 @@ class StringConstNode: DisplayableNode {
     var output: NodeOutput = .value(OutputValue(type: .string))
     var contentView: DisplayableNodeContentView? { return inputView }
     
-    let inputView: DrawCanvasNodeView
+    var inputView: DrawCanvasNodeView!
     
     required init() {
-        inputView = DrawCanvasNodeView(defaultValue: "", inputType: .alphanum)
+        inputView = DrawCanvasNodeView(node: self, defaultValue: "", inputType: .alphanum)
         
         self.setupConnections()
     }
     
     func assemble() -> String {
-        return "(\"\(inputView.value)\" as String)"
+        var escapedValue = inputView.value
+        escapedValue = escapedValue.replacingOccurrences(of: "\\", with: "\\\\")
+        escapedValue = escapedValue.replacingOccurrences(of: "\"", with: "\\\"")
+        return "(\"\(escapedValue)\" as String)"
     }
 }
 

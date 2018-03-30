@@ -12,13 +12,23 @@ enum DrawCanvasNodeInputType {
     case digits, alphanum
 }
 
-class DrawCanvasNodeView: DisplayableNodeContentView {
+class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
+    /// Reference to the node.
+    weak var node: Node?
+    
     /// The value from the view.
     var value: String = "" {
         didSet {
+            // Render the value
             renderValue()
+            
+            // Notify change
+            contentValueChanged()
         }
     }
+    
+    /// Input type for the view.
+    let inputType: DrawCanvasNodeInputType
     
     /// How much space there is for the view to scroll to the next position.
     let scrollMarginWidth: CGFloat = 50
@@ -35,8 +45,10 @@ class DrawCanvasNodeView: DisplayableNodeContentView {
     // Don't allow dragging
     override var absorbsTouches: Bool { return true }
     
-    init(defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 80)) {
-        canvas = DrawingCanvas(frame: CGRect.zero)
+    init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 80)) {
+        self.node = node
+        self.canvas = DrawingCanvas(frame: CGRect.zero)
+        self.inputType = inputType
         
         super.init(frame: CGRect.zero)
         
@@ -108,9 +120,6 @@ class DrawCanvasNodeView: DisplayableNodeContentView {
                     
                     // Save the value
                     self.value = result
-                    
-                    // Call the callback
-                    self.contentValueChanged()
                 }
             }
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
@@ -128,12 +137,78 @@ class DrawCanvasNodeView: DisplayableNodeContentView {
         scrollMargin.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
         scrollMargin.widthAnchor.constraint(equalToConstant: scrollMarginWidth).activate()
         
+        // Add edit button
+        let editButton = UIButton(type: UIButtonType.detailDisclosure)
+        editButton.tintColor = .black
+        editButton.addTarget(self, action: #selector(manualEdit(sender:)), for: .touchUpInside)
+        addSubview(editButton)
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        editButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
+        editButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).activate()
+        
         // Set the value
         value = defaultValue
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func manualEdit(sender: UIButton) {
+        // Get the name
+        var name: String = "Manual Edit"
+        if let node = node {
+            name = type(of: node).name
+        }
+        
+        // Create the alert
+        let alert = UIAlertController(title: name, message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = self.value
+            textField.clearButtonMode = .whileEditing
+            textField.delegate = self // Filter digits for digit pad
+            textField.keyboardType = self.inputType == .digits ? .decimalPad : .default
+        }
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .default,
+            handler: { _ in
+                
+            }
+        ))
+        alert.addAction(UIAlertAction(
+            title: "Done",
+            style: .cancel,
+            handler: { _ in
+                let textField = alert.textFields![0]
+                if let text = textField.text {
+                    // Update the value
+                    self.value = text
+                }
+            }
+        ))
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Allow clearing the text view
+        if string.count == 0 {
+            return true
+        }
+        
+        // Only filter text fields with decimal pads
+        guard textField.keyboardType == .decimalPad else { return true }
+        
+        guard let newString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else {
+            print("Failed to get text to filter digits in field.")
+            return true
+        }
+        
+        // Find the number of matches
+        let expression = "^([0-9]+)?(\\.([0-9]{1,2})?)?$"
+        let regex = try? NSRegularExpression(pattern: expression, options: .caseInsensitive)
+        let numberOfMatches = regex?.numberOfMatches(in: newString, options: [], range: NSRange(location: 0, length: newString.count))
+        return numberOfMatches != 0
     }
     
     private func renderValue() {
