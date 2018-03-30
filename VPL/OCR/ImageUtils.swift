@@ -216,6 +216,17 @@ func invert(image: UIImage) -> UIImage {
     return UIImage(cgImage: imageRef)
 }
 
+func removeRetinaData(image input: UIImage) -> UIImage {
+    UIGraphicsBeginImageContextWithOptions(input.size, false, 1.0)
+    input.draw(in: CGRect(x: 0, y: 0, width: input.size.width, height: input.size.height))
+    guard let nonRetinaImage = UIGraphicsGetImageFromCurrentImageContext() else {
+        print("Failed to construct non-retina image.")
+        return UIImage()
+    }
+    UIGraphicsEndImageContext()
+    return nonRetinaImage
+}
+
 // From: https://gist.github.com/marchinram/3675efc96bf1cc2c02a5
 extension UIImage {
     subscript (x: Int, y: Int) -> UIColor? {

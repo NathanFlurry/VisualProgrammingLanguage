@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DisplayNode: UIView {
+class DisplayNode: UIView, UIGestureRecognizerDelegate {
     /// The underlying node data.
     var node: DisplayableNode
     
@@ -17,6 +17,9 @@ class DisplayNode: UIView {
     
     /// List of all sockets on the node.
     var sockets: [DisplayNodeSocket] = []
+    
+    /// The content view for this node.
+    var contentView: DisplayableNodeContentView?
     
     init(node: DisplayableNode) {
         // Save the node and canvas
@@ -42,6 +45,9 @@ class DisplayNode: UIView {
         // Add content view
         var panelBottomAnchor = bottomAnchor // Anchor to attatch the panels to
         if let contentView = node.contentView {
+            // Save the view
+            self.contentView = contentView
+            
             // Add the view
             addSubview(contentView)
             
@@ -101,11 +107,13 @@ class DisplayNode: UIView {
         
         // Add drag gesture
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
+        dragGesture.delegate = self
         addGestureRecognizer(dragGesture)
         
         // Add remove gesture
         let removeGesture = UITapGestureRecognizer(target: self, action: #selector(remove(sender:)))
         removeGesture.numberOfTapsRequired = 2
+        removeGesture.delegate = self
         addGestureRecognizer(removeGesture)
         
         // Add intro effect
@@ -227,6 +235,16 @@ class DisplayNode: UIView {
         groupAnim.fillMode = kCAFillModeForwards
         groupAnim.isRemovedOnCompletion = false
         layer.add(groupAnim, forKey: "shadowAnim")
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        // If the content view absorbs touches, make sure the touch isn't inside
+        if let contentView = contentView, contentView.absorbsTouches {
+            return !contentView.point(inside: touch.location(in: contentView), with: nil)
+        }
+        
+        // Otherwise, carry on
+        return true
     }
     
     func updateState() {

@@ -72,17 +72,8 @@ class CanvasViewController: UIViewController {
                     return
                 }
                 
-                // Redraw image without retina data
-                UIGraphicsBeginImageContextWithOptions(output.size, false, 1.0)
-                output.draw(in: CGRect(x: 0, y: 0, width: output.size.width, height: output.size.height))
-                guard let nonRetinaImage = UIGraphicsGetImageFromCurrentImageContext() else {
-                    print("Failed to construct non-retina image.")
-                    return
-                }
-                UIGraphicsEndImageContext()
-                
                 // Process
-                try! OCRRequest(dataset: .alphanum, image: nonRetinaImage, singleCharacter: true) { (result, breakdown) in
+                try! OCRRequest(dataset: .alphanum, image: removeRetinaData(image: output), singleCharacter: true) { (result, breakdown) in
                     assert(breakdown.count == 1)
                     
                     // Get the character's center

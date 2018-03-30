@@ -34,6 +34,7 @@
 		BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
 		BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED62058693E007E2483 /* DrawingCanvas.swift */; };
 		BF62C25A206D9B7A002A148F /* MNIST.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF62C259206D9B7A002A148F /* MNIST.mlmodel */; };
+		BF62C25C206DA520002A148F /* DrawCanvasNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */; };
 		BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */; };
 		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
 		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
@@ -70,6 +71,7 @@
 		BF56DED420586439007E2483 /* DisplayNodeSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeSocket.swift; sourceTree = "<group>"; };
 		BF56DED62058693E007E2483 /* DrawingCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvas.swift; sourceTree = "<group>"; };
 		BF62C259206D9B7A002A148F /* MNIST.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MNIST.mlmodel; sourceTree = "<group>"; };
+		BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawCanvasNodeView.swift; sourceTree = "<group>"; };
 		BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvasOverlay.swift; sourceTree = "<group>"; };
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */,
 				BF24CA2C206C4D1D007AB6F2 /* ValueChooserView.swift */,
 				BF24CA34206CE04A007AB6F2 /* VariableChooserView.swift */,
+				BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */,
 			);
 			path = "Content Views";
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				BF313B712066FFF7006EEA83 /* Chars74k.mlmodel in Sources */,
 				BF24CA2D206C4D1D007AB6F2 /* ValueChooserView.swift in Sources */,
 				BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */,
+				BF62C25C206DA520002A148F /* DrawCanvasNodeView.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
 				BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */,
 				BF24CA37206CEC19007AB6F2 /* CodeOutputView.swift in Sources */,

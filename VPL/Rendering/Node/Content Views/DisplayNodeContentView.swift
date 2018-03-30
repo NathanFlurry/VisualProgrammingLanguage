@@ -9,6 +9,10 @@
 import UIKit
 
 class DisplayableNodeContentView: UIView {
+    /// If the view's touches are absorbed or if the display node can use drags
+    /// and double taps on this view.
+    var absorbsTouches: Bool { return false }
+    
     /// Set by the graph to observe changes in the node's content.
     var onChangeCallback: (() -> Void)?
     
