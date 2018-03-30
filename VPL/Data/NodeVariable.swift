@@ -9,6 +9,8 @@
 import Foundation
 
 class NodeVariable {
+    static var variableId: String { return String(format: "v%06x", Int(arc4random())) }
+    
     /// The trigger that owns this variable.
     weak var owner: OutputTrigger!
     
@@ -22,7 +24,7 @@ class NodeVariable {
     let type: ValueType
     
     init(name: String, type: ValueType) {
-        self.id = String(format: "v%06x", Int(arc4random() % 65535))
+        self.id = NodeVariable.variableId
         self.name = name
         self.type = type
     }
