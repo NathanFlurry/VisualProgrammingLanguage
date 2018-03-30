@@ -106,6 +106,14 @@ class GenericInputView: DisplayableNodeContentView {
         
         super.init(frame: CGRect.zero)
         
+        // Set the callbacks
+        for field in fields {
+            field.valueChangeCallback = {
+                self.contentValueChanged()
+            }
+        }
+        
+        // Add the views
         let stackView = UIStackView(arrangedSubviews: fields)
         stackView.axis = .vertical
         stackView.distribution = .fill
