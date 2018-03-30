@@ -30,8 +30,14 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
     /// Input type for the view.
     let inputType: DrawCanvasNodeInputType
     
+    /// Label indicating the current value.
+    let valueLabel: UILabel
+    
     /// How much space there is for the view to scroll to the next position.
     let scrollMarginWidth: CGFloat = 50
+    
+    /// View that holds the canvas.
+    var canvasContainer: UIView
     
     /// Canvas for drawing.
     var canvas: DrawingCanvas
@@ -45,10 +51,14 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
     // Don't allow dragging
     override var absorbsTouches: Bool { return true }
     
-    init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 80)) {
+    init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 85)) {
         self.node = node
-        self.canvas = DrawingCanvas(frame: CGRect.zero)
         self.inputType = inputType
+        self.value = defaultValue
+        
+        self.canvasContainer = UIView()
+        self.canvas = DrawingCanvas(frame: CGRect.zero)
+        self.valueLabel = UILabel()
         
         super.init(frame: CGRect.zero)
         
@@ -61,22 +71,27 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
             dataset = OCRDataset.alphanum
         }
         
-        // Style the view
-        layer.masksToBounds = true
-        layer.borderColor = UIColor(white: 0.9, alpha: 1).cgColor
-        layer.borderWidth = 1
-        layer.cornerRadius = 4
-        
         // Constrain view
         widthAnchor.constraint(greaterThanOrEqualToConstant: minSize.width).activate()
-        heightAnchor.constraint(greaterThanOrEqualToConstant: minSize.height).activate()
+        canvasContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: minSize.height).activate()
+        
+        // Create the canvas container
+        canvasContainer.layer.masksToBounds = true
+        canvasContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1).cgColor
+        canvasContainer.layer.borderWidth = 1
+        canvasContainer.layer.cornerRadius = 4
+        addSubview(canvasContainer)
+        canvasContainer.translatesAutoresizingMaskIntoConstraints = false
+        canvasContainer.leftAnchor.constraint(equalTo: leftAnchor).activate()
+        canvasContainer.rightAnchor.constraint(equalTo: rightAnchor).activate()
+        canvasContainer.topAnchor.constraint(equalTo: topAnchor).activate()
         
         // Add drawing canvas
-        addSubview(canvas)
+        canvasContainer.addSubview(canvas)
         canvas.translatesAutoresizingMaskIntoConstraints = false
-        self.canvasLeftAnchor = canvas.leftAnchor.constraint(equalTo: leftAnchor).activate()
-        canvas.topAnchor.constraint(equalTo: topAnchor).activate()
-        canvas.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        self.canvasLeftAnchor = canvas.leftAnchor.constraint(equalTo: canvasContainer.leftAnchor).activate()
+        canvas.topAnchor.constraint(equalTo: canvasContainer.topAnchor).activate()
+        canvas.bottomAnchor.constraint(equalTo: canvasContainer.bottomAnchor).activate()
         canvas.widthAnchor.constraint(equalToConstant: 2048).activate()
         
         // Handle canvas events
@@ -92,7 +107,7 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
             if strokeMax > self.frame.width - self.scrollMarginWidth {
                 UIView.animate(withDuration: 0.1) {
                     self.canvasLeftAnchor.constant -= self.frame.width * 0.7
-                    self.layoutIfNeeded()
+                    self.canvasContainer.layoutIfNeeded()
                 }
             }
             
@@ -104,7 +119,7 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
                 // Go back to beginning of scroll
                 UIView.animate(withDuration: 0.1) {
                     self.canvasLeftAnchor.constant = 0
-                    self.layoutIfNeeded()
+                    self.canvasContainer.layoutIfNeeded()
                 }
                 
                 // Get the drawing
@@ -130,11 +145,11 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
         let scrollMargin = UIView()
         scrollMargin.backgroundColor = UIColor(white: 0.5, alpha: 0.1)
         scrollMargin.isUserInteractionEnabled = false
-        addSubview(scrollMargin)
+        canvasContainer.addSubview(scrollMargin)
         scrollMargin.translatesAutoresizingMaskIntoConstraints = false
-        scrollMargin.rightAnchor.constraint(equalTo: rightAnchor).activate()
-        scrollMargin.topAnchor.constraint(equalTo: topAnchor).activate()
-        scrollMargin.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        scrollMargin.rightAnchor.constraint(equalTo: canvasContainer.rightAnchor).activate()
+        scrollMargin.topAnchor.constraint(equalTo: canvasContainer.topAnchor).activate()
+        scrollMargin.bottomAnchor.constraint(equalTo: canvasContainer.bottomAnchor).activate()
         scrollMargin.widthAnchor.constraint(equalToConstant: scrollMarginWidth).activate()
         
         // Add edit button
@@ -143,11 +158,22 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
         editButton.addTarget(self, action: #selector(manualEdit(sender:)), for: .touchUpInside)
         addSubview(editButton)
         editButton.translatesAutoresizingMaskIntoConstraints = false
-        editButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
-        editButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).activate()
+        editButton.rightAnchor.constraint(equalTo: canvasContainer.rightAnchor, constant: -8).activate()
+        editButton.bottomAnchor.constraint(equalTo: canvasContainer.bottomAnchor, constant: -8).activate()
         
-        // Set the value
-        value = defaultValue
+        // Add value view
+        valueLabel.numberOfLines = 0
+        valueLabel.textAlignment = .center
+        valueLabel.font = UIFont(name: "Menlo-Regular", size: UIFont.systemFontSize)
+        addSubview(valueLabel)
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        valueLabel.leftAnchor.constraint(equalTo: leftAnchor).activate()
+        valueLabel.rightAnchor.constraint(equalTo: rightAnchor).activate()
+        valueLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).activate()
+        valueLabel.topAnchor.constraint(equalTo: canvasContainer.bottomAnchor, constant: 16).activate()
+        
+        // Render the new value
+        renderValue()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -212,6 +238,6 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
     }
     
     private func renderValue() {
-        
+        valueLabel.text = value
     }
 }

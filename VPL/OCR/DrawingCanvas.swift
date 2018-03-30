@@ -115,7 +115,7 @@ class DrawingCanvas: UIView {
             self.strokeMinPosition?.x = min(strokeMinPosition.x, lastPoint.x)
             self.strokeMinPosition?.y = min(strokeMinPosition.y, lastPoint.y)
         }
-        if let strokeMaxPosition = strokeMinPosition {
+        if let strokeMaxPosition = strokeMaxPosition {
             self.strokeMaxPosition?.x = max(strokeMaxPosition.x, lastPoint.x)
             self.strokeMaxPosition?.y = max(strokeMaxPosition.y, lastPoint.y)
         }
@@ -152,6 +152,16 @@ class DrawingCanvas: UIView {
         
         // Clear the temp image view
         tempImageView.image = nil
+        
+        // Update the min and max
+        if let strokeMinPosition = strokeMinPosition {
+            self.strokeMinPosition?.x = min(strokeMinPosition.x, lastPoint.x)
+            self.strokeMinPosition?.y = min(strokeMinPosition.y, lastPoint.y)
+        }
+        if let strokeMaxPosition = strokeMaxPosition {
+            self.strokeMaxPosition?.x = max(strokeMaxPosition.x, lastPoint.x)
+            self.strokeMaxPosition?.y = max(strokeMaxPosition.y, lastPoint.y)
+        }
         
         // Calculate the character box
         var charBox: CGRect = CGRect.zero
