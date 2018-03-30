@@ -45,7 +45,7 @@ extension Node {
     }
     
     /// Variables that this node can use.
-    var availableVariables: [VariableInstance] {
+    var availableVariables: [NodeVariable] {
         // Add variables available from all parent triggers
         let trigger  = closestInputTrigger
         return (trigger?.target?.exposedVariables ?? []) + (trigger?.target?.owner.availableVariables ?? [])

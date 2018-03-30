@@ -41,10 +41,10 @@ class ForLoopNode: DisplayableNode {
     var inputValues: [InputValue] = [InputValue(id: "from", name: "From", type: .int), InputValue(id: "to", name: "To", type: .int)]
     var output: NodeOutput = .triggers([
         OutputTrigger(),
-        OutputTrigger(id: "loop", name: "Loop", exposedVariables: [VariableInstance(name: "Index", type: .int)])
+        OutputTrigger(id: "loop", name: "Loop", exposedVariables: [NodeVariable(name: "Index", type: .int)])
     ])
     
-    var indexVariable: VariableInstance {
+    var indexVariable: NodeVariable {
         if case let .triggers(triggers) = output {
             return triggers[1].exposedVariables[0]
         } else {

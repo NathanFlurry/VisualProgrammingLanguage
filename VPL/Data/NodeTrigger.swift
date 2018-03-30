@@ -8,27 +8,6 @@
 
 import Foundation
 
-class VariableInstance {
-    /// The trigger that owns this variable.
-    weak var owner: OutputTrigger!
-    
-    /// A UUID that represents this variable in the code itself.
-    let id: String
-    
-    /// Label for human readability.
-    let name: String
-    
-    /// The type of variable.
-    let type: ValueType
-    
-    init(name: String, type: ValueType) {
-        self.id = String(format: "v%06x", Int(arc4random() % 65535))
-        self.name = name
-        self.type = type
-    }
-}
-
-
 final class InputTrigger {
     /// The node that owns this trigger.
     weak var owner: Node!
@@ -83,9 +62,9 @@ final class OutputTrigger {
     private(set) var target: InputTrigger?
     
     /// Variables availables to any other nodes further along the control flow.
-    var exposedVariables: [VariableInstance]
+    var exposedVariables: [NodeVariable]
     
-    init(id: String, name: String, exposedVariables: [VariableInstance] = []) {
+    init(id: String, name: String, exposedVariables: [NodeVariable] = []) {
         self.id = id
         self.name = name
         self.exposedVariables = exposedVariables
@@ -96,7 +75,7 @@ final class OutputTrigger {
         }
     }
     
-    convenience init(exposedVariables: [VariableInstance] = []) {
+    convenience init(exposedVariables: [NodeVariable] = []) {
         self.init(id: "next", name: "Next", exposedVariables: exposedVariables)
     }
     

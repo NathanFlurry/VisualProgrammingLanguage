@@ -16,10 +16,10 @@ class DeclareVariableNode: DisplayableNode {
     var inputTrigger: InputTrigger? = InputTrigger()
     var inputValues: [InputValue] = [ InputValue(id: "init value", name: "Init Value", type: .unknown) ]
     var output: NodeOutput = .triggers([
-        OutputTrigger(exposedVariables: [ VariableInstance(name: "Variable", type: .unknown) ])
+        OutputTrigger(exposedVariables: [ NodeVariable(name: "Variable", type: .unknown) ])
     ])
     
-    var variable: VariableInstance {
+    var variable: NodeVariable {
         if case let .triggers(triggers) = output {
             return triggers[0].exposedVariables[0]
         } else {

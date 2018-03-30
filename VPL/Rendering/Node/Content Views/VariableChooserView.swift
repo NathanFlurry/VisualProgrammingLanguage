@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VariableChooserView: ValueChooserView<VariableInstance?> {
+class VariableChooserView: ValueChooserView<NodeVariable?> {
     weak var owner: Node!
     
     init(owner: Node) {
