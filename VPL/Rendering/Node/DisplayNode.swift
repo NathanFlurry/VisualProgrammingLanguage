@@ -94,6 +94,9 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         for value in node.inputValues {
             addProperty(parent: leftPanel, leftAlign: true, socket: .inputValue(value), name: value.name, type: value.type.description)
         }
+        for variable in node.inputVariables {
+            addProperty(parent: leftPanel, leftAlign: true, socket: .inputVariable(variable), name: variable.name, type: variable.type.description)
+        }
         switch node.output {
         case .triggers(let triggers):
             for trigger in triggers {

@@ -56,6 +56,7 @@ extension Node {
     func setupConnections() {
         inputTrigger?.owner = self
         for value in inputValues { value.owner = self }
+        for variable in inputVariables { variable.owner = self }
         switch output {
         case .triggers(let triggers):
             for trigger in triggers { trigger.owner = self }

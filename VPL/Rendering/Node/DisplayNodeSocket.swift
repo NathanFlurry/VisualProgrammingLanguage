@@ -9,7 +9,9 @@
 import UIKit
 
 enum DisplayNodeSocketType: Equatable {
-    case inputTrigger(InputTrigger), outputTrigger(OutputTrigger), inputValue(InputValue), outputValue(OutputValue)
+    case inputTrigger(InputTrigger), outputTrigger(OutputTrigger)
+    case inputValue(InputValue), outputValue(OutputValue)
+    case inputVariable(InputVariable)
     
     var socketColor: UIColor {
         switch self {
@@ -17,6 +19,8 @@ enum DisplayNodeSocketType: Equatable {
             return UIColor(red: 1, green: 0.74, blue: 0.24, alpha: 1.0)
         case .inputValue(_), .outputValue(_):
             return UIColor(red: 0.11, green: 0.84, blue: 1.0, alpha: 1.0)
+        case .inputVariable(_):
+            return UIColor(red: 0.12, green: 1, blue: 0.59, alpha: 1.0)
         }
     }
     
@@ -26,6 +30,8 @@ enum DisplayNodeSocketType: Equatable {
             return UIColor(red: 1, green: 0.85, blue: 0.56, alpha: 1.0)
         case .inputValue(_), .outputValue(_):
             return UIColor(red: 0.65, green: 0.93, blue: 1.0, alpha: 1.0)
+        case .inputVariable(_):
+            return UIColor(red: 0.44, green: 1, blue: 0.74, alpha: 1.0)
         }
     }
     
@@ -39,6 +45,8 @@ enum DisplayNodeSocketType: Equatable {
             return value.target != nil
         case .outputValue(let value):
             return value.target != nil
+        case .inputVariable(let variable):
+            return variable.target != nil
         }
     }
     
@@ -53,12 +61,16 @@ enum DisplayNodeSocketType: Equatable {
                 return lhsTrigger === rhsTrigger
             }
         case .inputValue(let lhsValue):
-            if case let .inputTrigger(rhsValue) = rhs {
+            if case let .inputValue(rhsValue) = rhs {
                 return lhsValue === rhsValue
             }
         case .outputValue(let lhsValue):
-            if case let .outputTrigger(rhsValue) = rhs {
+            if case let .outputValue(rhsValue) = rhs {
                 return lhsValue === rhsValue
+            }
+        case .inputVariable(let lhsVariable):
+            if case let .inputVariable(rhsVariable) = rhs {
+                return lhsVariable === rhsVariable
             }
         }
         
@@ -129,6 +141,14 @@ class DisplayNodeSocket: UIView {
             if case let .inputValue(otherValue) = other.type {
                 return value.canConnect(to: otherValue)
             }
+        case .inputVariable(let variable):
+            if case let .outputTrigger(trigger) = other.type {
+                for otherVariable in trigger.exposedVariables {
+                    if variable.canConnect(to: otherVariable) {
+                        return true
+                    }
+                }
+            }
         }
         
         return false
@@ -154,11 +174,65 @@ class DisplayNodeSocket: UIView {
             if case let .inputValue(otherValue) = other.type {
                 value.connect(to: otherValue)
             }
+        case .inputVariable(_):
+            promptVariableConnectino(to: other)
         }
         
         // Update the socket
         updateState()
         other.updateState()
+    }
+    
+    func promptVariableConnectino(to other: DisplayNodeSocket) {
+        guard case let .inputVariable(variable) = type else {
+            print("Cannot propt for variable connection on non-variable types.")
+            return
+        }
+        guard case let .outputTrigger(trigger) = other.type else {
+            return
+        }
+        
+        // Create the controller
+        let alert = UIAlertController(
+            title: "Spawn Node",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        
+        // Configure the popover
+        alert.popoverPresentationController?.sourceView = other
+        alert.popoverPresentationController?.sourceRect = other.bounds
+        alert.popoverPresentationController?.permittedArrowDirections = .left
+        
+        // Display the nodes
+        for otherVariable in trigger.exposedVariables {
+            // Make sure the variable can be connected to; this may mean there
+            // are single-option popovers, but that's ok. It's better to have
+            // the user know for sure what they're connecting without errors.
+            guard variable.canConnect(to: otherVariable) else {
+                continue
+            }
+            
+            // Create an action to spawn the node
+            let label = "\(otherVariable.name) (\(otherVariable.type.description))"
+            let action = UIAlertAction(title: label, style: .default) { _ in
+                // Connect the values
+                variable.connect(to: otherVariable)
+                
+                // Update the socket
+                self.updateState()
+                other.updateState()
+                
+                // Force update the canvas state, since it doesn't know about
+                // this
+                self.node?.canvas?.updateState()
+            }
+            alert.addAction(action)
+        }
+        
+        // Present it
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
     }
     
     @objc func panned(sender: UIPanGestureRecognizer) {
@@ -173,6 +247,7 @@ class DisplayNodeSocket: UIView {
         case .outputTrigger(let trigger): trigger.reset()
         case .inputValue(let value): value.reset()
         case .outputValue(let value): value.reset()
+        case .inputVariable(let variable): variable.reset()
         }
         
         // Update the dragging to position
@@ -235,7 +310,7 @@ class DisplayNodeSocket: UIView {
         // Determine if input
         var isInput: Bool
         switch type {
-        case .inputTrigger(_), .inputValue(_):
+        case .inputTrigger(_), .inputValue(_), .inputVariable(_):
             isInput = true
         case .outputTrigger(_), .outputValue(_):
             isInput = false

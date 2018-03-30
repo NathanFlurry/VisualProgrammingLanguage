@@ -88,6 +88,10 @@ class DisplayNodeCanvasOverlay: UIView {
                     if case let .inputValue(otherValue) = otherSocket.type {
                         if value.target === otherValue { return otherSocket }
                     }
+                case .inputVariable(let variable):
+                    if case let .outputTrigger(trigger) = otherSocket.type {
+                        if variable.target?.owner === trigger { return otherSocket }
+                    }
                 }
             }
         }

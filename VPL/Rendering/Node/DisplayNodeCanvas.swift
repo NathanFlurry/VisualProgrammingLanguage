@@ -89,7 +89,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         overlayView.frame.origin = scrollView.contentOffset
         
         // Update overlay
-        overlayView.setNeedsDisplay()
+        updateState()
     }
     
     /// Assembles all of the code.
@@ -144,8 +144,8 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         bringSubview(toFront: node)
         bringSubview(toFront: overlayView)
         
-        // Redraw overlay
-        overlayView.setNeedsDisplay()
+        // Update this canvas' state
+        updateState()
         
         // Update the state
         node.updateState()
@@ -187,7 +187,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         node.node.destroy()
         
         // Update
-        overlayView.setNeedsDisplay()
+        updateState()
         updateCallback?()
     }
     
@@ -219,5 +219,13 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         
         // Update
         updateCallback?()
+    }
+    
+    func updateState() {
+        // Update overlay
+        overlayView.setNeedsDisplay()
+        
+        // This does not notify the child node's state, since that's an
+        // expensive operatino and should rarely update all at once.
     }
 }
