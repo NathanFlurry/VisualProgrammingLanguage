@@ -80,10 +80,7 @@ class CodeOutputView: UIView {
         }
         
         // Set the font
-        if let font = UIFont(name: "Menlo-Regular", size: UIFont.systemFontSize) {
-            string.addAttribute(NSAttributedStringKey.font, value: font, range: NSMakeRange(0, string.length)
-            )
-        }
+        string.addAttribute(NSAttributedStringKey.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
         
         return string
     }

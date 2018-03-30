@@ -45,7 +45,8 @@ class DisplayNodeCanvasOverlay: UIView {
                         context: ctx,
                         from: CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
                         to: CGPoint(x: startPosition.x + target.x, y: startPosition.y + target.y),
-                        color: socket.type.connectionColor
+                        color: socket.type.connectionColor,
+                        label: nil
                     )
                 } else if let targetSocket = findTarget(forSocketType: socket.type) {
                     // Draw a line between the sockets
@@ -55,7 +56,8 @@ class DisplayNodeCanvasOverlay: UIView {
                         context: ctx,
                         from: CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
                         to: CGPoint(x: endPosition.x + targetSocket.frame.width / 2, y: endPosition.y + targetSocket.frame.height / 2),
-                        color: socket.type.connectionColor
+                        color: socket.type.connectionColor,
+                        label: socket.connectionLabel()
                     )
                 }
             }
@@ -114,13 +116,44 @@ class DisplayNodeCanvasOverlay: UIView {
     }
     
     /// Draws a line between two points indicating a socket position
-    func drawSocketConnection(context ctx: CGContext, from: CGPoint, to: CGPoint, color: UIColor) {
+    func drawSocketConnection(context ctx: CGContext, from: CGPoint, to: CGPoint, color: UIColor, label: String?) {
         // Draw the line
         ctx.setLineCap(.round)
         ctx.setLineWidth(8)
         ctx.setStrokeColor(color.cgColor)
         ctx.addLines(between: [from, to])
         ctx.strokePath()
+        
+        if let label = label {
+            // Get label metrics
+            let lineCenter = CGPoint(x: (from.x + to.x) / 2, y: (from.y + to.y) / 2)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            let attributes = [
+                NSAttributedStringKey.font: UIFont.codeFont(),
+                NSAttributedStringKey.paragraphStyle: paragraphStyle
+            ]
+            let size = (label as NSString).size(withAttributes: attributes)
+            
+            // Draw a shape behind the label
+            var paddedSize = CGSize(width: size.width, height: size.height + 8)
+            paddedSize.width += paddedSize.height / 2 // Make the caps go beyond the text
+            let roundedRect = UIBezierPath(
+                roundedRect: CGRect(
+                    x: lineCenter.x - paddedSize.width / 2, y: lineCenter.y - paddedSize.height / 2,
+                    width: paddedSize.width, height: paddedSize.height
+                ),
+                cornerRadius: paddedSize.height / 2
+            )
+            ctx.setFillColor(gray: 1.0, alpha: 0.7)
+            roundedRect.fill()
+            
+            // Draw the label
+            (label as NSString).draw(
+                in: CGRect(x: lineCenter.x - size.width / 2, y: lineCenter.y - size.height / 2, width: size.width, height: size.height),
+                withAttributes: attributes
+            )
+        }
     }
     
     /// Draws a cap over the socket.

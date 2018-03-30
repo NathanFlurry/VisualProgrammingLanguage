@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension UIFont {
+    static func codeFont(size: CGFloat = UIFont.systemFontSize) -> UIFont {
+        return UIFont(name: "Menlo-Regular", size: size)!
+    }
+}
+
 func randomFloat() -> CGFloat {
     return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
 }

@@ -131,7 +131,7 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
                 // Process
                 try! OCRRequest(dataset: dataset, image: removeRetinaData(image: output), singleCharacter: false) { (result, breakdown) in
                     // Overlay the breakdown for debug info
-                    self.canvas.overlayOCRBreakdown(breakdown: breakdown)
+//                    self.canvas.overlayOCRBreakdown(breakdown: breakdown)
                     
                     // Save the value
                     self.value = result
@@ -164,7 +164,7 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
         // Add value view
         valueLabel.numberOfLines = 0
         valueLabel.textAlignment = .center
-        valueLabel.font = UIFont(name: "Menlo-Regular", size: UIFont.systemFontSize)
+        valueLabel.font = UIFont.codeFont()
         addSubview(valueLabel)
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
         valueLabel.leftAnchor.constraint(equalTo: leftAnchor).activate()
@@ -195,16 +195,10 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
             textField.delegate = self // Filter digits for digit pad
             textField.keyboardType = self.inputType == .digits ? .decimalPad : .default
         }
-        alert.addAction(UIAlertAction(
-            title: "Cancel",
-            style: .default,
-            handler: { _ in
-                
-            }
-        ))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(
             title: "Done",
-            style: .cancel,
+            style: .default,
             handler: { _ in
                 let textField = alert.textFields![0]
                 if let text = textField.text {

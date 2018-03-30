@@ -35,6 +35,8 @@
 		BF62C25C206DA520002A148F /* DrawCanvasNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */; };
 		BF62C25E206E1188002A148F /* NodeVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25D206E1188002A148F /* NodeVariable.swift */; };
 		BF62C260206E165B002A148F /* ValueChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25F206E165B002A148F /* ValueChooserView.swift */; };
+		BF62C264206E2EF6002A148F /* ArrayNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C263206E2EF6002A148F /* ArrayNodes.swift */; };
+		BF62C266206E2EFE002A148F /* DictionaryNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C265206E2EFE002A148F /* DictionaryNodes.swift */; };
 		BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */; };
 		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
 		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
@@ -72,6 +74,8 @@
 		BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawCanvasNodeView.swift; sourceTree = "<group>"; };
 		BF62C25D206E1188002A148F /* NodeVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeVariable.swift; sourceTree = "<group>"; };
 		BF62C25F206E165B002A148F /* ValueChooserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueChooserView.swift; sourceTree = "<group>"; };
+		BF62C263206E2EF6002A148F /* ArrayNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayNodes.swift; sourceTree = "<group>"; };
+		BF62C265206E2EFE002A148F /* DictionaryNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryNodes.swift; sourceTree = "<group>"; };
 		BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvasOverlay.swift; sourceTree = "<group>"; };
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 				BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */,
 				BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */,
 				BF24CA23206C39D9007AB6F2 /* MathNodes.swift */,
+				BF62C263206E2EF6002A148F /* ArrayNodes.swift */,
+				BF62C265206E2EFE002A148F /* DictionaryNodes.swift */,
 				BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */,
 			);
 			path = Implementations;
@@ -275,6 +281,7 @@
 				BF24CA20206C39B5007AB6F2 /* VariableNodes.swift in Sources */,
 				BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */,
 				BF24CA31206C5966007AB6F2 /* NodeTrigger.swift in Sources */,
+				BF62C264206E2EF6002A148F /* ArrayNodes.swift in Sources */,
 				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
 				BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */,
 				BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */,
@@ -294,6 +301,7 @@
 				BF24CA092067623A007AB6F2 /* ValueType.swift in Sources */,
 				BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */,
 				BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */,
+				BF62C266206E2EFE002A148F /* DictionaryNodes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

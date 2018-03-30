@@ -16,16 +16,18 @@ class EvalConstNode: DisplayableNode {
     var output: NodeOutput = .value(OutputValue(type: .unknown))
     var contentView: DisplayableNodeContentView? { return inputView }
     
-    let inputView: GenericInputView
+    var inputView: GenericInputView!
     
     required init() {
-        inputView = GenericInputView(frame: CGRect.zero, defaultValue: "0")
+        inputView = GenericInputView(node: self, fields: [
+            GenericInputViewField(name: "Swift Code", defaultValue: "nil")
+        ])
         
         self.setupConnections()
     }
     
     func assemble() -> String {
-        return "(\(inputView.value))"
+        return "(\(inputView.fields[0].value))"
     }
 }
 

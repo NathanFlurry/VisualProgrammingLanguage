@@ -235,6 +235,20 @@ class DisplayNodeSocket: UIView {
         UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
     }
     
+    /// Label that will be drawn on the connection.
+    func connectionLabel() -> String? {
+        switch type {
+        case .inputVariable(let variable):
+            if let target = variable.target {
+                return "\(target.name) (\(target.type.description))"
+            } else {
+                return nil
+            }
+        default:
+            return nil
+        }
+    }
+    
     @objc func panned(sender: UIPanGestureRecognizer) {
         guard let node = node, let canvas = node.canvas else {
             print("Missing node or canvas for socket.")

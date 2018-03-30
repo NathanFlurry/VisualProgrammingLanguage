@@ -157,6 +157,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         let typeLabel = UILabel(frame: CGRect.zero)
         typeLabel.text = type
         typeLabel.textColor = UIColor(white: 0, alpha: 0.5)
+        typeLabel.font = UIFont.codeFont()
         view.addSubview(typeLabel)
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).activate()
