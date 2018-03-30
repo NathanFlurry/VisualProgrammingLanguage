@@ -220,6 +220,12 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         // Animate properties
         let presentation = layer.presentation()
         
+        let scaleAnim = CABasicAnimation(keyPath: "transform")
+        scaleAnim.fromValue = presentation?.transform ?? CATransform3DIdentity
+        scaleAnim.toValue = lifted ?
+            CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05) :
+            CATransform3DIdentity
+        
         let offsetAnim = CABasicAnimation(keyPath: "shadowOffset")
         offsetAnim.fromValue = presentation?.shadowOffset ?? CGSize.zero
         offsetAnim.toValue = lifted ? CGSize(width: 0, height: 25) : CGSize(width: 0, height: 5)
@@ -231,7 +237,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         let groupAnim = CAAnimationGroup()
         groupAnim.duration = 0.2
         groupAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        groupAnim.animations = [ offsetAnim, shadowAnim ]
+        groupAnim.animations = [ scaleAnim, offsetAnim, shadowAnim ]
         groupAnim.fillMode = kCAFillModeForwards
         groupAnim.isRemovedOnCompletion = false
         layer.add(groupAnim, forKey: "shadowAnim")
