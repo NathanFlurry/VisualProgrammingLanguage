@@ -75,6 +75,8 @@ class DisplayNodeSocket: UIView {
     
     var shapeView: UIView = UIView()
     
+    var triangleShape: CAShapeLayer!
+    
     init(frame: CGRect, type: DisplayNodeSocketType, node: DisplayNode) {
         self.type = type
         self.node = node
@@ -92,6 +94,9 @@ class DisplayNodeSocket: UIView {
         shapeView.centerYAnchor.constraint(equalTo: centerYAnchor).activate()
         shapeView.widthAnchor.constraint(equalToConstant: 22).activate()
         shapeView.heightAnchor.constraint(equalTo: shapeView.widthAnchor).activate()
+        
+        // Add a triangle
+        self.triangleShape = addTriangle(size: CGSize(width: 6, height: 8))
         
         // Add drag gesture
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
@@ -194,9 +199,59 @@ class DisplayNodeSocket: UIView {
     }
     
     func updateState() {
+        let isConnected = self.type.isConnected || self.draggingTarget != nil
+        
+        // Update shape layer
         UIView.animate(withDuration: 0.2) {
-            let isCircle = self.type.isConnected || self.draggingTarget != nil
-            self.shapeView.layer.cornerRadius = isCircle ? self.shapeView.frame.width / 2 : 8
+            self.shapeView.layer.cornerRadius = isConnected ? self.shapeView.frame.width / 2 : 8
+        }
+        
+        // Hide/show triangle
+        triangleShape.isHidden = isConnected
+    }
+    
+    func addTriangle(size: CGSize) -> CAShapeLayer {
+        // Create the path
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: size.width, y: size.height / 2))
+        path.addLine(to: CGPoint(x: 0, y: size.height))
+        path.addLine(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: size.width, y: size.height / 2))
+        
+        // Create a shape
+        let shape = CAShapeLayer()
+        shape.frame = CGRect(origin: CGPoint.zero, size: size)
+        shape.path = path
+        shape.fillColor = UIColor(white: 0, alpha: 0.2).cgColor
+        
+        layer.insertSublayer(shape, at: 0)
+        
+        return shape
+    }
+    
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        
+        // Determine if input
+        var isInput: Bool
+        switch type {
+        case .inputTrigger(_), .inputValue(_):
+            isInput = true
+        case .outputTrigger(_), .outputValue(_):
+            isInput = false
+        }
+        
+        // Reposition triangle shape
+        if isInput {
+            triangleShape.frame.origin = CGPoint(
+                x: -triangleShape.frame.width / 2 - 8,
+                y: frame.height / 2 - triangleShape.frame.height / 2
+            )
+        } else {
+            triangleShape.frame.origin = CGPoint(
+                x: frame.width - triangleShape.frame.width / 2 + 8,
+                y: frame.height / 2 - triangleShape.frame.height / 2
+            )
         }
     }
 }

@@ -237,7 +237,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         let groupAnim = CAAnimationGroup()
         groupAnim.duration = 0.2
         groupAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        groupAnim.animations = [ scaleAnim, offsetAnim, shadowAnim ]
+        groupAnim.animations = [ /*scaleAnim,*/ offsetAnim, shadowAnim ]
         groupAnim.fillMode = kCAFillModeForwards
         groupAnim.isRemovedOnCompletion = false
         layer.add(groupAnim, forKey: "shadowAnim")
