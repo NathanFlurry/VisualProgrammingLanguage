@@ -46,7 +46,8 @@ class IntConstNode: DisplayableNode {
     }
     
     func assemble() -> String {
-        let rawValue = inputView.value
+        var rawValue = inputView.value
+        rawValue = rawValue.split(separator: ".").first.map { String($0) } ?? "" // Remove decimal
         if rawValue.count == 0 {
             return "(0 as Int)"
         } else if Int(rawValue) != nil {
