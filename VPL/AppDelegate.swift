@@ -27,13 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GetVariableNode.self,
             IfNode.self,
             ForLoopNode.self,
-            PrintNode.self,
             
             AddNode.self,
             SubtractNode.self,
             MultiplyNode.self,
             DivideNode.self,
             ModuloNode.self,
+            EqualsNode.self,
             
             ArrayCreateNode.self,
             ArrayAppendNode.self,
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DictionaryContainsKeyNode.self,
             DictionaryRemoveAtNode.self,
             
-            EqualsNode.self,
+            PrintNode.self,
             SwapNode.self
         ]
         
