@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Version</key>
+	<string>1.0</string>
+	<key>ImageReference</key>
+	<string>cover.png</string>
+	<key>ContentVersion</key>
+	<string>1.0</string>
+	<key>Name</key>
+	<string>VPL Playground</string>
+	<key>ContentIdentifier</key>
+	<string>com.NathanFlurry.VPLPlayground</string>
+	<key>DeploymentTarget</key>
+	<string>ios11.0</string>
+	<key>Chapters</key>
+	<array>
+		<string>Chapter1.playgroundchapter</string>
+	</array>
+</dict>
+</plist>
