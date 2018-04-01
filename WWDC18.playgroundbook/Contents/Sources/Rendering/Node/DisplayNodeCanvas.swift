@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
+public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     /// List of all nodes in the canvas.
-    var nodes: [DisplayNode]
+    public private(set) var nodes: [DisplayNode]
     
     /// View that is drawn behind all other views.
     var backgroundView: UIView? {
@@ -33,7 +33,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     var updateCallback: (() -> Void)?
     
     /// The starting node that all other nodes build off of.
-    var baseNode: DisplayNode!
+    public private(set) var baseNode: DisplayNode!
     
     override init(frame: CGRect) {
         // Create new node list
@@ -73,17 +73,17 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         contentOffset = CGPoint(x: contentSize.width / 2 - 200, y: contentSize.height / 2 - 200)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         // Resize all views
         backgroundView?.frame.size = bounds.size
         overlayView.frame.size = bounds.size
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Move the background and overlay with the view
         backgroundView?.frame.origin = scrollView.contentOffset
         overlayView.frame.origin = scrollView.contentOffset
@@ -93,7 +93,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     }
     
     /// Assembles all of the code.
-    func assemble() -> String {
+    public func assemble() -> String {
         var output = ""
         
         // Assemble each function
@@ -109,7 +109,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     }
     
     /// Adds a node to the canvas.
-    func insert(node: DisplayNode, at position: CGPoint, absolutePosition: Bool = false) {
+    public func insert(node: DisplayNode, at position: CGPoint, absolutePosition: Bool = false) {
         assert(!nodes.contains(node))
         assert(node.canvas == nil)
         
@@ -139,7 +139,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     
     /// Called when any interaction occurs with the node and it needs to be
     /// updated.
-    func updated(node: DisplayNode) {
+    public func updated(node: DisplayNode) {
         // Bring node to front under overlay
         bringSubview(toFront: node)
         bringSubview(toFront: overlayView)
@@ -155,7 +155,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     }
     
     /// Removes a ndoe from the canvas.
-    func remove(node: DisplayNode) {
+    public func remove(node: DisplayNode) {
         assert(nodes.contains(node))
         assert(node.canvas == self)
         

@@ -7,18 +7,17 @@
 //
 
 import Foundation
-
-class ArrayCreateNode: DisplayableNode {
-    static let shortcutCharacter: String? = "A"
+public class ArrayCreateNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "A"
     
-    static let id: String = "array-create"
-    static let name: String = "Create Array"
-    var output: NodeOutput = .value(OutputValue(type: .array(.unknown)))
-    var contentView: DisplayableNodeContentView? { return input }
+    public static let id: String = "array-create"
+    public static let name: String = "Create Array"
+    public let output: NodeOutput = .value(OutputValue(type: .array(.unknown)))
+    public var contentView: DisplayableNodeContentView? { return input }
     
     var input: GenericInputView!
     
-    required init() {
+    public required init() {
         input = GenericInputView(node: self, fields: [
             GenericInputViewField(name: "Value Type", defaultValue: "Int")
         ])
@@ -26,114 +25,109 @@ class ArrayCreateNode: DisplayableNode {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         return "[\(input.fields[0].value)]()"
     }
 }
-
-class ArrayAppendNode: DisplayableNode {
-    static let shortcutCharacter: String? = "A"
+public class ArrayAppendNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "A"
     
-    static let id: String = "array-appent"
-    static let name: String = "Append to Array"
-    var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [
+    public static let id: String = "array-appent"
+    public static let name: String = "Append to Array"
+    public let inputTrigger: InputTrigger? = InputTrigger()
+    public let inputValues: [InputValue] = [
         InputValue(id: "array", name: "Array", type: .array(.unknown)),
         InputValue(id: "value", name: "Value", type: .unknown)
     ]
-    var output: NodeOutput = .triggers([OutputTrigger()])
+    public let output: NodeOutput = .triggers([OutputTrigger()])
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var out = ""
         out !+= "\(inputValues[0].assemble()).append(\(inputValues[1].assemble()))"
         return out + assembleOutputTrigger()
     }
 }
-
-class ArraySetAtNode: DisplayableNode {
-    static let shortcutCharacter: String? = "A"
+public class ArraySetAtNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "A"
     
-    static let id: String = "array-set-at"
-    static let name: String = "Set At Index"
-    var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [
+    public static let id: String = "array-set-at"
+    public static let name: String = "Set At Index"
+    public let inputTrigger: InputTrigger? = InputTrigger()
+    public let inputValues: [InputValue] = [
         InputValue(id: "array", name: "Array", type: .array(.unknown)),
         InputValue(id: "index", name: "Index", type: .int),
         InputValue(id: "value", name: "Value", type: .unknown)
     ]
-    var output: NodeOutput = .triggers([OutputTrigger()])
+    public let output: NodeOutput = .triggers([OutputTrigger()])
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var out = ""
         out !+= "\(inputValues[0].assemble())[\(inputValues[1].assemble())] = \(inputValues[2].assemble())"
         return out + assembleOutputTrigger()
     }
 }
-
-class ArrayGetAtNode: DisplayableNode {
-    static let shortcutCharacter: String? = "A"
+public class ArrayGetAtNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "A"
     
-    static let id: String = "array-get-at"
-    static let name: String = "Get At Index"
-    var inputValues: [InputValue] = [
+    public static let id: String = "array-get-at"
+    public static let name: String = "Get At Index"
+    public let inputValues: [InputValue] = [
         InputValue(id: "array", name: "Array", type: .array(.unknown)),
         InputValue(id: "index", name: "Index", type: .int)
     ]
-    var output: NodeOutput = .value(OutputValue(type: .unknown))
+    public let output: NodeOutput = .value(OutputValue(type: .unknown))
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         return "\(inputValues[0].assemble())[\(inputValues[1].assemble())]"
     }
 }
-
-class ArrayRemoveAtNode: DisplayableNode {
-    static let shortcutCharacter: String? = "A"
+public class ArrayRemoveAtNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "A"
     
-    static let id: String = "array-remove-at"
-    static let name: String = "Remove At Index"
-    var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [
+    public static let id: String = "array-remove-at"
+    public static let name: String = "Remove At Index"
+    public let inputTrigger: InputTrigger? = InputTrigger()
+    public let inputValues: [InputValue] = [
         InputValue(id: "array", name: "Array", type: .array(.unknown)),
         InputValue(id: "index", name: "Index", type: .int)
     ]
-    var output: NodeOutput = .triggers([OutputTrigger()])
+    public let output: NodeOutput = .triggers([OutputTrigger()])
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var out = ""
         out !+= "\(inputValues[0].assemble()).remove(at: \(inputValues[1].assemble()))"
         return out + assembleOutputTrigger()
     }
 }
-
-class ArrayCountNode: DisplayableNode {
-    static let shortcutCharacter: String? = "A"
+public class ArrayCountNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "A"
     
-    static let id: String = "array-count"
-    static let name: String = "Value Count"
-    var inputValues: [InputValue] = [InputValue(id: "array", name: "Array", type: .array(.unknown))]
-    var output: NodeOutput = .value(OutputValue(type: .int))
+    public static let id: String = "array-count"
+    public static let name: String = "Value Count"
+    public let inputValues: [InputValue] = [InputValue(id: "array", name: "Array", type: .array(.unknown))]
+    public let output: NodeOutput = .value(OutputValue(type: .int))
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         return "\(inputValues[0].assemble()).count"
     }
 }

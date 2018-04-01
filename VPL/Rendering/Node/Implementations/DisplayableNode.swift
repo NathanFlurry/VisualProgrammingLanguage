@@ -24,6 +24,8 @@ public let defaultNodes: [DisplayableNode.Type] = [
     MultiplyNode.self,
     DivideNode.self,
     ModuloNode.self,
+    RandomIntNode.self,
+    RandomFloatNode.self,
     EqualsNode.self,
     
     ArrayCreateNode.self,

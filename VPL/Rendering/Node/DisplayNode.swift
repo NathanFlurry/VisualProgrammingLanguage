@@ -10,7 +10,7 @@ import UIKit
 
 public class DisplayNode: UIView, UIGestureRecognizerDelegate {
     /// The underlying node data.
-    var node: DisplayableNode
+    public let node: DisplayableNode
     
     /// Canvas that this node is displayed in.
     weak var canvas: DisplayNodeCanvas?

@@ -24,6 +24,8 @@ public let defaultNodes: [DisplayableNode.Type] = [
     MultiplyNode.self,
     DivideNode.self,
     ModuloNode.self,
+    RandomIntNode.self,
+    RandomFloatNode.self,
     EqualsNode.self,
     
     ArrayCreateNode.self,
@@ -56,9 +58,9 @@ public protocol DisplayableNode: Node {
 }
 
 extension DisplayableNode {
-    static var shortcutCharacter: String? { return nil }
+    public static var shortcutCharacter: String? { return nil }
     
-    static var destroyable: Bool { return true }
+    public static var destroyable: Bool { return true }
     
-    var contentView: DisplayableNodeContentView? { return nil }
+    public var contentView: DisplayableNodeContentView? { return nil }
 }

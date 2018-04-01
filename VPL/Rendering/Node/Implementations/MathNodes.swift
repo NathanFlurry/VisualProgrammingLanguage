@@ -67,6 +67,39 @@ public class ModuloNode: MathNode {
         return "(\(inputA.assemble()) % \(inputB.assemble()))"
     }
 }
+
+public class RandomIntNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "M"
+    
+    public static let id: String = "random-in"
+    public static let name: String = "Random Integer"
+    public let output: NodeOutput = .value(OutputValue(type: .int))
+    
+    public required init() {
+        self.setupConnections()
+    }
+    
+    public func assemble() -> String {
+        return "(arc4random() as Int)"
+    }
+}
+
+public class RandomFloatNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "M"
+    
+    public static let id: String = "random-float"
+    public static let name: String = "Random Float"
+    public let output: NodeOutput = .value(OutputValue(type: .float))
+    
+    public required init() {
+        self.setupConnections()
+    }
+    
+    public func assemble() -> String {
+        return "(Float(arc4random()) / Float(UINT32_MAX))"
+    }
+}
+
 public class EqualsNode: DisplayableNode {
     public static let shortcutCharacter: String? = "E"
     

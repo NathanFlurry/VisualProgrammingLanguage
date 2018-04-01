@@ -19,13 +19,23 @@ public class CanvasViewController: UIViewController {
     var outputView: CodeOutputView!
     
     /// Canvas that holds all of the nodes
-    var nodeCanvas: DisplayNodeCanvas!
+    public let canvas: DisplayNodeCanvas
     
     /// Canvas for all of the drawing for quick shortcuts
     var drawingCanvas: DrawingCanvas!
     
     /// Timer for committing shortcuts
     var commitDrawingTimer: Timer?
+    
+    public init() {
+        canvas = DisplayNodeCanvas(frame: CGRect.zero)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +50,20 @@ public class CanvasViewController: UIViewController {
         outputView.heightAnchor.constraint(equalToConstant: isInPlayground ? 260 : 180).activate()
 
         // Add the node canvas
-        nodeCanvas = DisplayNodeCanvas(frame: view.bounds)
-        nodeCanvas.updateCallback = {
-            let assembled = self.nodeCanvas.assemble()
+        canvas.updateCallback = {
+            let assembled = self.canvas.assemble()
             self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))
         }
-        view.addSubview(nodeCanvas)
-        nodeCanvas.translatesAutoresizingMaskIntoConstraints = false
-        nodeCanvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
-        nodeCanvas.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
-        nodeCanvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
-        nodeCanvas.bottomAnchor.constraint(equalTo: outputView.topAnchor).activate()
+        view.addSubview(canvas)
+        canvas.translatesAutoresizingMaskIntoConstraints = false
+        canvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
+        canvas.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
+        canvas.topAnchor.constraint(equalTo: view.topAnchor).activate()
+        canvas.bottomAnchor.constraint(equalTo: outputView.topAnchor).activate()
         
         // Add drawing canvas
-        drawingCanvas = DrawingCanvas(frame: nodeCanvas.bounds)
-        nodeCanvas.backgroundView = drawingCanvas
+        drawingCanvas = DrawingCanvas(frame: canvas.bounds)
+        canvas.backgroundView = drawingCanvas
         drawingCanvas.onInputStart = {
             // Cancel the timer
             self.commitDrawingTimer?.invalidate()
@@ -125,7 +134,7 @@ public class CanvasViewController: UIViewController {
         
         // Create and insert the display node
         let displayNode = DisplayNode(node: node)
-        nodeCanvas.insert(node: displayNode, at: position)
+        canvas.insert(node: displayNode, at: position)
         
         return displayNode
     }

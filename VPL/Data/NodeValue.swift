@@ -10,7 +10,7 @@ import Foundation
 
 public final class InputValue {
     /// The node that owns this value.
-    weak var owner: Node!
+    public internal(set) weak var owner: Node!
     
     /// An identifier for this value.
     public let id: String
@@ -31,12 +31,12 @@ public final class InputValue {
     }
     
     /// Determines if two values can be connected.
-    func canConnect(to newTarget: OutputValue) -> Bool {
+    public func canConnect(to newTarget: OutputValue) -> Bool {
         return newTarget.canConnect(to: self)
     }
     
     /// Connects this value to another value.
-    func connect(to newTarget: OutputValue) {
+    public func connect(to newTarget: OutputValue) {
         // Set the new target
         target = newTarget
         
@@ -47,7 +47,7 @@ public final class InputValue {
     }
     
     /// Disconnects any targets this is connected to.
-    func reset() {
+    public func reset() {
         // Remove the target
         let tmpTarget = target
         target = nil
@@ -66,7 +66,7 @@ public final class InputValue {
 
 public final class OutputValue {
     /// The node that owns this value
-    weak var owner: Node!
+    public internal(set) weak var owner: Node!
     
     /// The type of value this holds.
     public let type: ValueType
@@ -79,12 +79,12 @@ public final class OutputValue {
     }
     
     /// Determines if two values can be connected.
-    func canConnect(to newTarget: InputValue) -> Bool {
+    public func canConnect(to newTarget: InputValue) -> Bool {
         return type.canCast(to: newTarget.type) && owner !== newTarget.owner && target == nil && newTarget.target == nil
     }
     
     /// Connects this value to another value.
-    func connect(to newTarget: InputValue) {
+    public func connect(to newTarget: InputValue) {
         // Set the new target
         target = newTarget
         
@@ -95,7 +95,7 @@ public final class OutputValue {
     }
     
     /// Disconnects any targets this is connected to.
-    func reset() {
+    public func reset() {
         // Remove the target
         let tmpTarget = target
         target = nil

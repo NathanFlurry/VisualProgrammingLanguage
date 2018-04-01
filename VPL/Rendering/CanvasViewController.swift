@@ -19,13 +19,23 @@ public class CanvasViewController: UIViewController {
     var outputView: CodeOutputView!
     
     /// Canvas that holds all of the nodes
-    public private(set) var canvas: DisplayNodeCanvas!
+    public let canvas: DisplayNodeCanvas
     
     /// Canvas for all of the drawing for quick shortcuts
     var drawingCanvas: DrawingCanvas!
     
     /// Timer for committing shortcuts
     var commitDrawingTimer: Timer?
+    
+    public init() {
+        canvas = DisplayNodeCanvas(frame: CGRect.zero)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +50,6 @@ public class CanvasViewController: UIViewController {
         outputView.heightAnchor.constraint(equalToConstant: isInPlayground ? 260 : 180).activate()
 
         // Add the node canvas
-        canvas = DisplayNodeCanvas(frame: view.bounds)
         canvas.updateCallback = {
             let assembled = self.canvas.assemble()
             self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))

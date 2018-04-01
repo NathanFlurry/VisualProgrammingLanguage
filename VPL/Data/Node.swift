@@ -10,6 +10,24 @@ import Foundation
 
 public enum NodeOutput {
     case triggers([OutputTrigger]), value(OutputValue), none
+    
+    /// Returns the triggers, if a triggers type.
+    public var triggers: [OutputTrigger]? {
+        if case let .triggers(triggers) = self {
+            return triggers
+        } else {
+            return nil
+        }
+    }
+    
+    /// Returns the value, if a value type.
+    public var value: OutputValue? {
+        if case let .value(value) = self {
+            return value
+        } else {
+            return nil
+        }
+    }
 }
 
 public protocol Node: class {
@@ -36,7 +54,7 @@ extension Node {
     /// Finds the first available input trigger. If this node has an input
     /// trigger, it returns that. Othwerise, it follows the output value until
     /// it finds an input trigger.
-    var closestInputTrigger: InputTrigger? {
+    public var closestInputTrigger: InputTrigger? {
         if let trigger = inputTrigger {
             return trigger
         } else if case let .value(value) = output {
@@ -47,13 +65,13 @@ extension Node {
     }
     
     /// Variables that this node can use.
-    var availableVariables: [NodeVariable] {
+    public var availableVariables: [NodeVariable] {
         // Add variables available from all parent triggers
         let trigger  = closestInputTrigger
         return (trigger?.target?.exposedVariables ?? []) + (trigger?.target?.owner.availableVariables ?? [])
     }
     
-    func setupConnections() {
+    public func setupConnections() {
         inputTrigger?.owner = self
         for value in inputValues { value.owner = self }
         for variable in inputVariables { variable.owner = self }
@@ -67,7 +85,7 @@ extension Node {
         }
     }
     
-    func destroy() {
+    public func destroy() {
         inputTrigger?.reset()
         for value in inputValues { value.reset() }
         switch output {
@@ -80,7 +98,7 @@ extension Node {
         }
     }
     
-    func assembleOutputTrigger(id: String? = nil) -> String {
+    public func assembleOutputTrigger(id: String? = nil) -> String {
         if case let .triggers(triggers) = output {
             if let id = id {
                 if let trigger = triggers.first(where: { $0.id == id }) {

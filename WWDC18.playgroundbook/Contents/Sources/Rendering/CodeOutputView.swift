@@ -68,13 +68,30 @@ class CodeOutputView: UIView {
     private func stylize(code: String) -> NSMutableAttributedString {
         // Process the code
         let string = NSMutableAttributedString(string: code)
-        let words = code.split { splitCharacters.contains(String($0)) }.map { String($0) }
-        
+
         // Stylize the keywords
-        for word in words {
-            if keywords.contains(word) {
-                let range = (string.string as NSString).range(of: word)
-                let color = UIColor(red: 0.66, green: 0.51, blue: 0.57, alpha: 1.0)
+        let color = UIColor(red: 0.66, green: 0.51, blue: 0.57, alpha: 1.0)
+        for keyword in keywords {
+            var searchCode = code[code.startIndex..<code.endIndex]
+            while let keywordRange = searchCode.range(of: keyword) {
+                // Replace the code to search
+                searchCode = searchCode[keywordRange.upperBound..<code.endIndex]
+                
+                // Make sure that it's surrounded by split characters or at the
+                // edge of the string
+                if let prevIndex = code.index(keywordRange.lowerBound, offsetBy: -1, limitedBy: code.startIndex) {
+                    if !splitCharacters.contains(String(code[prevIndex])) {
+                        continue
+                    }
+                }
+                if let nextIndex = code.index(keywordRange.upperBound, offsetBy: 1, limitedBy: code.endIndex) {
+                    if !splitCharacters.contains(String(code[nextIndex])) {
+                        continue
+                    }
+                }
+                
+                // Updates the attributes
+                let range = NSRange(keywordRange, in: code)
                 string.addAttribute(NSAttributedStringKey.foregroundColor, value: color, range: range)
             }
         }

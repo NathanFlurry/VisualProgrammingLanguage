@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DisplayNode: UIView, UIGestureRecognizerDelegate {
+public class DisplayNode: UIView, UIGestureRecognizerDelegate {
     /// The underlying node data.
-    var node: DisplayableNode
+    public let node: DisplayableNode
     
     /// Canvas that this node is displayed in.
     weak var canvas: DisplayNodeCanvas?
@@ -19,9 +19,9 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
     var sockets: [DisplayNodeSocket] = []
     
     /// The content view for this node.
-    var contentView: DisplayableNodeContentView?
+    public var contentView: DisplayableNodeContentView?
     
-    init(node: DisplayableNode) {
+    public init(node: DisplayableNode) {
         // Save the node and canvas
         self.node = node
         
@@ -129,7 +129,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    required init(coder: NSCoder) {
+    public required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -209,7 +209,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         canvas?.remove(node: self)
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         // Size to fit content
         frame.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
     }
@@ -247,7 +247,7 @@ class DisplayNode: UIView, UIGestureRecognizerDelegate {
         layer.add(groupAnim, forKey: "shadowAnim")
     }
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         // If the content view absorbs touches, make sure the touch isn't inside
         if let contentView = contentView, contentView.absorbsTouches {
             return !contentView.point(inside: touch.location(in: contentView), with: nil)

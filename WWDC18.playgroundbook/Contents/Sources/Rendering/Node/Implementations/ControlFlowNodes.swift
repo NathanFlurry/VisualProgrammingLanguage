@@ -7,21 +7,20 @@
 //
 
 import UIKit
-
-class IfNode: DisplayableNode {
-    static let shortcutCharacter: String? = "I"
+public class IfNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "I"
     
-    static let id: String = "if"
-    static let name: String = "If"
-    var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [InputValue(id: "condition", name: "Condition", type: .bool)]
-    var output: NodeOutput = .triggers([OutputTrigger(), OutputTrigger(id: "true", name: "True"), OutputTrigger(id: "false", name: "False")])
+    public static let id: String = "if"
+    public static let name: String = "If"
+    public let inputTrigger: InputTrigger? = InputTrigger()
+    public let inputValues: [InputValue] = [InputValue(id: "condition", name: "Condition", type: .bool)]
+    public let output: NodeOutput = .triggers([OutputTrigger(), OutputTrigger(id: "true", name: "True"), OutputTrigger(id: "false", name: "False")])
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var out = ""
         out !+= "if \(inputValues[0].assemble()) {"
         out !!+= assembleOutputTrigger(id: "true")
@@ -31,15 +30,14 @@ class IfNode: DisplayableNode {
         return out + assembleOutputTrigger()
     }
 }
-
-class ForLoopNode: DisplayableNode {
-    static let shortcutCharacter: String? = "F"
+public class ForLoopNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "F"
     
-    static let id: String = "for"
-    static var name: String = "For Loop"
-    var inputTrigger: InputTrigger? = InputTrigger()
-    var inputValues: [InputValue] = [InputValue(id: "from", name: "From", type: .int), InputValue(id: "to", name: "To", type: .int)]
-    var output: NodeOutput = .triggers([
+    public static let id: String = "for"
+    public static let name: String = "For Loop"
+    public let inputTrigger: InputTrigger? = InputTrigger()
+    public let inputValues: [InputValue] = [InputValue(id: "from", name: "From", type: .int), InputValue(id: "to", name: "To", type: .int)]
+    public let output: NodeOutput = .triggers([
         OutputTrigger(),
         OutputTrigger(id: "loop", name: "Loop", exposedVariables: [NodeVariable(name: "Index", type: .int)])
     ])
@@ -52,11 +50,11 @@ class ForLoopNode: DisplayableNode {
         }
     }
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var out = ""
         out !+= "for \(indexVariable.id) in (\(inputValues[0].assemble()))..<(\(inputValues[1].assemble())) {"
         out !!+= assembleOutputTrigger(id: "loop")

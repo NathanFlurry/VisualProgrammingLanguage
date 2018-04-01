@@ -11,19 +11,24 @@
  + Note:
  Due to sandbox constrains, this playground cannot run the code. Feel free to tap the copy button and paste it into a new playground.
  
- + Callout(Challenge):
- Try adding another if statement after the first to determine if the number is divisible evenly by 3.
+ The canvas makes use of CoreML and a neural network classifier in order to provide character recognition to quickly create nodes. Try adding code to print "ODD" if the number is not even. You can draw a single character anywhere on the canvas and the corresponding node will spawn there.
  
- The canvas makes use of CoreML and a neural network classifier in order to provide character recognition to quickly create nodes. Try adding code to print "ODD" if the number is not even.
+ + Callout(Models used):
+ The `NIST Special Database 19` dataset is used for alphanumeric inputs and the `MNIST` database is used for digit input.
  
  1. Draw *P* to spawn a `Print` [node](glossary://node).
- 2. Drag a line from the [output](glossary://output) [trigger](glossary://trigger) [socket](glossary://socket) labeled `False` on the `If` node to the [input](glossary://input) [trigger](glossary://trigger) [socket](glossary://socket) on the newly created `Print` node. You should see this change reflected in the output.
- 3. Draw *C* and tap "String Constant" to spawn a `String Constant` node.
- 4. `Integer` and `String Constant` nodes provide a small drawing area to input data, seen by the textured box on the bottom of the `String Constant` node. Write the text "ODD" (printed in all capitals) in the text area to define what is printed.
- 5. Now connect the [output](glossary://output) [value](glossary://value) [socket](glossary://socket) labeled `Output` to the [input](glossary://input) [value](glossary://value) [socket](glossary://socket) labelled `Value` on the `Print` node.
+ 
+ + Note:
+ To get a full list of available nodes with their corresponding shortcuts, draw *X*.
  
  + Important:
  At the moment, the handwriting recognition is only allows capital letters and numbers. Additionally, the accuracy is limited, so please make sure that your characters are printed and neat.
+ 
+ 2. Drag a line from the [output](glossary://output) [trigger](glossary://trigger) [socket](glossary://socket) labeled `False` on the `If` node to the [input](glossary://input) [trigger](glossary://trigger) [socket](glossary://socket) on the newly created `Print` node. You should see this change reflected in the output.
+ 
+ 3. Draw *C* and tap "String Constant" to spawn a `String Constant` node.
+ 
+ 4. `Integer` and `String Constant` nodes provide a small drawing area to input data, seen by the textured box on the bottom of the `String Constant` node. Write the text "ODD" (printed in all capitals) in the text area to define what is printed.
  
  + Important:
  The `Vision` framework only recognizes clusters of characters, not individual characters. If you want to type lowercase or short strings, tape the small "i" at the bottom right of the node to enter the constant manually.
@@ -31,12 +36,12 @@
  + Note:
  The drawing pad for the `Integer` and `String Constant` nodes scroll to the right once you reach the gray area on the right of the drawing area so you can write longer strings in there.
  
- + Callout(Models used):
- The `NIST Special Database 19` dataset is used for alphanumeric inputs and the `MNIST` database is used for digit input.
+ 5. Now connect the [output](glossary://output) [value](glossary://value) [socket](glossary://socket) labeled `Output` to the [input](glossary://input) [value](glossary://value) [socket](glossary://socket) labelled `Value` on the `Print` node.
  
- *Congratulations!* You just finished your first visual program.
+ **Congratulations!** You just finished your first visual program. 🎉
  
  + Callout(Challenge):
  Try adding another if statement after the first to determine if the number is divisible evenly by 3.
  
  */
+

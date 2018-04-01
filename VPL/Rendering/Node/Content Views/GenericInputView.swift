@@ -78,18 +78,22 @@ public class GenericInputViewField: UIView {
             handler: { _ in
                 let textField = alert.textFields![0]
                 if let text = textField.text {
-                    // Update the value
-                    self.value = text
-                    self.valueLabel.text = text
-                    
-                    // Value change callback
-                    self.valueChangeCallback?()
+                    self.set(value: text)
                 }
             }
         )
         alert.addAction(cancelAction)
         alert.addAction(doneAction)
         parentViewController?.present(alert, animated: true)
+    }
+    
+    func set(value: String) {
+        // Update the value
+        self.value = text
+        self.valueLabel.text = text
+        
+        // Value change callback
+        self.valueChangeCallback?()
     }
 }
 

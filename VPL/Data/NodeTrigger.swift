@@ -10,7 +10,7 @@ import Foundation
 
 public final class InputTrigger {
     /// The node that owns this trigger.
-    weak var owner: Node!
+    public internal(set) weak var owner: Node!
     
     /// The connected trigger.
     public private(set) var target: OutputTrigger?
@@ -20,12 +20,12 @@ public final class InputTrigger {
     }
     
     /// Determines if two triggers can be connected.
-    func canConnect(to newTarget: OutputTrigger) -> Bool {
+    public func canConnect(to newTarget: OutputTrigger) -> Bool {
         return newTarget.canConnect(to: self)
     }
     
     /// Connects this trigger to another trigger.
-    func connect(to newTarget: OutputTrigger) {
+    public func connect(to newTarget: OutputTrigger) {
         // Set the new target
         target = newTarget
         
@@ -36,7 +36,7 @@ public final class InputTrigger {
     }
     
     /// Disconnects any targets this is connected to.
-    func reset() {
+    public func reset() {
         // Remove the target
         let tmpTarget = target
         target = nil
@@ -50,7 +50,7 @@ public final class InputTrigger {
 
 public final class OutputTrigger {
     /// The node that owns this trigger
-    weak var owner: Node!
+    public internal(set) weak var owner: Node!
     
     /// An identifier for this trigger.
     public let id: String
@@ -75,17 +75,17 @@ public final class OutputTrigger {
         }
     }
     
-    convenience init(exposedVariables: [NodeVariable] = []) {
+    public convenience init(exposedVariables: [NodeVariable] = []) {
         self.init(id: "next", name: "Next", exposedVariables: exposedVariables)
     }
     
     /// Determines if two triggers can be connected.
-    func canConnect(to newTarget: InputTrigger) -> Bool {
+    public func canConnect(to newTarget: InputTrigger) -> Bool {
         return owner !== newTarget.owner && target == nil && newTarget.target == nil
     }
     
     /// Connects this trigger to another trigger.
-    func connect(to newTarget: InputTrigger) {
+    public func connect(to newTarget: InputTrigger) {
         // Set the new target
         target = newTarget
         
@@ -96,7 +96,7 @@ public final class OutputTrigger {
     }
     
     /// Disconnects any targets this is connected to.
-    func reset() {
+    public func reset() {
         // Remove the target
         let tmpTarget = target
         target = nil

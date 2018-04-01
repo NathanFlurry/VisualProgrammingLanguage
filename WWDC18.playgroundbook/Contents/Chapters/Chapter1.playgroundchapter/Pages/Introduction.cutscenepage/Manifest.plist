@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Name</key>
-	<string>Introduction</string>
+	<string>Preface</string>
 	<key>CutsceneReference</key>
 	<string>index.html</string>
 </dict>
