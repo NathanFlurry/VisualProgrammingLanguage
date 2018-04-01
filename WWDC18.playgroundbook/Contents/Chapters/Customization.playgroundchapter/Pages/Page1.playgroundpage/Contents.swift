@@ -14,6 +14,8 @@ import PlaygroundSupport
 import UIKit
 
 let canvasViewController = CanvasViewController()
+let canvas = canvasViewController.canvas
+let baseNode = canvas.baseNode!
 
 PlaygroundPage.current.liveView = canvasViewController
 //#-end-hidden-code
@@ -105,4 +107,36 @@ canvasViewController.spawnableNodes += [SplitStringNode.self, DoCatchNode.self]
 
 //#-editable-code
 //#-end-editable-code
+
+//#-hidden-code
+@discardableResult
+func const(base: DisplayNode, def: String, inputIndex: Int = 0) -> DisplayNode {
+    let node = canvas.insert(node: IntConstNode(), base: base, offset: CGPoint(x: -300, y: 225))
+    (node.node.contentView! as! DrawCanvasNodeView).value = def
+    node.node.output.value!.connect(to: base.node.inputValues[inputIndex])
+    return node
+}
+
+@discardableResult
+func getVar(base: DisplayNode, inputIndex: Int, targetTrigger: OutputTrigger, offset: CGPoint) -> DisplayNode {
+    let node = canvas.insert(node: GetVariableNode(), base: base, offset: offset)
+    node.node.output.value!.connect(to: base.node.inputValues[inputIndex])
+    node.node.inputVariables[0].connect(to: targetTrigger.exposedVariables[0])
+    return node
+}
+
+let doCatch = canvas.insert(node: DoCatchNode(), base: baseNode, offset: CGPoint(x: 250, y: 0))
+baseNode.node.output.triggers![0].connect(to: doCatch.node.inputTrigger!)
+
+let pr = canvas.insert(node: PrintNode(), base: doCatch, offset: CGPoint(x: 400, y: 0))
+pr.node.inputTrigger!.connect(to: doCatch.node.output.triggers![2])
+
+let spl = canvas.insert(node: SplitStringNode(), base: pr, offset: CGPoint(x: 0, y: 200))
+spl.node.output.value!.connect(to: pr.node.inputValues[0])
+
+getVar(base: spl, inputIndex: 0, targetTrigger: doCatch.node.output.triggers![2], offset: CGPoint(x: -425, y: 0))
+
+const(base: spl, def: " ")
+
+//#-end-hidden-code
 
