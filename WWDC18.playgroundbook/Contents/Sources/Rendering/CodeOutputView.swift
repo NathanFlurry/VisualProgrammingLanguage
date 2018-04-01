@@ -22,7 +22,7 @@ class CodeOutputView: UIView {
             "willSet"
     ]
     
-    let splitCharacters: [String] = [ "\n", " ", "{", "}", "(", ")", "[", "]" ]
+    let splitCharacters: [String] = [ "\n", "at ", "{", "}", "(", ")", "[", "]" ]
     
     var code: String = ""
     

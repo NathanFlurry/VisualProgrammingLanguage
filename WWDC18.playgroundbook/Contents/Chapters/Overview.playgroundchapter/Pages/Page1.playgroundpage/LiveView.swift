@@ -26,3 +26,4 @@ ifNode.node.output.triggers![1].connect(to: pr.node.inputTrigger!)
 
 let cEven = canvas.insert(node: StringConstNode(), base: pr, offset: CGPoint(x: 0, y: 200))
 cEven.node.output.value!.connect(to: pr.node.inputValues[0])
+(cEven.node.contentView! as! DrawCanvasNodeView).value = "EVEN"

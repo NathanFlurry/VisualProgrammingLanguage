@@ -1,5 +1,5 @@
 /***
- From: https://github.com/martinmitrevski/TextRecognizer/blob/master/TextRecognizer/ImageUtils.swift
+ Some tools adapted from: https://github.com/martinmitrevski/TextRecognizer/blob/master/TextRecognizer/ImageUtils.swift
  ***/
 
 import Foundation
