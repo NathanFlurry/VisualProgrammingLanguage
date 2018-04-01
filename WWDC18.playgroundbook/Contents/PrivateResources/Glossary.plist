@@ -7,7 +7,62 @@
 		<key>VPL</key>
 		<dict>
 			<key>Definition</key>
-			<string>Visual Programming Langauge</string>
+			<string>Visual programming language. These come in three flavors: blocks, graphs, and flow charts. This specific VPL is a graph visual programming language.</string>
+		</dict>
+		<key>node</key>
+		<dict>
+			<key>Definition</key>
+			<string>A box that represents a certain action or piece data. Nodes connect together using sockets to create more complex behavior.</string>
+		</dict>
+		<key>socket</key>
+		<dict>
+			<key>Definition</key>
+			<string>A the circles on the left and right edges of nodes that connect nodes together to define their behavior.</string>
+		</dict>
+		<key>input</key>
+		<dict>
+			<key>Definition</key>
+			<string>Sockets on the left side of nodes that can be connected to outputs. These may be either triggers, values, or variable references.</string>
+		</dict>
+		<key>output</key>
+		<dict>
+			<key>Definition</key>
+			<string>Sockets on the right side of nodes that can be connected to inputs. These may be either values or triggers.</string>
+		</dict>
+		<key>nearest control node</key>
+		<dict>
+			<key>Definition</key>
+			<string>The nearest node that has an input trigger. For example, the “equals” node only has output values and no input triggers. If the “equals” node is connected to an “if” node, then the “if” node is the nearest control node, since it has an input variable.</string>
+		</dict>
+		<key>child node</key>
+		<dict>
+			<key>Definition</key>
+			<string>A node that is a descendent of another node through trigger connections. All nodes are children of the start node. To be a child of another node, then doe’s input trigger must be connected to the parent’s output trigger. Nodes with no input triggers are also children of the nearest control node’s parents.</string>
+		</dict>
+		<key>control flow</key>
+		<dict>
+			<key>Definition</key>
+			<string>Similar to the traditional definition for control flow, this is he behavior of how code executes. A program begins at the start node and flows from output to input. Nodes like “for” and “if” allow for non-linear flow and repeating chunks of code. This is indicated by orange lines connecting trigger sockets.</string>
+		</dict>
+		<key>data flow</key>
+		<dict>
+			<key>Definition</key>
+			<string>The way that data is combined. Data is combined from output to input. This is indicated by blue lines connecting value sockets.</string>
+		</dict>
+		<key>trigger</key>
+		<dict>
+			<key>Definition</key>
+			<string>A socket used in constructing the control flow of the program. Nodes may only have one input trigger, but may have multiple output triggers, such as if statements or for loops, each of which have multiple output triggers. Triggers may also define variables that are available to any child nodes, such as how for loops define an index for the loop. If a trigger exposes a variable, it will show a small number indicating how many variables it exposes. These are indicated by the orange sockets.</string>
+		</dict>
+		<key>value</key>
+		<dict>
+			<key>Definition</key>
+			<string>A chunk of data, such as a number, string, or array.  These are indicated by blue sockets.</string>
+		</dict>
+		<key>variable</key>
+		<dict>
+			<key>Definition</key>
+			<string>A value holder available along a control flow. Variables are defined by output triggers and are available to any child nodes. Variable references are indicated by green input sockets which may be connected to output triggers that expose variables. Note that in order to connect a variable socket to a trigger, the variable socket must be a child of the socket (see “nearest control node”).</string>
 		</dict>
 	</dict>
 </dict>

@@ -1,57 +1,9 @@
-//#-hidden-code
-import UIKit
-//#-end-hidden-code
-
 /*:
- test test test
+ Welcome to the world of visual programming! This playground aims to demonstrate the basics visual programming and demonstrate its potential. The first few pages will get you acquainted with the basics of this [VPL](glossary://VPL). Each following page will challenge you to represent simple common algorithms using this [VPL](glossary://VPL).
  
- * a
- * b
- * c
+ Visual programs are constructed on a 2D canvas, such as the one you see to the right. Use to fingers and drag the canvas to look around.
+ 
+ - Note:
+ This playground assumes that the users is familiar with basic programming concepts, such as control flow and variables.
+ 
  */
-
-//
-//
-//let arraySize = /*#-editable-code*/50/*#-end-editable-code*/
-//
-////#-hidden-code
-//let array = VisualSortableArray.init(arraySize: arraySize)
-//
-//func compare(i: Int, j: Int) -> Int{
-//    return array.compare(i: i, j: j)
-//}
-//
-//func swap(i: Int, j: Int) -> Bool {
-//    return array.swap(i: i, j: j)
-//}
-//
-//func select(i: Int, j: Int) -> Bool {
-//    return array.select(i: i, j: j)
-//}
-//
-//PlaygroundPage.current.liveView = array.view
-//
-//DispatchQueue.global(qos: .background).async {
-//    sleep(2)
-////#-end-hidden-code
-//while true {
-//    var swapped = false
-//    
-//    for i in 1..<array.count {
-//        select(i: i, j: i-1)
-//        if compare(i: i, j: i-1) < 0{
-//            swap(i: i, j: i-1)
-//            swapped = true
-//        }
-//    }
-//    if !swapped {
-//        break
-//    }
-//}
-////#-hidden-code
-//}
-////#-end-hidden-code
-
-//#-editable-code
-print("hi")
-//#-end-editable-code
