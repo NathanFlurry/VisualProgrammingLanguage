@@ -73,8 +73,8 @@ extension UIView {
 }
 
 // Append code
-extension String {
-    mutating func append(code: String, indent: Int = 0) {
+public extension String {
+    public mutating func append(code: String, indent: Int = 0) {
         let indentString = String(repeating: "    ", count: indent)
         for line in code.split(separator: "\n") {
             self.append(indentString + line + "\n")
@@ -83,11 +83,11 @@ extension String {
 }
 
 infix operator !+=
-func !+=(lhs: inout String, rhs: String) {
+public func !+=(lhs: inout String, rhs: String) {
     lhs.append(code: rhs)
 }
 
 infix operator !!+=
-func !!+=(lhs: inout String, rhs: String) {
+public func !!+=(lhs: inout String, rhs: String) {
     lhs.append(code: rhs, indent: 1)
 }

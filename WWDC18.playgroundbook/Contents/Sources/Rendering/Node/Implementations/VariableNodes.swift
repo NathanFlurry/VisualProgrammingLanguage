@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 public class DeclareVariableNode: DisplayableNode {
     public static let shortcutCharacter: String? = "S"
     

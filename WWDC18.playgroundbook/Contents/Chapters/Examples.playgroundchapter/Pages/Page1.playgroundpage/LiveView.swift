@@ -8,21 +8,66 @@ PlaygroundPage.current.liveView = canvasViewController
 let canvas = canvasViewController.canvas
 let baseNode = canvas.baseNode!
 
-let ifNode = canvas.insert(node: IfNode(), base: baseNode, offset: CGPoint(x: 400, y: 0))
-baseNode.node.output.triggers![0].connect(to: ifNode.node.inputTrigger!)
+@discardableResult
+func const(base: DisplayNode, def: String, inputIndex: Int = 0) -> DisplayNode {
+    let node = canvas.insert(node: IntConstNode(), base: base, offset: CGPoint(x: -250, y: 250))
+    (node.node.contentView! as! DrawCanvasNodeView).value = def
+    node.node.output.value!.connect(to: base.node.inputValues[inputIndex])
+    return node
+}
 
-let eqNode = canvas.insert(node: EqualsNode(), base: ifNode, offset: CGPoint(x: -400, y: 200))
-ifNode.node.inputValues[0].connect(to: eqNode.node.output.value!)
+@discardableResult
+func getVar(base: DisplayNode, inputIndex: Int, targetTrigger: DisplayNode, offset: CGPoint) -> DisplayNode {
+    let node = canvas.insert(node: GetVariableNode(), base: base, offset: offset)
+    node.node.output.value!.connect(to: base.node.inputValues[inputIndex])
+    node.node.inputVariables[0].connect(to: targetTrigger.node.output.triggers![0].exposedVariables[0])
+    return node
+}
 
-let c1 = canvas.insert(node: RandomIntNode(), base: eqNode, offset: CGPoint(x: -300, y: -100))
-c1.node.output.value!.connect(to: eqNode.node.inputValues[0])
+// Up to for loop
+let var1 = canvas.insert(node: DeclareVariableNode(), base: baseNode, offset: CGPoint(x: 400, y: 0))
+baseNode.node.output.triggers![0].connect(to: var1.node.inputTrigger!)
 
-let c2 = canvas.insert(node: IntConstNode(), base: eqNode, offset: CGPoint(x: -300, y: 100))
-(c2.node.contentView! as! DrawCanvasNodeView).value = "2"
-c2.node.output.value!.connect(to: eqNode.node.inputValues[1])
+const(base: var1, def: "0")
 
-let pr = canvas.insert(node: PrintNode(), base: ifNode, offset: CGPoint(x: 400, y: -300))
-ifNode.node.output.triggers![1].connect(to: pr.node.inputTrigger!)
+let var2 = canvas.insert(node: DeclareVariableNode(), base: var1, offset: CGPoint(x: 400, y: 0))
+var1.node.output.triggers![0].connect(to: var2.node.inputTrigger!)
 
-let cEven = canvas.insert(node: StringConstNode(), base: pr, offset: CGPoint(x: 0, y: 200))
-cEven.node.output.value!.connect(to: pr.node.inputValues[0])
+const(base: var2, def: "1")
+
+let forNode = canvas.insert(node: ForLoopNode(), base: var2, offset: CGPoint(x: 400, y: 0))
+var2.node.output.triggers![0].connect(to: forNode.node.inputTrigger!)
+
+
+let loopStart = const(base: forNode, def: "0")
+loopStart.frame.origin.x -= 200
+let loopEnd = const(base: forNode, def: "10", inputIndex: 1)
+loopEnd.frame.origin.x += 150
+
+// Loop
+let var3 = canvas.insert(node: DeclareVariableNode(), base: forNode, offset: CGPoint(x: 650, y: 100))
+var3.node.inputTrigger!.connect(to: forNode.node.output.triggers![1])
+
+let add = canvas.insert(node: AddNode(), base: var3, offset: CGPoint(x: 0, y: 150))
+add.node.output.value!.connect(to: var3.node.inputValues[0])
+
+getVar(base: add, inputIndex: 0, targetTrigger: var1, offset: CGPoint(x: -350, y: -50))
+getVar(base: add, inputIndex: 1, targetTrigger: var2, offset: CGPoint(x: -350, y: 50))
+
+let set1 = canvas.insert(node: SetVariableNode(), base: var3, offset: CGPoint(x: 350, y: 0))
+set1.node.inputTrigger!.connect(to: var3.node.output.triggers![0])
+set1.node.inputVariables[0].connect(to: var1.node.output.triggers![0].exposedVariables[0])
+
+getVar(base: set1, inputIndex: 0, targetTrigger: var2, offset: CGPoint(x: 0, y: 150))
+
+let set2 = canvas.insert(node: SetVariableNode(), base: set1, offset: CGPoint(x: 400, y: 0))
+set2.node.inputTrigger!.connect(to: set1.node.output.triggers![0])
+set2.node.inputVariables[0].connect(to: var2.node.output.triggers![0].exposedVariables[0])
+
+getVar(base: set2, inputIndex: 0, targetTrigger: var3, offset: CGPoint(x: 0, y: 150))
+
+// Print
+let pr = canvas.insert(node: PrintNode(), base: forNode, offset: CGPoint(x: 350, y: -200))
+pr.node.inputTrigger!.connect(to: forNode.node.output.triggers![0])
+
+getVar(base: pr, inputIndex: 0, targetTrigger: var2, offset: CGPoint(x: 0, y: 150))
