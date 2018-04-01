@@ -43,6 +43,7 @@ class DisplayNodeCanvasOverlay: UIView {
                     let startPosition = socket.convert(CGPoint.zero, to: self)
                     drawSocketConnection(
                         context: ctx,
+                        fromInput: socket.type.isInput,
                         from: CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
                         to: CGPoint(x: startPosition.x + target.x, y: startPosition.y + target.y),
                         color: socket.type.connectionColor,
@@ -54,6 +55,7 @@ class DisplayNodeCanvasOverlay: UIView {
                     let endPosition = targetSocket.convert(CGPoint.zero, to: self)
                     drawSocketConnection(
                         context: ctx,
+                        fromInput: socket.type.isInput,
                         from: CGPoint(x: startPosition.x + socket.frame.width / 2, y: startPosition.y + socket.frame.height / 2),
                         to: CGPoint(x: endPosition.x + targetSocket.frame.width / 2, y: endPosition.y + targetSocket.frame.height / 2),
                         color: socket.type.connectionColor,
@@ -116,12 +118,14 @@ class DisplayNodeCanvasOverlay: UIView {
     }
     
     /// Draws a line between two points indicating a socket position
-    func drawSocketConnection(context ctx: CGContext, from: CGPoint, to: CGPoint, color: UIColor, label: String?) {
+    func drawSocketConnection(context ctx: CGContext, fromInput: Bool, from: CGPoint, to: CGPoint, color: UIColor, label: String?) {
         // Draw the line
         ctx.setLineCap(.round)
         ctx.setLineWidth(8)
         ctx.setStrokeColor(color.cgColor)
-        ctx.addLines(between: [from, to])
+        ctx.move(to: from)
+        let controlDistance: CGFloat = 75 * (fromInput ? -1 : 1)
+        ctx.addCurve(to: to, control1: CGPoint(x: from.x + controlDistance, y: from.y), control2: CGPoint(x: to.x - controlDistance, y: to.y))
         ctx.strokePath()
         
         if let label = label {

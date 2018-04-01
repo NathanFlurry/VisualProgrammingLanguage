@@ -31,7 +31,16 @@ enum DisplayNodeSocketType: Equatable {
         case .inputValue(_), .outputValue(_):
             return UIColor(red: 0.65, green: 0.93, blue: 1.0, alpha: 1.0)
         case .inputVariable(_):
-            return UIColor(red: 0.44, green: 1, blue: 0.74, alpha: 1.0)
+            return UIColor(red: 0.44, green: 1, blue: 0.74, alpha: 0.35)
+        }
+    }
+    
+    var isInput: Bool {
+        switch self {
+        case .inputTrigger(_), .inputValue(_), .inputVariable(_):
+            return true
+        case .outputValue(_), .outputTrigger(_):
+            return false
         }
     }
     
