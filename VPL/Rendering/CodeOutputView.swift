@@ -24,7 +24,11 @@ class CodeOutputView: UIView {
     
     let splitCharacters: [String] = [ " ", "{", "}", "(", ")", "[", "]" ]
     
+    var code: String = ""
+    
     var textView: UITextView = UITextView(frame: CGRect.zero)
+    
+    var copyButton: UIButton = UIButton()
     
     init() {
         super.init(frame: CGRect.zero)
@@ -49,6 +53,15 @@ class CodeOutputView: UIView {
         textView.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: 64).activate()
         textView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600).activate().setPriority(.defaultLow)
         
+        // Add copy button
+        copyButton.setTitle("Copy", for: .normal)
+        copyButton.setTitleColor(UIColor(white: 0.2, alpha: 1.0), for: .normal)
+        copyButton.addTarget(self, action: #selector(copyCode(sender:)), for: .touchUpInside)
+        addSubview(copyButton)
+        copyButton.translatesAutoresizingMaskIntoConstraints = false
+        copyButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).activate()
+        copyButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).activate()
+        
         // Render the code
         render(code: "")
     }
@@ -59,7 +72,11 @@ class CodeOutputView: UIView {
     
     func render(code: String) {
         // Get the code
+        self.code = code
         let code = code.count > 0 ? code : "No assembled code."
+        
+        // Show/hide button
+        copyButton.isHidden = code.count == 0
         
         // Update attributed text
         textView.attributedText = stylize(code: code)
@@ -100,5 +117,9 @@ class CodeOutputView: UIView {
         string.addAttribute(NSAttributedStringKey.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
         
         return string
+    }
+    
+    @objc func copyCode(sender: UIButton) {
+        UIPasteboard.general.string = code
     }
 }

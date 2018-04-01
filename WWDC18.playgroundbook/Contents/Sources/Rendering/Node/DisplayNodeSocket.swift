@@ -96,6 +96,8 @@ class DisplayNodeSocket: UIView {
     
     var shapeView: UIView = UIView()
     
+    var variablesText: UILabel?
+    
     var triangleShape: CAShapeLayer!
     
     init(frame: CGRect, type: DisplayNodeSocketType, node: DisplayNode) {
@@ -118,6 +120,22 @@ class DisplayNodeSocket: UIView {
         
         // Add a triangle
         self.triangleShape = addTriangle(size: CGSize(width: 6, height: 8))
+        
+        // Add variables text
+        if case let .outputTrigger(trigger) = type, trigger.exposedVariables.count > 0 {
+            let variablesText = UILabel()
+            self.variablesText = variablesText
+            variablesText.text = String(trigger.exposedVariables.count)
+            variablesText.font = UIFont.codeFont(size: 10)
+            variablesText.textAlignment = .center
+            variablesText.isUserInteractionEnabled = false
+            addSubview(variablesText)
+            variablesText.translatesAutoresizingMaskIntoConstraints = false
+            variablesText.widthAnchor.constraint(equalToConstant: 20).activate()
+            variablesText.heightAnchor.constraint(equalToConstant: 20).activate()
+            variablesText.rightAnchor.constraint(equalTo: rightAnchor).activate()
+            variablesText.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        }
         
         // Add drag gesture
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
