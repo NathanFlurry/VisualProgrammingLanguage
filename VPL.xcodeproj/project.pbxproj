@@ -42,7 +42,67 @@
 		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
 		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
 		BF86B73D205F0145006AEEA7 /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73C205F0144006AEEA7 /* ImageUtils.swift */; };
+		BF899E2E2070B47B008EC5EA /* VPLEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BF899E2C2070B47B008EC5EA /* VPLEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF899E312070B47B008EC5EA /* VPLEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF899E2A2070B47B008EC5EA /* VPLEditor.framework */; };
+		BF899E322070B47B008EC5EA /* VPLEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF899E2A2070B47B008EC5EA /* VPLEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF899E372070B4CA008EC5EA /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */; };
+		BF899E382070B4CA008EC5EA /* BaseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1B206C398F007AB6F2 /* BaseNode.swift */; };
+		BF899E392070B4CA008EC5EA /* ConstNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */; };
+		BF899E3A2070B4CA008EC5EA /* VariableNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */; };
+		BF899E3B2070B4CA008EC5EA /* ControlFlowNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA21206C39CA007AB6F2 /* ControlFlowNodes.swift */; };
+		BF899E3C2070B4CA008EC5EA /* MathNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA23206C39D9007AB6F2 /* MathNodes.swift */; };
+		BF899E3D2070B4CA008EC5EA /* ArrayNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C263206E2EF6002A148F /* ArrayNodes.swift */; };
+		BF899E3E2070B4CA008EC5EA /* DictionaryNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C265206E2EFE002A148F /* DictionaryNodes.swift */; };
+		BF899E3F2070B4CA008EC5EA /* MiscNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */; };
+		BF899E402070B4CE008EC5EA /* DisplayNodeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */; };
+		BF899E412070B4CE008EC5EA /* GenericInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */; };
+		BF899E422070B4CE008EC5EA /* ValueChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25F206E165B002A148F /* ValueChooserView.swift */; };
+		BF899E432070B4CE008EC5EA /* DrawCanvasNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */; };
+		BF899E442070B4CE008EC5EA /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */; };
+		BF899E452070B4CE008EC5EA /* DisplayNodeCanvasOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */; };
+		BF899E462070B4CE008EC5EA /* DisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECF2058631A007E2483 /* DisplayNode.swift */; };
+		BF899E472070B4CE008EC5EA /* DisplayNodeSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED420586439007E2483 /* DisplayNodeSocket.swift */; };
+		BF899E482070B4CE008EC5EA /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED02058631A007E2483 /* CanvasViewController.swift */; };
+		BF899E492070B4CE008EC5EA /* CodeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */; };
+		BF899E4A2070B4D1008EC5EA /* DrawingCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DED62058693E007E2483 /* DrawingCanvas.swift */; };
+		BF899E4B2070B4D1008EC5EA /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
+		BF899E4C2070B4D1008EC5EA /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73C205F0144006AEEA7 /* ImageUtils.swift */; };
+		BF899E4D2070B4D3008EC5EA /* MNIST.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF62C259206D9B7A002A148F /* MNIST.mlmodel */; };
+		BF899E4E2070B4D3008EC5EA /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
+		BF899E4F2070B4D3008EC5EA /* Chars74k.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF313B702066FFF7006EEA83 /* Chars74k.mlmodel */; };
+		BF899E502070B4D6008EC5EA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF19A6DA207058060046EFC5 /* background.png */; };
+		BF899E512070B4D6008EC5EA /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF19A6D9207058060046EFC5 /* background@2x.png */; };
+		BF899E522070B4D6008EC5EA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECA20586313007E2483 /* Utils.swift */; };
+		BF899E532070B51A008EC5EA /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* ValueType.swift */; };
+		BF899E542070B51A008EC5EA /* NodeTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */; };
+		BF899E552070B51A008EC5EA /* NodeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA32206C596F007AB6F2 /* NodeValue.swift */; };
+		BF899E562070B51A008EC5EA /* NodeVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25D206E1188002A148F /* NodeVariable.swift */; };
+		BF899E572070B51A008EC5EA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BF899E2F2070B47B008EC5EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF56DEA6205862B2007E2483 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF899E292070B47B008EC5EA;
+			remoteInfo = VPLEditor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BF899E362070B47B008EC5EA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BF899E322070B47B008EC5EA /* VPLEditor.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BF19A6D9207058060046EFC5 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "VPL/Images/background@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -82,10 +142,22 @@
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
 		BF86B73C205F0144006AEEA7 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		BF899E242070B40A008EC5EA /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BF899E2A2070B47B008EC5EA /* VPLEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPLEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF899E2C2070B47B008EC5EA /* VPLEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPLEditor.h; sourceTree = "<group>"; };
+		BF899E2D2070B47B008EC5EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BF56DEAB205862B2007E2483 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF899E312070B47B008EC5EA /* VPLEditor.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF899E262070B47B008EC5EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -180,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				BF56DEB0205862B2007E2483 /* VPL */,
+				BF899E2B2070B47B008EC5EA /* VPLEditor */,
 				BF56DEAF205862B2007E2483 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -188,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				BF56DEAE205862B2007E2483 /* VPL.app */,
+				BF899E2A2070B47B008EC5EA /* VPLEditor.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,6 +269,7 @@
 		BF56DEB0205862B2007E2483 /* VPL */ = {
 			isa = PBXGroup;
 			children = (
+				BF899E242070B40A008EC5EA /* Playground.playground */,
 				BF24CA072067620C007AB6F2 /* Data */,
 				BF56DECD2058631A007E2483 /* Rendering */,
 				BF24CA13206A1C58007AB6F2 /* OCR */,
@@ -218,7 +293,27 @@
 			path = Rendering;
 			sourceTree = "<group>";
 		};
+		BF899E2B2070B47B008EC5EA /* VPLEditor */ = {
+			isa = PBXGroup;
+			children = (
+				BF899E2C2070B47B008EC5EA /* VPLEditor.h */,
+				BF899E2D2070B47B008EC5EA /* Info.plist */,
+			);
+			path = VPLEditor;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BF899E272070B47B008EC5EA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF899E2E2070B47B008EC5EA /* VPLEditor.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		BF56DEAD205862B2007E2483 /* VPL */ = {
@@ -228,15 +323,35 @@
 				BF56DEAA205862B2007E2483 /* Sources */,
 				BF56DEAB205862B2007E2483 /* Frameworks */,
 				BF56DEAC205862B2007E2483 /* Resources */,
+				BF899E362070B47B008EC5EA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BF899E302070B47B008EC5EA /* PBXTargetDependency */,
 			);
 			name = VPL;
 			productName = VPL;
 			productReference = BF56DEAE205862B2007E2483 /* VPL.app */;
 			productType = "com.apple.product-type.application";
+		};
+		BF899E292070B47B008EC5EA /* VPLEditor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF899E332070B47B008EC5EA /* Build configuration list for PBXNativeTarget "VPLEditor" */;
+			buildPhases = (
+				BF899E252070B47B008EC5EA /* Sources */,
+				BF899E262070B47B008EC5EA /* Frameworks */,
+				BF899E272070B47B008EC5EA /* Headers */,
+				BF899E282070B47B008EC5EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VPLEditor;
+			productName = VPLEditor;
+			productReference = BF899E2A2070B47B008EC5EA /* VPLEditor.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -250,6 +365,10 @@
 				TargetAttributes = {
 					BF56DEAD205862B2007E2483 = {
 						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					BF899E292070B47B008EC5EA = {
+						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -268,6 +387,7 @@
 			projectRoot = "";
 			targets = (
 				BF56DEAD205862B2007E2483 /* VPL */,
+				BF899E292070B47B008EC5EA /* VPLEditor */,
 			);
 		};
 /* End PBXProject section */
@@ -280,6 +400,15 @@
 				BF56DEBC205862B2007E2483 /* LaunchScreen.storyboard in Resources */,
 				BF19A6DC207058060046EFC5 /* background.png in Resources */,
 				BF19A6DB207058060046EFC5 /* background@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF899E282070B47B008EC5EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF899E512070B4D6008EC5EA /* background@2x.png in Resources */,
+				BF899E502070B4D6008EC5EA /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +454,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BF899E252070B47B008EC5EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF899E422070B4CE008EC5EA /* ValueChooserView.swift in Sources */,
+				BF899E4B2070B4D1008EC5EA /* OCRRequest.swift in Sources */,
+				BF899E542070B51A008EC5EA /* NodeTrigger.swift in Sources */,
+				BF899E3F2070B4CA008EC5EA /* MiscNodes.swift in Sources */,
+				BF899E532070B51A008EC5EA /* ValueType.swift in Sources */,
+				BF899E552070B51A008EC5EA /* NodeValue.swift in Sources */,
+				BF899E4A2070B4D1008EC5EA /* DrawingCanvas.swift in Sources */,
+				BF899E3B2070B4CA008EC5EA /* ControlFlowNodes.swift in Sources */,
+				BF899E522070B4D6008EC5EA /* Utils.swift in Sources */,
+				BF899E382070B4CA008EC5EA /* BaseNode.swift in Sources */,
+				BF899E482070B4CE008EC5EA /* CanvasViewController.swift in Sources */,
+				BF899E442070B4CE008EC5EA /* DisplayNodeCanvas.swift in Sources */,
+				BF899E452070B4CE008EC5EA /* DisplayNodeCanvasOverlay.swift in Sources */,
+				BF899E3D2070B4CA008EC5EA /* ArrayNodes.swift in Sources */,
+				BF899E4D2070B4D3008EC5EA /* MNIST.mlmodel in Sources */,
+				BF899E3A2070B4CA008EC5EA /* VariableNodes.swift in Sources */,
+				BF899E462070B4CE008EC5EA /* DisplayNode.swift in Sources */,
+				BF899E372070B4CA008EC5EA /* DisplayableNode.swift in Sources */,
+				BF899E472070B4CE008EC5EA /* DisplayNodeSocket.swift in Sources */,
+				BF899E4E2070B4D3008EC5EA /* Alphanum_28x28.mlmodel in Sources */,
+				BF899E392070B4CA008EC5EA /* ConstNodes.swift in Sources */,
+				BF899E492070B4CE008EC5EA /* CodeOutputView.swift in Sources */,
+				BF899E402070B4CE008EC5EA /* DisplayNodeContentView.swift in Sources */,
+				BF899E3C2070B4CA008EC5EA /* MathNodes.swift in Sources */,
+				BF899E572070B51A008EC5EA /* Node.swift in Sources */,
+				BF899E4F2070B4D3008EC5EA /* Chars74k.mlmodel in Sources */,
+				BF899E562070B51A008EC5EA /* NodeVariable.swift in Sources */,
+				BF899E3E2070B4CA008EC5EA /* DictionaryNodes.swift in Sources */,
+				BF899E412070B4CE008EC5EA /* GenericInputView.swift in Sources */,
+				BF899E432070B4CE008EC5EA /* DrawCanvasNodeView.swift in Sources */,
+				BF899E4C2070B4D1008EC5EA /* ImageUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BF899E302070B47B008EC5EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF899E292070B47B008EC5EA /* VPLEditor */;
+			targetProxy = BF899E2F2070B47B008EC5EA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BF56DEBA205862B2007E2483 /* LaunchScreen.storyboard */ = {
@@ -453,6 +628,7 @@
 		BF56DEC1205862B3007E2483 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = US5KT4GR2Y;
@@ -468,6 +644,7 @@
 		BF56DEC2205862B3007E2483 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = US5KT4GR2Y;
@@ -477,6 +654,58 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BF899E342070B47B008EC5EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = US5KT4GR2Y;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = VPLEditor/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.NathanFlurry.VPLEditor;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BF899E352070B47B008EC5EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = US5KT4GR2Y;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = VPLEditor/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.NathanFlurry.VPLEditor;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -497,6 +726,15 @@
 			buildConfigurations = (
 				BF56DEC1205862B3007E2483 /* Debug */,
 				BF56DEC2205862B3007E2483 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF899E332070B47B008EC5EA /* Build configuration list for PBXNativeTarget "VPLEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF899E342070B47B008EC5EA /* Debug */,
+				BF899E352070B47B008EC5EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

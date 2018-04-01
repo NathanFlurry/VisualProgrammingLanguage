@@ -7,86 +7,79 @@
 //
 
 import UIKit
-
-class MathNode: DisplayableNode {
-    static let shortcutCharacter: String? = "M"
+public class MathNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "M"
     
-    class var id: String { fatalError("Unimplemented.") }
-    class var name: String { fatalError("Unimplemented.") }
-    var inputValues: [InputValue] = [InputValue(id: "a", name: "A", type: .int), InputValue(id: "b", name: "B", type: .int)]
-    var output: NodeOutput = .value(OutputValue(type: .int))
+    public class var id: String { fatalError("Unimplemented.") }
+    public class var name: String { fatalError("Unimplemented.") }
+    public let inputValues: [InputValue] = [InputValue(id: "a", name: "A", type: .int), InputValue(id: "b", name: "B", type: .int)]
+    public let output: NodeOutput = .value(OutputValue(type: .int))
     
     var inputA: InputValue { return inputValues[0] }
     
     var inputB: InputValue { return inputValues[1] }
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         fatalError("Unimplemented.")
     }
 }
-
-class AddNode: MathNode {
-    override class var id: String { return "add" }
-    override class var name: String { return "Add" }
+public class AddNode: MathNode {
+    public override class var id: String { return "add" }
+    public override class var name: String { return "Add" }
     
-    override func assemble() -> String {
+    public override func assemble() -> String {
         return "(\(inputA.assemble()) + \(inputB.assemble()))"
     }
 }
-
-class SubtractNode: MathNode {
-    override class var id: String { return "subtract" }
-    override class var name: String { return "Subtract" }
+public class SubtractNode: MathNode {
+    public override class var id: String { return "subtract" }
+    public override class var name: String { return "Subtract" }
     
-    override func assemble() -> String {
+    public override func assemble() -> String {
         return "(\(inputA.assemble()) - \(inputB.assemble()))"
     }
 }
-
-class MultiplyNode: MathNode {
-    override class var id: String { return "multiply" }
-    override class var name: String { return "Multiply" }
+public class MultiplyNode: MathNode {
+    public override class var id: String { return "multiply" }
+    public override class var name: String { return "Multiply" }
     
-    override func assemble() -> String {
+    public override func assemble() -> String {
         return "(\(inputA.assemble()) * \(inputB.assemble()))"
     }
 }
-
-class DivideNode: MathNode {
-    override class var id: String { return "divide" }
-    override class var name: String { return "Divide" }
+public class DivideNode: MathNode {
+    public override class var id: String { return "divide" }
+    public override class var name: String { return "Divide" }
     
-    override func assemble() -> String {
+    public override func assemble() -> String {
         return "(\(inputA.assemble()) / \(inputB.assemble()))"
     }
 }
-
-class ModuloNode: MathNode {
-    override class var id: String { return "modulo" }
-    override class var name: String { return "Modulo" }
+public class ModuloNode: MathNode {
+    public override class var id: String { return "modulo" }
+    public override class var name: String { return "Modulo" }
     
-    override func assemble() -> String {
+    public override func assemble() -> String {
         return "(\(inputA.assemble()) % \(inputB.assemble()))"
     }
 }
-
-class EqualsNode: DisplayableNode {
-    static let shortcutCharacter: String? = "E"
+public class EqualsNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "E"
     
-    static let id: String = "equals"
-    static let name: String = "Equals"
-    var inputValues: [InputValue] = [InputValue(id: "a", name: "A", type: .int), InputValue(id: "b", name: "B", type: .int)]
-    var output: NodeOutput = .value(OutputValue(type: .bool))
+    public static let id: String = "equals"
+    public static let name: String = "Equals"
+    public let inputValues: [InputValue] = [InputValue(id: "a", name: "A", type: .int), InputValue(id: "b", name: "B", type: .int)]
+    public let output: NodeOutput = .value(OutputValue(type: .bool))
     
-    required init() {
+    public required init() {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         let assembledInputA = inputValues[0].assemble()
         let assembledInputB = inputValues[1].assemble()
         return "(\(assembledInputA) == \(assembledInputB))"

@@ -26,10 +26,10 @@ public protocol Node: class {
 }
 
 extension Node {
-    var inputTrigger: InputTrigger? { return nil }
-    var inputValues: [InputValue] { return [] }
-    var inputVariables: [InputVariable] { return [] }
-    var output: NodeOutput { return .none }
+    public var inputTrigger: InputTrigger? { return nil }
+    public var inputValues: [InputValue] { return [] }
+    public var inputVariables: [InputVariable] { return [] }
+    public var output: NodeOutput { return .none }
 }
 
 extension Node {

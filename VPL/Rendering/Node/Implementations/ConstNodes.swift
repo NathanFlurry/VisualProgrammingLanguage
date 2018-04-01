@@ -8,17 +8,17 @@
 
 import UIKit
 
-class EvalConstNode: DisplayableNode {
-    static let shortcutCharacter: String? = "C"
+public class EvalConstNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "C"
     
-    static let id: String = "eval-const"
-    static let name: String = "Eval Constant"
-    var output: NodeOutput = .value(OutputValue(type: .unknown))
-    var contentView: DisplayableNodeContentView? { return inputView }
+    public static let id: String = "eval-const"
+    public static let name: String = "Eval Constant"
+    public var output: NodeOutput = .value(OutputValue(type: .unknown))
+    public var contentView: DisplayableNodeContentView? { return inputView }
     
     var inputView: GenericInputView!
     
-    required init() {
+    public required init() {
         inputView = GenericInputView(node: self, fields: [
             GenericInputViewField(name: "Swift Code", defaultValue: "nil")
         ])
@@ -26,28 +26,27 @@ class EvalConstNode: DisplayableNode {
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         return "(\(inputView.fields[0].value))"
     }
 }
-
-class IntConstNode: DisplayableNode {
-    static let shortcutCharacter: String? = "C"
+public class IntConstNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "C"
     
-    static let id: String = "int-const"
-    static let name: String = "Integer Constant"
-    var output: NodeOutput = .value(OutputValue(type: .int))
-    var contentView: DisplayableNodeContentView? { return inputView }
+    public static let id: String = "int-const"
+    public static let name: String = "Integer Constant"
+    public let output: NodeOutput = .value(OutputValue(type: .int))
+    public var contentView: DisplayableNodeContentView? { return inputView }
     
     var inputView: DrawCanvasNodeView!
     
-    required init() {
+    public required init() {
         inputView = DrawCanvasNodeView(node: self, defaultValue: "0", inputType: .digits)
         
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var rawValue = inputView.value
         rawValue = rawValue.split(separator: ".").first.map { String($0) } ?? "" // Remove decimal
         if rawValue.count == 0 {
@@ -59,24 +58,23 @@ class IntConstNode: DisplayableNode {
         }
     }
 }
-
-class StringConstNode: DisplayableNode {
-    static let shortcutCharacter: String? = "C"
+public class StringConstNode: DisplayableNode {
+    public static let shortcutCharacter: String? = "C"
     
-    static let id: String = "str-const"
-    static let name: String = "String Constant"
-    var output: NodeOutput = .value(OutputValue(type: .string))
-    var contentView: DisplayableNodeContentView? { return inputView }
+    public static let id: String = "str-const"
+    public static let name: String = "String Constant"
+    public let output: NodeOutput = .value(OutputValue(type: .string))
+    public var contentView: DisplayableNodeContentView? { return inputView }
     
     var inputView: DrawCanvasNodeView!
     
-    required init() {
+    public required init() {
         inputView = DrawCanvasNodeView(node: self, defaultValue: "", inputType: .alphanum)
         
         self.setupConnections()
     }
     
-    func assemble() -> String {
+    public func assemble() -> String {
         var escapedValue = inputView.value
         escapedValue = escapedValue.replacingOccurrences(of: "\\", with: "\\\\")
         escapedValue = escapedValue.replacingOccurrences(of: "\"", with: "\\\"")
