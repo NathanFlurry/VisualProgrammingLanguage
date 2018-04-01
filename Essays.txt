@@ -1,0 +1,8 @@
+Tell us about the features and technologies you used in your Swift playground.
+A core goal of this playground was to create a visual programming language that can be used almost exclusively with an Apple Pencil or one's finger and no keyboard. In order to do this, I needed to use CoreML models to recognize handwritten characters and Vision to break apart large chunks of text into individual characters. Two different models were used: an alphanumeric model based on the NIST Special Dataset #19 and a digit model using the famous MNIST dataset. The alphanumeric dataset enabled me to create shortcuts to create different nodes by drawing a letter corresponding to each node where you want to add it. Additionally, when writing string or integer literals, the playground provides Vision-enabled box that can break apart inputted text into individual characters and classify them with the appropriate model, depending on what you're inputting. Additionally, the entire program relies heavily on UIKit for features like simple syntax highlighting, gesture management, and flexible node layouts using Auto Layout. 
+
+In what ways have you considered sharing your coding knowledge and enthusiasm for computer science with others?
+Having grown up in a retirement community without any peers that share my passion for programming, I jump at every chance to help another person learn to program. 
+
+Is there anything else you would like us to know?
+
