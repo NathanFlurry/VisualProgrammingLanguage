@@ -78,7 +78,7 @@ public class DoCatchNode: DisplayableNode {
     
     public func assemble() -> String {
 //: When a `NodeVariable` is constructed, it is given a unique identifier for the node name which is stored on `NodeVariable.id`. Any time you need to reference the variable in the code, then you can access the ID easily, like here.
-        let errorVariable = output.triggers![2].id
+        let errorVariable = output.triggers![2].exposedVariables[0].id
         
 //: Sometimes you need to store a temporary variable that is not accessible to the user. In this case, we need to convert the error to a string before letting the child nodes access it. For this, you can generate a temporary variable ID with `NodeVariable.variableId` like we do here.
         let tempErrorVariable = NodeVariable.variableId
@@ -109,13 +109,6 @@ canvasViewController.spawnableNodes += [SplitStringNode.self, DoCatchNode.self]
 //#-end-editable-code
 
 //#-hidden-code
-@discardableResult
-func const(base: DisplayNode, def: String, inputIndex: Int = 0) -> DisplayNode {
-    let node = canvas.insert(node: IntConstNode(), base: base, offset: CGPoint(x: -300, y: 225))
-    (node.node.contentView! as! DrawCanvasNodeView).value = def
-    node.node.output.value!.connect(to: base.node.inputValues[inputIndex])
-    return node
-}
 
 @discardableResult
 func getVar(base: DisplayNode, inputIndex: Int, targetTrigger: OutputTrigger, offset: CGPoint) -> DisplayNode {
@@ -136,7 +129,9 @@ spl.node.output.value!.connect(to: pr.node.inputValues[0])
 
 getVar(base: spl, inputIndex: 0, targetTrigger: doCatch.node.output.triggers![2], offset: CGPoint(x: -425, y: 0))
 
-const(base: spl, def: " ")
+let c1 = canvas.insert(node: StringConstNode(), base: spl, offset: CGPoint(x: -300, y: 225))
+(c1.node.contentView! as! DrawCanvasNodeView).value = " "
+c1.node.output.value!.connect(to: spl.node.inputValues[1])
 
 //#-end-hidden-code
 
