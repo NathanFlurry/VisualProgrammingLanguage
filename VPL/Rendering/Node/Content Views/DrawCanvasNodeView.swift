@@ -8,16 +8,16 @@
 
 import UIKit
 
-enum DrawCanvasNodeInputType {
+public enum DrawCanvasNodeInputType {
     case digits, alphanum
 }
 
-class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
+public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
     /// Reference to the node.
     weak var node: Node?
     
     /// The value from the view.
-    var value: String = "" {
+    public var value: String = "" {
         didSet {
             // Render the value
             renderValue()
@@ -46,12 +46,12 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
     private var canvasLeftAnchor: NSLayoutConstraint!
     
     /// Timer for committing shortcuts
-    var commitDrawingTimer: Timer?
+    private var commitDrawingTimer: Timer?
     
     // Don't allow dragging
     override var absorbsTouches: Bool { return true }
     
-    init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 85)) {
+    public init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 85)) {
         self.node = node
         self.inputType = inputType
         self.value = defaultValue
@@ -176,7 +176,7 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
         renderValue()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -207,10 +207,10 @@ class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
                 }
             }
         ))
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        parentViewController?.present(alert, animated: true)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Allow clearing the text view
         if string.count == 0 {
             return true

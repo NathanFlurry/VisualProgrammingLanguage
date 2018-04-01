@@ -17,40 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Create canvas view controller
         let canvasViewController = CanvasViewController()
-        canvasViewController.spawnableNodes = [
-            EvalConstNode.self,
-            IntConstNode.self,
-            StringConstNode.self,
-            
-            DeclareVariableNode.self,
-            SetVariableNode.self,
-            GetVariableNode.self,
-            IfNode.self,
-            ForLoopNode.self,
-            
-            AddNode.self,
-            SubtractNode.self,
-            MultiplyNode.self,
-            DivideNode.self,
-            ModuloNode.self,
-            EqualsNode.self,
-            
-            ArrayCreateNode.self,
-            ArrayAppendNode.self,
-            ArraySetAtNode.self,
-            ArrayGetAtNode.self,
-            ArrayRemoveAtNode.self,
-            ArrayCountNode.self,
-            
-            DictionaryCreateNode.self,
-            DictionarySetAtNode.self,
-            DictionaryGetAtNode.self,
-            DictionaryContainsKeyNode.self,
-            DictionaryRemoveAtNode.self,
-            
-            PrintNode.self,
-            SwapNode.self
-        ]
         
         // Create the window
         window = UIWindow(frame: UIScreen.main.bounds)

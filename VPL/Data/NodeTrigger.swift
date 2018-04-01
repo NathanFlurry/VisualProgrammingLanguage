@@ -8,14 +8,14 @@
 
 import Foundation
 
-final class InputTrigger {
+public final class InputTrigger {
     /// The node that owns this trigger.
     weak var owner: Node!
     
     /// The connected trigger.
-    private(set) var target: OutputTrigger?
+    public private(set) var target: OutputTrigger?
     
-    init() {
+    public init() {
         
     }
     
@@ -48,23 +48,23 @@ final class InputTrigger {
     }
 }
 
-final class OutputTrigger {
+public final class OutputTrigger {
     /// The node that owns this trigger
     weak var owner: Node!
     
     /// An identifier for this trigger.
-    var id: String
+    public let id: String
     
     /// Name for this trigger.
-    var name: String
+    public let name: String
     
     /// The connected trigger.
-    private(set) var target: InputTrigger?
+    public private(set) var target: InputTrigger?
     
     /// Variables availables to any other nodes further along the control flow.
-    var exposedVariables: [NodeVariable]
+    public let exposedVariables: [NodeVariable]
     
-    init(id: String, name: String, exposedVariables: [NodeVariable] = []) {
+    public init(id: String, name: String, exposedVariables: [NodeVariable] = []) {
         self.id = id
         self.name = name
         self.exposedVariables = exposedVariables
@@ -108,7 +108,7 @@ final class OutputTrigger {
     }
     
     /// Assembles the code.
-    func assemble() -> String {
+    public func assemble() -> String {
         return target?.owner.assemble() ?? ""
     }
 }

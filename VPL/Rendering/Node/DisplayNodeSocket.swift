@@ -232,7 +232,7 @@ class DisplayNodeSocket: UIView {
         }
         
         // Present it
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        parentViewController?.present(alert, animated: true)
     }
     
     /// Label that will be drawn on the connection.

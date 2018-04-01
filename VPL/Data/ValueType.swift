@@ -8,7 +8,7 @@
 
 import Foundation
 
-indirect enum ValueType: CustomStringConvertible {
+public indirect enum ValueType: CustomStringConvertible {
     /// Custom variable type. These correspond to the exact Swift variable type.
     case type(String)
     
@@ -26,20 +26,20 @@ indirect enum ValueType: CustomStringConvertible {
     /// represents where the data comes from.
 //    case proxy(inputId: String)
     
-    static var bool: ValueType { return .type("Bool") }
-    static var int: ValueType { return .type("Int") }
-    static var float: ValueType { return .type("Float") }
-    static var string: ValueType { return .type("String") }
+    public static var bool: ValueType { return .type("Bool") }
+    public static var int: ValueType { return .type("Int") }
+    public static var float: ValueType { return .type("Float") }
+    public static var string: ValueType { return .type("String") }
     
-    static func array(_ inner: ValueType) -> ValueType {
+    public static func array(_ inner: ValueType) -> ValueType {
         return .generic("Array", [inner])
         
     }
-    static func dictionary(_ a: ValueType, _ b: ValueType) -> ValueType {
+    public static func dictionary(_ a: ValueType, _ b: ValueType) -> ValueType {
         return .generic("Dictionary", [a, b])
     }
         
-    var description: String {
+    public var description: String {
         switch self {
         case .type(let type):
             return type
@@ -50,7 +50,7 @@ indirect enum ValueType: CustomStringConvertible {
         }
     }
     
-    func canCast(to other: ValueType) -> Bool {
+    public func canCast(to other: ValueType) -> Bool {
         // Anything cna be casted to unknown
         if case .unknown = other {
             return true

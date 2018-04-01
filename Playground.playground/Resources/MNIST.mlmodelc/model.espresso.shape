@@ -1,0 +1,52 @@
+{
+  "layer_shapes" : {
+    "max_pooling2d_1_output" : {
+      "k" : 32,
+      "w" : 12,
+      "n" : 1,
+      "h" : 12
+    },
+    "flatten_1_output" : {
+      "k" : 4608,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "activation_1_output" : {
+      "k" : 32,
+      "w" : 26,
+      "n" : 1,
+      "h" : 26
+    },
+    "activation_3_output" : {
+      "k" : 128,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "activation_2_output" : {
+      "k" : 32,
+      "w" : 24,
+      "n" : 1,
+      "h" : 24
+    },
+    "prediction" : {
+      "k" : 10,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "image" : {
+      "k" : 1,
+      "w" : 28,
+      "n" : 1,
+      "h" : 28
+    },
+    "dense_2_output" : {
+      "k" : 10,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    }
+  }
+}

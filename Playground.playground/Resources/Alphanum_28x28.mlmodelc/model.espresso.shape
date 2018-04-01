@@ -1,0 +1,52 @@
+{
+  "layer_shapes" : {
+    "max_pooling2d_1_output" : {
+      "k" : 64,
+      "w" : 12,
+      "n" : 1,
+      "h" : 12
+    },
+    "flatten_1_output" : {
+      "k" : 9216,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "Probabilities" : {
+      "k" : 36,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "conv2d_2__activation___output" : {
+      "k" : 64,
+      "w" : 24,
+      "n" : 1,
+      "h" : 24
+    },
+    "conv2d_1__activation___output" : {
+      "k" : 32,
+      "w" : 26,
+      "n" : 1,
+      "h" : 26
+    },
+    "dense_1__activation___output" : {
+      "k" : 128,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "dense_2_output" : {
+      "k" : 36,
+      "w" : 1,
+      "n" : 1,
+      "h" : 1
+    },
+    "Image" : {
+      "k" : 1,
+      "w" : 28,
+      "n" : 1,
+      "h" : 28
+    }
+  }
+}

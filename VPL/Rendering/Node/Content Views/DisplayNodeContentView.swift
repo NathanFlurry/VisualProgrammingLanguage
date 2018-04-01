@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DisplayableNodeContentView: UIView {
+public class DisplayableNodeContentView: UIView {
     /// If the view's touches are absorbed or if the display node can use drags
     /// and double taps on this view.
     var absorbsTouches: Bool { return false }

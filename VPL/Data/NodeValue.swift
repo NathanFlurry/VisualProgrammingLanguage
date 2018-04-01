@@ -8,23 +8,23 @@
 
 import Foundation
 
-final class InputValue {
+public final class InputValue {
     /// The node that owns this value.
     weak var owner: Node!
     
     /// An identifier for this value.
-    var id: String
+    public let id: String
     
     /// Name for this value.
-    var name: String
+    public let name: String
     
     /// The type of value this holds.
-    let type: ValueType
+    public let type: ValueType
     
     /// The connected value.
-    private(set) var target: OutputValue?
+    public private(set) var target: OutputValue?
     
-    init(id: String, name: String, type: ValueType) {
+    public init(id: String, name: String, type: ValueType) {
         self.id = id
         self.name = name
         self.type = type
@@ -59,22 +59,22 @@ final class InputValue {
     }
     
     /// Assembles the code.
-    func assemble() -> String {
+    public func assemble() -> String {
         return target?.owner.assemble() ?? ""
     }
 }
 
-final class OutputValue {
+public final class OutputValue {
     /// The node that owns this value
     weak var owner: Node!
     
     /// The type of value this holds.
-    let type: ValueType
+    public let type: ValueType
     
     /// The connected value.
-    private(set) var target: InputValue?
+    public private(set) var target: InputValue?
     
-    init(type: ValueType) {
+    public init(type: ValueType) {
         self.type = type
     }
     

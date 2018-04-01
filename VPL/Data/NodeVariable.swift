@@ -8,45 +8,45 @@
 
 import Foundation
 
-class NodeVariable {
+public class NodeVariable {
     static var variableId: String { return String(format: "v%06x", Int(arc4random())) }
     
     /// The trigger that owns this variable.
     weak var owner: OutputTrigger!
     
     /// A UUID that represents this variable in the code itself.
-    let id: String
+    public let id: String
     
     /// Label for human readability.
-    let name: String
+    public let name: String
     
     /// The type of variable.
-    let type: ValueType
+    public let type: ValueType
     
-    init(name: String, type: ValueType) {
+    public init(name: String, type: ValueType) {
         self.id = NodeVariable.variableId
         self.name = name
         self.type = type
     }
 }
 
-final class InputVariable {
+public final class InputVariable {
     /// The node that owns this value.
     weak var owner: Node!
     
     /// An identifier for this value.
-    var id: String
+    public let id: String
     
     /// Name for this value.
-    var name: String
+    public let name: String
     
     /// The type of value this holds.
-    let type: ValueType
+    public let type: ValueType
     
     /// The connected value.
-    private(set) var target: NodeVariable?
+    public private(set) var target: NodeVariable?
     
-    init(id: String, name: String, type: ValueType) {
+    public init(id: String, name: String, type: ValueType) {
         self.id = id
         self.name = name
         self.type = type
@@ -71,7 +71,7 @@ final class InputVariable {
     }
     
     /// Assembles the code.
-    func assemble() -> String {
+    public func assemble() -> String {
         return target?.id ?? "NO VARIABLE"
     }
 }

@@ -8,7 +8,42 @@
 
 import UIKit
 
-protocol DisplayableNode: Node {
+public let defaultNodes: [DisplayableNode.Type] = [
+    EvalConstNode.self,
+    IntConstNode.self,
+    StringConstNode.self,
+    
+    DeclareVariableNode.self,
+    SetVariableNode.self,
+    GetVariableNode.self,
+    IfNode.self,
+    ForLoopNode.self,
+    
+    AddNode.self,
+    SubtractNode.self,
+    MultiplyNode.self,
+    DivideNode.self,
+    ModuloNode.self,
+    EqualsNode.self,
+    
+    ArrayCreateNode.self,
+    ArrayAppendNode.self,
+    ArraySetAtNode.self,
+    ArrayGetAtNode.self,
+    ArrayRemoveAtNode.self,
+    ArrayCountNode.self,
+    
+    DictionaryCreateNode.self,
+    DictionarySetAtNode.self,
+    DictionaryGetAtNode.self,
+    DictionaryContainsKeyNode.self,
+    DictionaryRemoveAtNode.self,
+    
+    PrintNode.self,
+    SwapNode.self
+]
+
+public protocol DisplayableNode: Node {
     /// The character that can be drawn to spawn this node.
     static var shortcutCharacter: String? { get }
     

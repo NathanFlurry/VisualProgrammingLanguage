@@ -41,13 +41,28 @@ extension String {
     }
 }
 
-// Appent code
+// Ew... I know. Just pretend you didn't see this.
+extension UIView {
+    var parentViewController: UIViewController? {
+        // Iterate through parents until it finds a UIViewController
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
+
+// Append code
 infix operator !+=
 func !+=(lhs: inout String, rhs: String) {
     lhs.append(code: rhs)
 }
 
-// Appent code with 1 indent
+// Append code with 1 indent
 infix operator !!+=
 func !!+=(lhs: inout String, rhs: String) {
     lhs.append(code: rhs, indent: 1)

@@ -8,16 +8,16 @@
 
 import UIKit
 
-class GenericInputViewField: UIView {
-    var name: String
+public class GenericInputViewField: UIView {
+    public let name: String
     
-    var value: String
+    public var value: String
     
     var valueChangeCallback: (() -> Void)?
     
     private var valueLabel: UILabel!
     
-    init(name: String, defaultValue: String) {
+    public init(name: String, defaultValue: String) {
         self.name = name
         self.value = defaultValue
         
@@ -60,7 +60,7 @@ class GenericInputViewField: UIView {
         pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: .touchUpInside)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -89,16 +89,16 @@ class GenericInputViewField: UIView {
         )
         alert.addAction(cancelAction)
         alert.addAction(doneAction)
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        parentViewController?.present(alert, animated: true)
     }
 }
 
-class GenericInputView: DisplayableNodeContentView {
+public class GenericInputView: DisplayableNodeContentView {
     /// The owning node.
     weak var node: Node?
     
     /// The value from the view.
-    var fields: [GenericInputViewField]
+    public let fields: [GenericInputViewField]
     
     init(node: Node, fields: [GenericInputViewField]) {
         self.node = node
@@ -126,7 +126,7 @@ class GenericInputView: DisplayableNodeContentView {
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

@@ -70,7 +70,7 @@ class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         insert(node: baseNode, at: CGPoint(x: contentSize.width / 2, y: contentSize.height / 2))
         
         // Scroll to the center
-        contentOffset = CGPoint(x: contentSize.width / 2 - frame.width / 2, y: contentSize.height / 2 - frame.width / 2)
+        contentOffset = CGPoint(x: contentSize.width / 2 - 200, y: contentSize.height / 2 - 200)
     }
     
     required init?(coder aDecoder: NSCoder) {

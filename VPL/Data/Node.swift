@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum NodeOutput {
+public enum NodeOutput {
     case triggers([OutputTrigger]), value(OutputValue), none
 }
 
-protocol Node: class {
+public protocol Node: class {
     static var id: String { get }
     static var name: String { get }
     var inputTrigger: InputTrigger? { get }

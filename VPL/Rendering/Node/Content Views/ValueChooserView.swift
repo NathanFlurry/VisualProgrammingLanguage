@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ValueChooserView<T>: DisplayableNodeContentView {
+public class ValueChooserView<T>: DisplayableNodeContentView {
     /// The currently selected item.
-    var value: T
+    public var value: T
     
     /// Returns all of the options for this time chooser.
     var getValues: () -> [T]
@@ -24,7 +24,7 @@ class ValueChooserView<T>: DisplayableNodeContentView {
     private var selectionLabel: UILabel!
     private var pickButton: UIButton!
     
-    init(
+    public init(
         defaultValue: T,
         getValues: @escaping () -> [T],
         valueLabel: @escaping (T) -> String,
@@ -59,7 +59,7 @@ class ValueChooserView<T>: DisplayableNodeContentView {
         pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: .touchUpInside)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -95,6 +95,6 @@ class ValueChooserView<T>: DisplayableNodeContentView {
         }
         
         // Present it
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+        parentViewController?.present(alert, animated: true)
     }
 }

@@ -8,12 +8,12 @@
 
 import UIKit
 
-class CanvasViewController: UIViewController {
+public class CanvasViewController: UIViewController {
     /// Shortcut for custom node popover.
     var customNodeShortcut: String = "X"
     
     /// View nodes that can be created.
-    var spawnableNodes: [DisplayableNode.Type] = []
+    public var spawnableNodes: [DisplayableNode.Type] = defaultNodes
     
     /// Output of the code.
     var outputView: CodeOutputView!
@@ -27,7 +27,7 @@ class CanvasViewController: UIViewController {
     /// Timer for committing shortcuts
     var commitDrawingTimer: Timer?
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         // Add the text
@@ -113,7 +113,7 @@ class CanvasViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

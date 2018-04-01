@@ -40,7 +40,7 @@ class DrawingCanvas: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor(patternImage: UIImage(imageLiteralResourceName: "GeometryBackground"))
+        backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
         
         imageView.frame = bounds
         tempImageView.frame = bounds
