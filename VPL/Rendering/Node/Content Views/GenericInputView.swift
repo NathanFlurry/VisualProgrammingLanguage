@@ -89,8 +89,8 @@ public class GenericInputViewField: UIView {
     
     func set(value: String) {
         // Update the value
-        self.value = text
-        self.valueLabel.text = text
+        self.value = value
+        self.valueLabel.text = value
         
         // Value change callback
         self.valueChangeCallback?()

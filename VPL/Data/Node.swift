@@ -54,11 +54,11 @@ extension Node {
     /// Finds the first available input trigger. If this node has an input
     /// trigger, it returns that. Othwerise, it follows the output value until
     /// it finds an input trigger.
-    public var closestInputTrigger: InputTrigger? {
+    public var nearestControlNode: InputTrigger? {
         if let trigger = inputTrigger {
             return trigger
         } else if case let .value(value) = output {
-            return value.target?.owner.closestInputTrigger
+            return value.target?.owner.nearestControlNode
         } else {
             return nil
         }
@@ -67,7 +67,7 @@ extension Node {
     /// Variables that this node can use.
     public var availableVariables: [NodeVariable] {
         // Add variables available from all parent triggers
-        let trigger  = closestInputTrigger
+        let trigger  = nearestControlNode
         return (trigger?.target?.exposedVariables ?? []) + (trigger?.target?.owner.availableVariables ?? [])
     }
     

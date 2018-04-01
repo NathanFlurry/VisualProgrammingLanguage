@@ -4,7 +4,11 @@
 <dict>
 	<key>Chapters</key>
 	<array>
-		<string>Chapter1.playgroundchapter</string>
+		<string>Introduction.playgroundchapter</string>
+		<string>Overview.playgroundchapter</string>
+		<string>Examples.playgroundchapter</string>
+		<string>Customization.playgroundchapter</string>
+		<string>Playground.playgroundchapter</string>
 	</array>
 	<key>ContentIdentifier</key>
 	<string>com.NathanFlurry.VPLPlayground</string>

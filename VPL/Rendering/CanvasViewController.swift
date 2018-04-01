@@ -51,8 +51,7 @@ public class CanvasViewController: UIViewController {
 
         // Add the node canvas
         canvas.updateCallback = {
-            let assembled = self.canvas.assemble()
-            self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))
+            self.assembleCode()
         }
         view.addSubview(canvas)
         canvas.translatesAutoresizingMaskIntoConstraints = false
@@ -120,11 +119,19 @@ public class CanvasViewController: UIViewController {
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
             self.commitDrawingTimer = timer
         }
+        
+        // Assemble the code
+        assembleCode()
     }
 
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func assembleCode() {
+        let assembled = self.canvas.assemble()
+        self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 
     @discardableResult
@@ -169,5 +176,12 @@ public class CanvasViewController: UIViewController {
         
         // Present it
         self.present(alert, animated: true)
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Rerender the overlay
+        canvas.updateState()
     }
 }

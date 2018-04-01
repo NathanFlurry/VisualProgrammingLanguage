@@ -3,11 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>Name</key>
-	<string>Visual Programming Language</string>
+	<string>Playground</string>
 	<key>Pages</key>
 	<array>
-		<string>Introduction.cutscenepage</string>
-		<string>Page1.playgroundpage</string>
 		<string>Playground.playgroundpage</string>
 	</array>
 </dict>

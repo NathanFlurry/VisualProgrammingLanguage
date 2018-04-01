@@ -167,4 +167,8 @@ class DisplayNodeCanvasOverlay: UIView {
         )
         ctx.fillPath()
     }
+    
+    override func layoutSubviews() {
+//        setNeedsLayout()
+    }
 }
