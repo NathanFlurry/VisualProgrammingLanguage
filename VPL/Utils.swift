@@ -8,6 +8,11 @@
 
 import UIKit
 
+// See https://stackoverflow.com/a/33374024
+var isInPlayground: Bool {
+    return Bundle.allBundles.contains(where: { ($0.bundleIdentifier ?? "").hasPrefix("com.apple.Playgrounds.") })
+}
+
 extension UIFont {
     static func codeFont(size: CGFloat = UIFont.systemFontSize) -> UIFont {
         return UIFont(name: "Menlo-Regular", size: size)!

@@ -2,10 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Version</key>
-	<string>1.0</string>
 	<key>Name</key>
-	<string>Sorting Algorithms</string>
+	<string>Visual Programming Language</string>
 	<key>Pages</key>
 	<array>
 		<string>Introduction.cutscenepage</string>

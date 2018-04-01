@@ -37,7 +37,7 @@ public class CanvasViewController: UIViewController {
         outputView.rightAnchor.constraint(equalTo: view.rightAnchor).activate()
         outputView.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
         outputView.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
-        outputView.heightAnchor.constraint(equalToConstant: 180).activate()
+        outputView.heightAnchor.constraint(equalToConstant: isInPlayground ? 260 : 180).activate()
 
         // Add the node canvas
         nodeCanvas = DisplayNodeCanvas(frame: view.bounds)

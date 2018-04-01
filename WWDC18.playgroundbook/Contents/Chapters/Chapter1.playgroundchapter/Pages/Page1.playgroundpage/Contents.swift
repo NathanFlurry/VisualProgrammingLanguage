@@ -1,10 +1,5 @@
 //#-hidden-code
 import UIKit
-import PlaygroundSupport
-
-let canvasViewController = CanvasViewController()
-
-PlaygroundPage.current.liveView = canvasViewController
 //#-end-hidden-code
 
 /*:
@@ -56,3 +51,7 @@ PlaygroundPage.current.liveView = canvasViewController
 ////#-hidden-code
 //}
 ////#-end-hidden-code
+
+//#-editable-code
+print("hi")
+//#-end-editable-code

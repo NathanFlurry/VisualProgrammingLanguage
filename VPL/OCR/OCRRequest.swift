@@ -47,6 +47,7 @@ enum OCRDataset {
     }
 }
 
+@available(iOS 11.0, *)
 class OCRRequest {
     /// The dataset being used by the request.
     private let dataset: OCRDataset
