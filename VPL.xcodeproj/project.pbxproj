@@ -142,7 +142,6 @@
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
 		BF86B73C205F0144006AEEA7 /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
-		BF899E242070B40A008EC5EA /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BF899E2A2070B47B008EC5EA /* VPLEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPLEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF899E2C2070B47B008EC5EA /* VPLEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPLEditor.h; sourceTree = "<group>"; };
 		BF899E2D2070B47B008EC5EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -269,7 +268,6 @@
 		BF56DEB0205862B2007E2483 /* VPL */ = {
 			isa = PBXGroup;
 			children = (
-				BF899E242070B40A008EC5EA /* Playground.playground */,
 				BF24CA072067620C007AB6F2 /* Data */,
 				BF56DECD2058631A007E2483 /* Rendering */,
 				BF24CA13206A1C58007AB6F2 /* OCR */,
