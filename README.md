@@ -27,6 +27,4 @@ This entire project was developed in around a week and – sadly – there is 
 
 ## Future Goals
 
-This has been one of my dream projects for a long time now, but I don't have the time to turn this into something useful & usable at the moment.
-
-If I were to continue development, I would likely integrate it into the iOS 11 document picker and allow the user to edit playgrounds directly in split view, similar to how the wonderful app [Force Unwrap](https://itunes.apple.com/app/id1347821944?mt=8) works.
+I hope to continue development this summer. Hold tight!
