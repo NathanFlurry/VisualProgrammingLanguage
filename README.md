@@ -2,29 +2,25 @@
 
 <p align="center">
   <img width="460" height="300" src="Media/Cover.png"><br/>
-  <i>WWDC 2018 Scholarship Submission</i>
+  <i>Swift Visual Programming Language</i>
 </p>
 
-This project aims to create a node-based visual programming language that assembles to executable Swift code and can be written almost entirely using an Apple Pencil or touch.
+This project aims to create a proof of concept node-based visual programming language that assembles to executable Swift code and can be written almost entirely using an Apple Pencil or touch.
 
-## Screenshots
+See `wwdc-submission` branch for the original files submitted for my WWDC 2018 scholarship.
 
-*The Swift Playground that walks through different aspects of the VPL.*
-
-![Swift Playground](Media/Playground.PNG)
-
-*The VPL running as a standalone application.*
+Video available at [here](https://youtu.be/BNWC_OF5Q-Y).
 
 ![Full App](Media/Full%20App.PNG)
 
-A [video](Media/Short%20Demo.MP4) is also available of constructing a simple program.
-
 ## Discussion
 
-I encourage you to try the playground and then try the standalone application. The playground explains many aspects of the VPL and shows you how to extend it.
+This is a very early prototype of what a visual programming language built for touch could look like. At the moment, it is incredibly inefficient to write programs in this, but I intend for that to change.
 
-This entire project was developed in around a week and – sadly – there is a limit to what I can do in a week. Because of that, there are many vital nodes that are missing that would be easy to add, especially pertaining to floating point math. **Pull requests are welcome.**
+As always, feedback and pull requests are more than welcome.
 
 ## Future Goals
 
 I hope to continue development this summer. Hold tight!
+
+
