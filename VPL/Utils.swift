@@ -46,6 +46,12 @@ func randomFloat() -> CGFloat {
     return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
 }
 
+extension CGRect {
+    public var center: CGPoint {
+        return CGPoint(x: midX, y: midY)
+    }
+}
+
 // Extension helpers
 extension NSLayoutConstraint {
     @discardableResult

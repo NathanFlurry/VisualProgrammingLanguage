@@ -93,7 +93,6 @@ public class CanvasViewController: UIViewController {
                         print("Could not get char box.")
                         return
                     }
-                    let charCenter = CGPoint(x: charBox.midX, y: charBox.midY)
 
                     // Overlay the breakdown for debug info
 //                    self.drawingCanvas.overlayOCRBreakdown(breakdown: breakdown)
@@ -109,7 +108,7 @@ public class CanvasViewController: UIViewController {
                         if availableNodes.count > 1 {
                             self.nodeListPopover(nodes: availableNodes, charBox: charBox, showShortcuts: false)
                         } else if let node = availableNodes.first {
-                            self.create(node: node, position: charCenter)
+                            self.create(node: node, position: charBox.center)
                         } else {
                             print("No nodes with shortcut: \(character)")
                         }
@@ -169,7 +168,7 @@ public class CanvasViewController: UIViewController {
 
             // Create an action to spawn the node
             let action = UIAlertAction(title: title, style: .default) { _ in
-                self.create(node: node, position: CGPoint(x: charBox.midX, y: charBox.midY))
+                self.create(node: node, position: charBox.center)
             }
             alert.addAction(action)
         }
