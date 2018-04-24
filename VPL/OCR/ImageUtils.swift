@@ -168,13 +168,12 @@ extension VNRectangleObservation {
     }
 }
 
-func crop(image: UIImage, rectangle: CGRect) -> UIImage? {
-    let drawImage = image.cgImage!.cropping(to: rectangle)
-    if let drawImage = drawImage {
-        let uiImage = UIImage(cgImage: drawImage)
-        return uiImage
+extension UIImage {
+    func cropping(to rect: CGRect) -> UIImage? {
+        return cgImage!.cropping(to: rect).flatMap {
+            UIImage(cgImage: $0)
+        }
     }
-    return nil
 }
 
 func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false, addInsets: Bool = true) -> UIImage {

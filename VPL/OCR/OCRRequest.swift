@@ -95,7 +95,7 @@ class OCRRequest {
 
             // Get the cropped image for the character
             let charBox = image.trimWhiteRect()
-            if let cropped = crop(image: image, rectangle: charBox) {
+            if let cropped = image.cropping(to: charBox) {
                 // Classify the image
                 let processedImage = dataset.preprocess(input: cropped)
                 self.classifyImage(image: processedImage, charBox: charBox, wordIndex: 0, characterIndex: 0)
@@ -151,7 +151,7 @@ class OCRRequest {
             for (charIndex, charBox) in charBoxes.enumerated() {
                 // Get the cropped image for the character
                 let charBox = charBox.applyTo(size: image.size)
-                if let cropped = crop(image: image, rectangle: charBox) {
+                if let cropped = image.cropping(to: charBox) {
                     // Classify the image
                     let processedImage = dataset.preprocess(input: cropped)
                     self.classifyImage(image: processedImage, charBox: charBox, wordIndex: wordIndex, characterIndex: charIndex)
