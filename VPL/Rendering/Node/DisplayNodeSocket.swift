@@ -161,58 +161,38 @@ class DisplayNodeSocket: UIView {
 
     /// If this socket can be connected to another socket.
     func canConnectTo(socket other: DisplayNodeSocket) -> Bool {
-        switch type {
-        case .inputTrigger(let trigger):
-            if case let .outputTrigger(otherTrigger) = other.type {
-                return trigger.canConnect(to: otherTrigger)
-            }
-        case .outputTrigger(let trigger):
-            if case let .inputTrigger(otherTrigger) = other.type {
-                return trigger.canConnect(to: otherTrigger)
-            }
-        case .inputValue(let value):
-            if case let .outputValue(otherValue) = other.type {
-                return value.canConnect(to: otherValue)
-            }
-        case .outputValue(let value):
-            if case let .inputValue(otherValue) = other.type {
-                return value.canConnect(to: otherValue)
-            }
-        case .inputVariable(let variable):
-            if case let .outputTrigger(trigger) = other.type {
-                for otherVariable in trigger.exposedVariables {
-                    if variable.canConnect(to: otherVariable) {
-                        return true
-                    }
-                }
-            }
+        switch (type, other.type) {
+        case let (.inputTrigger(trigger), .outputTrigger(otherTrigger)):
+            return trigger.canConnect(to: otherTrigger)
+        case let (.outputTrigger(trigger), .inputTrigger(otherTrigger)):
+            return trigger.canConnect(to: otherTrigger)
+        case let (.inputValue(value), .outputValue(otherValue)):
+            return value.canConnect(to: otherValue)
+        case let (.outputValue(value), .inputValue(otherValue)):
+            return value.canConnect(to: otherValue)
+        case let (.inputVariable(variable), .outputTrigger(trigger)):
+            return trigger.exposedVariables.contains { variable.canConnect(to: $0) }
+        default:
+            return false
         }
-
-        return false
     }
 
     /// Connects this socket to another socket.
     func connect(to other: DisplayNodeSocket) {
         // Set the connection.
-        switch type {
-        case .inputTrigger(let trigger):
-            if case let .outputTrigger(otherTrigger) = other.type {
-                trigger.connect(to: otherTrigger)
-            }
-        case .outputTrigger(let trigger):
-            if case let .inputTrigger(otherTrigger) = other.type {
-                trigger.connect(to: otherTrigger)
-            }
-        case .inputValue(let value):
-            if case let .outputValue(otherValue) = other.type {
-                value.connect(to: otherValue)
-            }
-        case .outputValue(let value):
-            if case let .inputValue(otherValue) = other.type {
-                value.connect(to: otherValue)
-            }
-        case .inputVariable:
+        switch (type, other.type) {
+        case let (.inputTrigger(trigger), .outputTrigger(otherTrigger)):
+            trigger.connect(to: otherTrigger)
+        case let (.outputTrigger(trigger), .inputTrigger(otherTrigger)):
+            trigger.connect(to: otherTrigger)
+        case let (.inputValue(value), .outputValue(otherValue)):
+            value.connect(to: otherValue)
+        case let (.outputValue(value), .inputValue(otherValue)):
+            value.connect(to: otherValue)
+        case (.inputVariable, _):
             promptVariableConnectino(to: other)
+        default:
+            break
         }
 
         // Update the socket
