@@ -85,6 +85,16 @@ enum DisplayNodeSocketType: Equatable {
 
         return false
     }
+
+    func reset() {
+        switch self {
+        case let .inputTrigger(trigger): trigger.reset()
+        case let .outputTrigger(trigger): trigger.reset()
+        case let .inputValue(value): value.reset()
+        case let .outputValue(value): value.reset()
+        case let .inputVariable(variable): variable.reset()
+        }
+    }
 }
 
 class DisplayNodeSocket: UIView {
@@ -264,16 +274,11 @@ class DisplayNodeSocket: UIView {
 
     /// Label that will be drawn on the connection.
     func connectionLabel() -> String? {
-        switch type {
-        case .inputVariable(let variable):
-            if let target = variable.target {
-                return "\(target.name) (\(target.type.description))"
-            } else {
-                return nil
-            }
-        default:
-            return nil
+        if case let .inputVariable(variable) = type,
+            let target = variable.target {
+            return "\(target.name) (\(target.type.description))"
         }
+        return nil
     }
 
     @objc func panned(sender: UIPanGestureRecognizer) {
@@ -283,13 +288,7 @@ class DisplayNodeSocket: UIView {
         }
 
         // Remove the target
-        switch type {
-        case .inputTrigger(let trigger): trigger.reset()
-        case .outputTrigger(let trigger): trigger.reset()
-        case .inputValue(let value): value.reset()
-        case .outputValue(let value): value.reset()
-        case .inputVariable(let variable): variable.reset()
-        }
+        type.reset()
 
         // Update the dragging to position
         if sender.state == .began || sender.state == .changed {
@@ -331,7 +330,7 @@ class DisplayNodeSocket: UIView {
         let path = CGMutablePath()
         path.move(to: CGPoint(x: size.width, y: size.height / 2))
         path.addLine(to: CGPoint(x: 0, y: size.height))
-        path.addLine(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: .zero)
         path.addLine(to: CGPoint(x: size.width, y: size.height / 2))
 
         // Create a shape
