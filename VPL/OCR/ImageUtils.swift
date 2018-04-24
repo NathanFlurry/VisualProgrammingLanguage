@@ -178,7 +178,7 @@ func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false,
     let height = image.size.height
     let addToHeight2 = height / 2
     let addToWidth2 = ((6 * height) / 3 - width) / 2
-    
+
     // Process the image
     var image = image
     if shouldInvert {
@@ -189,7 +189,7 @@ func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false,
     }
     image = resize(image: image, targetSize: size)
     image = convertToGrayscale(image: image)
-    
+
     return image
 }
 
@@ -203,7 +203,7 @@ func invert(image: UIImage) -> UIImage {
         print("Failed to get CGImage.")
         return UIImage()
     }
-    
+
     // Invert the image
     let img = CIImage(cgImage: cgImage)
     filter.setDefaults()
@@ -233,47 +233,47 @@ extension UIImage {
         if x < 0 || x > Int(size.width) || y < 0 || y > Int(size.height) {
             return nil
         }
-        
+
         guard let providerData = cgImage?.dataProvider?.data else { return nil }
         let data = CFDataGetBytePtr(providerData)!
-        
+
         let numberOfComponents = 4
         let pixelData = ((Int(size.width) * y) + x) * numberOfComponents
-        
+
         let r = CGFloat(data[pixelData]) / 255.0
         let g = CGFloat(data[pixelData + 1]) / 255.0
         let b = CGFloat(data[pixelData + 2]) / 255.0
         let a = CGFloat(data[pixelData + 3]) / 255.0
-        
+
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
-    
+
     // From: https://stackoverflow.com/a/48759198
     func trimWhiteRect() -> CGRect {
-        
+
         let cgImage = self.cgImage!
-        
+
         let width = cgImage.width
         let height = cgImage.height
-        
+
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bytesPerPixel:Int = 4
         let bytesPerRow = bytesPerPixel * width
         let bitsPerComponent = 8
         let bitmapInfo: UInt32 = CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue
-        
+
         guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo),
             let ptr = context.data?.assumingMemoryBound(to: UInt8.self) else {
                 return CGRect.zero
         }
-        
+
         context.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: width, height: height))
-        
+
         var minX = width
         var minY = height
         var maxX: Int = 0
         var maxY: Int = 0
-        
+
         for x in 1..<width {
             for y in 1..<height {
                 let i = bytesPerRow * Int(y) + bytesPerPixel * Int(x)
@@ -281,7 +281,7 @@ extension UIImage {
                 let g = CGFloat(ptr[i + 1]) / 255.0
                 let b = CGFloat(ptr[i + 2]) / 255.0
 //                let a = CGFloat(ptr[i + 3]) / 255.0
-                
+
                 if r != 1 || g != 1 || b != 1 { // Check if it's white
                     if x < minX { minX = x }
                     if x > maxX { maxX = x }
@@ -290,7 +290,7 @@ extension UIImage {
                 }
             }
         }
-        
+
         return CGRect(x: CGFloat(minX),y: CGFloat(minY), width: CGFloat(maxX-minX), height: CGFloat(maxY-minY))
     }
 }

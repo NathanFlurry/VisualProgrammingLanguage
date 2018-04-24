@@ -18,14 +18,14 @@ extension DisplayNodeCanvas {
     public func insert(node: DisplayableNode, base: DisplayNode, offset: CGPoint) -> DisplayNode {
         // Create the ndoe
         let node = DisplayNode(node: node)
-        
+
         // Insert the node
         insert(
             node: node,
             at: CGPoint(x: base.center.x + offset.x, y: base.center.y + offset.y),
             absolutePosition: true
         )
-        
+
         return node
     }
 }
@@ -49,7 +49,7 @@ extension NSLayoutConstraint {
         self.isActive = true
         return self
     }
-    
+
     @discardableResult
     func setPriority(_ priority: UILayoutPriority) -> Self {
         self.priority = priority

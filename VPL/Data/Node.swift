@@ -10,7 +10,7 @@ import Foundation
 
 public enum NodeOutput {
     case triggers([OutputTrigger]), value(OutputValue), none
-    
+
     /// Returns the triggers, if a triggers type.
     public var triggers: [OutputTrigger]? {
         if case let .triggers(triggers) = self {
@@ -19,7 +19,7 @@ public enum NodeOutput {
             return nil
         }
     }
-    
+
     /// Returns the value, if a value type.
     public var value: OutputValue? {
         if case let .value(value) = self {
@@ -37,9 +37,9 @@ public protocol Node: class {
     var inputValues: [InputValue] { get }
     var inputVariables: [InputVariable] { get }
     var output: NodeOutput { get }
-    
+
     init()
-    
+
     func assemble() -> String
 }
 
@@ -63,14 +63,14 @@ extension Node {
             return nil
         }
     }
-    
+
     /// Variables that this node can use.
     public var availableVariables: [NodeVariable] {
         // Add variables available from all parent triggers
         let trigger  = nearestControlNode
         return (trigger?.target?.exposedVariables ?? []) + (trigger?.target?.owner.availableVariables ?? [])
     }
-    
+
     public func setupConnections() {
         inputTrigger?.owner = self
         for value in inputValues { value.owner = self }
@@ -84,7 +84,7 @@ extension Node {
             break
         }
     }
-    
+
     public func destroy() {
         inputTrigger?.reset()
         for value in inputValues { value.reset() }
@@ -97,7 +97,7 @@ extension Node {
             break
         }
     }
-    
+
     public func assembleOutputTrigger(id: String? = nil) -> String {
         if case let .triggers(triggers) = output {
             if let id = id {

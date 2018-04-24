@@ -10,20 +10,20 @@ import UIKit
 
 class DisplayNodeCanvasOverlay: UIView {
     weak var canvas: DisplayNodeCanvas?
-    
+
     init(frame: CGRect, canvas: DisplayNodeCanvas) {
         self.canvas = canvas
-        
+
         super.init(frame: frame)
-        
+
         isUserInteractionEnabled = false
         backgroundColor = .clear
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func draw(_ rect: CGRect) {
         guard let canvas = canvas else {
             print("No canvas to draw overlay.")
@@ -33,7 +33,7 @@ class DisplayNodeCanvasOverlay: UIView {
             print("No graphics context.")
             return
         }
-        
+
         // Draw all node connections
         for node in canvas.nodes {
             for socket in node.sockets {
@@ -64,7 +64,7 @@ class DisplayNodeCanvasOverlay: UIView {
                 }
             }
         }
-        
+
         // Draw socket caps over where the lines meet; this makes it so it
         // doesn't feel clunky when multiple lines join at the same position
         for node in canvas.nodes {
@@ -77,14 +77,14 @@ class DisplayNodeCanvasOverlay: UIView {
             }
         }
     }
-    
+
     /// Finds a display node socket that matches a socket type.
     func findTarget(forSocketType socketType: DisplayNodeSocketType) -> DisplayNodeSocket? {
         guard let canvas = canvas else {
             print("Missing canvas.")
             return nil
         }
-        
+
         // Find a socket that matches the target of this view
         for node in canvas.nodes {
             for otherSocket in node.sockets {
@@ -112,11 +112,11 @@ class DisplayNodeCanvasOverlay: UIView {
                 }
             }
         }
-        
+
         // No match
         return nil
     }
-    
+
     /// Draws a line between two points indicating a socket position
     func drawSocketConnection(context ctx: CGContext, fromInput: Bool, from: CGPoint, to: CGPoint, color: UIColor, label: String?) {
         // Draw the line
@@ -127,7 +127,7 @@ class DisplayNodeCanvasOverlay: UIView {
         let controlDistance: CGFloat = 75 * (fromInput ? -1 : 1)
         ctx.addCurve(to: to, control1: CGPoint(x: from.x + controlDistance, y: from.y), control2: CGPoint(x: to.x - controlDistance, y: to.y))
         ctx.strokePath()
-        
+
         if let label = label {
             // Get label metrics
             let lineCenter = CGPoint(x: (from.x + to.x) / 2, y: (from.y + to.y) / 2)
@@ -138,7 +138,7 @@ class DisplayNodeCanvasOverlay: UIView {
                 NSAttributedStringKey.paragraphStyle: paragraphStyle
             ]
             let size = (label as NSString).size(withAttributes: attributes)
-            
+
             // Draw a shape behind the label
             var paddedSize = CGSize(width: size.width, height: size.height + 8)
             paddedSize.width += paddedSize.height / 2 // Make the caps go beyond the text
@@ -151,7 +151,7 @@ class DisplayNodeCanvasOverlay: UIView {
             )
             ctx.setFillColor(gray: 1.0, alpha: 0.7)
             roundedRect.fill()
-            
+
             // Draw the label
             (label as NSString).draw(
                 in: CGRect(x: lineCenter.x - size.width / 2, y: lineCenter.y - size.height / 2, width: size.width, height: size.height),
@@ -159,7 +159,7 @@ class DisplayNodeCanvasOverlay: UIView {
             )
         }
     }
-    
+
     /// Draws a cap over the socket.
     func drawSocketCap(context ctx: CGContext, center: CGPoint, color: UIColor) {
         // Draw circle over the cap of the base node
@@ -171,7 +171,7 @@ class DisplayNodeCanvasOverlay: UIView {
         )
         ctx.fillPath()
     }
-    
+
     override func layoutSubviews() {
 //        setNeedsLayout()
     }
