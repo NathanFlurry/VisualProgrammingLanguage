@@ -27,7 +27,7 @@ public class GenericInputViewField: UIView {
         fieldLabel.textAlignment = .center
         fieldLabel.text = "\(name):"
         fieldLabel.textColor = UIColor(white: 0.3, alpha: 1.0)
-        fieldLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
+        fieldLabel.font = .systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
         addSubview(fieldLabel)
 
         valueLabel = UILabel()

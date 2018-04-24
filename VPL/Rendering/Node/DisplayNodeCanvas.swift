@@ -8,6 +8,45 @@
 
 import UIKit
 
+extension Array where Element == DisplayNode {
+
+    /// Finds a display node socket that matches a socket type.
+    func target(for socketType: DisplayNodeSocketType) -> DisplayNodeSocket? {
+        // Find a socket that matches the target of this view
+        for node in self {
+            for otherSocket in node.sockets {
+                switch (socketType, otherSocket.type) {
+                case let (.inputTrigger(trigger), .outputTrigger(otherTrigger)):
+                    if trigger.target === otherTrigger {
+                        return otherSocket
+                    }
+                case let (.outputTrigger(trigger), .inputTrigger(otherTrigger)):
+                    if trigger.target === otherTrigger {
+                        return otherSocket
+                    }
+                case let (.inputValue(value), .outputValue(otherValue)):
+                    if value.target === otherValue {
+                        return otherSocket
+                    }
+                case let (.outputValue(value), .inputValue(otherValue)):
+                    if value.target === otherValue {
+                        return otherSocket
+                    }
+                case let (.inputVariable(variable), .outputTrigger(trigger)):
+                    if variable.target?.owner === trigger {
+                        return otherSocket
+                    }
+                default:
+                    break
+                }
+            }
+        }
+
+        // No match
+        return nil
+    }
+}
+
 public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     /// List of all nodes in the canvas.
     public private(set) var nodes: [DisplayNode]

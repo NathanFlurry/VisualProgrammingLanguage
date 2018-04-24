@@ -49,7 +49,7 @@ class DisplayNodeCanvasOverlay: UIView {
                         color: socket.type.connectionColor,
                         label: nil
                     )
-                } else if let targetSocket = findTarget(forSocketType: socket.type) {
+                } else if let targetSocket = target(for: socket.type) {
                     // Draw a line between the sockets
                     let startPosition = socket.convert(CGPoint.zero, to: self)
                     let endPosition = targetSocket.convert(CGPoint.zero, to: self)
@@ -70,7 +70,7 @@ class DisplayNodeCanvasOverlay: UIView {
         for node in canvas.nodes {
             for socket in node.sockets {
                 // Draw the cap if it has a connection
-                if socket.draggingTarget != nil || findTarget(forSocketType: socket.type) != nil {
+                if socket.draggingTarget != nil || target(for: socket.type) != nil {
                     let centerPosition = socket.convert(CGPoint(x: socket.frame.width / 2, y: socket.frame.height / 2), to: self)
                     drawSocketCap(context: ctx, center: centerPosition, color: socket.type.connectionColor)
                 }
@@ -79,42 +79,12 @@ class DisplayNodeCanvasOverlay: UIView {
     }
 
     /// Finds a display node socket that matches a socket type.
-    func findTarget(forSocketType socketType: DisplayNodeSocketType) -> DisplayNodeSocket? {
+    func target(for socketType: DisplayNodeSocketType) -> DisplayNodeSocket? {
         guard let canvas = canvas else {
             print("Missing canvas.")
             return nil
         }
-
-        // Find a socket that matches the target of this view
-        for node in canvas.nodes {
-            for otherSocket in node.sockets {
-                switch socketType {
-                case .inputTrigger(let trigger):
-                    if case let .outputTrigger(otherTrigger) = otherSocket.type {
-                        if trigger.target === otherTrigger { return otherSocket }
-                    }
-                case .outputTrigger(let trigger):
-                    if case let .inputTrigger(otherTrigger) = otherSocket.type {
-                        if trigger.target === otherTrigger { return otherSocket }
-                    }
-                case .inputValue(let value):
-                    if case let .outputValue(otherValue) = otherSocket.type {
-                        if value.target === otherValue { return otherSocket }
-                    }
-                case .outputValue(let value):
-                    if case let .inputValue(otherValue) = otherSocket.type {
-                        if value.target === otherValue { return otherSocket }
-                    }
-                case .inputVariable(let variable):
-                    if case let .outputTrigger(trigger) = otherSocket.type {
-                        if variable.target?.owner === trigger { return otherSocket }
-                    }
-                }
-            }
-        }
-
-        // No match
-        return nil
+        return canvas.nodes.target(for: socketType)
     }
 
     /// Draws a line between two points indicating a socket position
