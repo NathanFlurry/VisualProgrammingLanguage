@@ -80,7 +80,7 @@ public class RandomIntNode: DisplayableNode {
     }
 
     public func assemble() -> String {
-        return "(arc4random() as Int)"
+        return "(Int.random())"
     }
 }
 
@@ -96,7 +96,7 @@ public class RandomFloatNode: DisplayableNode {
     }
 
     public func assemble() -> String {
-        return "(Float(arc4random()) / Float(UINT32_MAX))"
+        return "(Float.random())"
     }
 }
 
