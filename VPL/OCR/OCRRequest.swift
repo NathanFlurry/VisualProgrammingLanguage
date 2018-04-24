@@ -106,7 +106,7 @@ class OCRRequest {
         } else {
             // Start the request
             let handler = VNImageRequestHandler(cgImage: convertedImage.cgImage!)
-            let request: VNDetectTextRectanglesRequest = VNDetectTextRectanglesRequest(completionHandler: detectTextHandler)
+            let request = VNDetectTextRectanglesRequest(completionHandler: detectTextHandler)
             request.reportCharacterBoxes = true
             try handler.perform([request])
         }

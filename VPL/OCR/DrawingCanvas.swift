@@ -143,8 +143,8 @@ class DrawingCanvas: UIView {
         context.clear(bounds)
 
         // Draw the images into the new context
-        imageView.image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
-        tempImageView.image?.draw(in: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height), blendMode: .normal, alpha: 1.0)
+        imageView.image?.draw(in: CGRect(origin: .zero, size: frame.size), blendMode: .normal, alpha: 1.0)
+        tempImageView.image?.draw(in: CGRect(origin: .zero, size: frame.size), blendMode: .normal, alpha: 1.0)
 
         // Assign the image
         imageView.image = UIGraphicsGetImageFromCurrentImageContext()

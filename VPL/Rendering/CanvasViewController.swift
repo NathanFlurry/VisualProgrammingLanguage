@@ -116,7 +116,7 @@ public class CanvasViewController: UIViewController {
                     }
                 }
             }
-            RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
+            RunLoop.main.add(timer, forMode: .defaultRunLoopMode)
             self.commitDrawingTimer = timer
         }
 
