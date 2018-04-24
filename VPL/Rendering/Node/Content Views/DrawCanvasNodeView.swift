@@ -129,7 +129,7 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
                 }
 
                 // Process
-                try! OCRRequest(dataset: dataset, image: removeRetinaData(image: output), singleCharacter: false) { (result, breakdown) in
+                try! OCRRequest(dataset: dataset, image: output.removeRetinaData(), singleCharacter: false) { (result, breakdown) in
                     // Overlay the breakdown for debug info
 //                    self.canvas.overlayOCRBreakdown(breakdown: breakdown)
 

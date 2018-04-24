@@ -153,6 +153,12 @@ extension UIImage {
         let a = CGFloat(data[pixelInfo + 3]) / CGFloat(255.0)
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
+
+    func cropping(to rect: CGRect) -> UIImage? {
+        return cgImage!.cropping(to: rect).flatMap {
+            UIImage(cgImage: $0)
+        }
+    }
 }
 
 extension VNRectangleObservation {
@@ -169,11 +175,6 @@ extension VNRectangleObservation {
 }
 
 extension UIImage {
-    func cropping(to rect: CGRect) -> UIImage? {
-        return cgImage!.cropping(to: rect).flatMap {
-            UIImage(cgImage: $0)
-        }
-    }
 }
 
 func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false, addInsets: Bool = true) -> UIImage {
@@ -220,15 +221,18 @@ func invert(image: UIImage) -> UIImage {
     return UIImage(cgImage: imageRef)
 }
 
-func removeRetinaData(image input: UIImage) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(input.size, false, 1.0)
-    input.draw(in: CGRect(x: 0, y: 0, width: input.size.width, height: input.size.height))
-    guard let nonRetinaImage = UIGraphicsGetImageFromCurrentImageContext() else {
-        print("Failed to construct non-retina image.")
-        return UIImage()
+
+extension UIImage {
+    func removeRetinaData() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        draw(in: CGRect(size: size))
+        guard let nonRetinaImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            print("Failed to construct non-retina image.")
+            return UIImage()
+        }
+        UIGraphicsEndImageContext()
+        return nonRetinaImage
     }
-    UIGraphicsEndImageContext()
-    return nonRetinaImage
 }
 
 // From: https://gist.github.com/marchinram/3675efc96bf1cc2c02a5

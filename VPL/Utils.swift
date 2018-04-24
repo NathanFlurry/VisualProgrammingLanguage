@@ -59,6 +59,14 @@ extension CGRect {
     public var center: CGPoint {
         return CGPoint(x: midX, y: midY)
     }
+
+    public init(square: CGFloat) {
+        self.init(size: CGSize(width: square, height: square))
+    }
+
+    public init(size: CGSize) {
+        self.init(origin: .zero, size: size)
+    }
 }
 
 // Extension helpers

@@ -81,7 +81,7 @@ public class CanvasViewController: UIViewController {
                 }
 
                 // Process
-                try! OCRRequest(dataset: .alphanum, image: removeRetinaData(image: output), singleCharacter: true) { (result, breakdown) in
+                try! OCRRequest(dataset: .alphanum, image: output.removeRetinaData(), singleCharacter: true) { (result, breakdown) in
                     assert(breakdown.count == 1)
 
                     // Get the character's center

@@ -25,7 +25,7 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         // Save the node and canvas
         self.node = node
 
-        super.init(frame: CGRect(x: 0, y: 0, width: 99999, height: 9999)) // Need large frame so the layout can be made
+        super.init(frame: CGRect(square: 99999)) // Need large frame so the layout can be made
 
         // Setup the view
         backgroundColor = UIColor(white: 0.95, alpha: 1.0)
@@ -109,12 +109,12 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         }
 
         // Add drag gesture
-        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned(sender:)))
+        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panned))
         dragGesture.delegate = self
         addGestureRecognizer(dragGesture)
 
         // Add remove gesture
-        let removeGesture = UITapGestureRecognizer(target: self, action: #selector(remove(sender:)))
+        let removeGesture = UITapGestureRecognizer(target: self, action: #selector(remove))
         removeGesture.numberOfTapsRequired = 2
         removeGesture.delegate = self
         addGestureRecognizer(removeGesture)
