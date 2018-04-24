@@ -103,9 +103,9 @@ class DisplayNodeCanvasOverlay: UIView {
             let lineCenter = CGPoint(x: (from.x + to.x) / 2, y: (from.y + to.y) / 2)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
-            let attributes = [
-                NSAttributedStringKey.font: UIFont.codeFont(),
-                NSAttributedStringKey.paragraphStyle: paragraphStyle
+            let attributes: [NSAttributedStringKey: Any] = [
+                .font: UIFont.codeFont(),
+                .paragraphStyle: paragraphStyle
             ]
             let size = (label as NSString).size(withAttributes: attributes)
 

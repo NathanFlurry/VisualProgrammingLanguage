@@ -231,7 +231,7 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
 
         let offsetAnim = CABasicAnimation(keyPath: "shadowOffset")
         offsetAnim.fromValue = presentation?.shadowOffset ?? .zero
-        offsetAnim.toValue = lifted ? CGSize(width: 0, height: 25) : CGSize(width: 0, height: 5)
+        offsetAnim.toValue = CGSize(width: 0, height: lifted ? 25 : 5)
 
         let shadowAnim = CABasicAnimation(keyPath: "shadowRadius")
         shadowAnim.fromValue = presentation?.shadowRadius ?? 0

@@ -15,31 +15,31 @@ enum DisplayNodeSocketType: Equatable {
 
     var socketColor: UIColor {
         switch self {
-        case .inputTrigger(_), .outputTrigger(_):
+        case .inputTrigger, .outputTrigger:
             return UIColor(red: 1, green: 0.74, blue: 0.24, alpha: 1.0)
-        case .inputValue(_), .outputValue(_):
+        case .inputValue, .outputValue:
             return UIColor(red: 0.11, green: 0.84, blue: 1.0, alpha: 1.0)
-        case .inputVariable(_):
+        case .inputVariable:
             return UIColor(red: 0.12, green: 1, blue: 0.59, alpha: 1.0)
         }
     }
 
     var connectionColor: UIColor {
         switch self {
-        case .inputTrigger(_), .outputTrigger(_):
+        case .inputTrigger, .outputTrigger:
             return UIColor(red: 1, green: 0.85, blue: 0.56, alpha: 1.0)
-        case .inputValue(_), .outputValue(_):
+        case .inputValue, .outputValue:
             return UIColor(red: 0.65, green: 0.93, blue: 1.0, alpha: 1.0)
-        case .inputVariable(_):
+        case .inputVariable:
             return UIColor(red: 0.44, green: 1, blue: 0.74, alpha: 0.35)
         }
     }
 
     var isInput: Bool {
         switch self {
-        case .inputTrigger(_), .inputValue(_), .inputVariable(_):
+        case .inputTrigger, .inputValue, .inputVariable:
             return true
-        case .outputValue(_), .outputTrigger(_):
+        case .outputValue, .outputTrigger:
             return false
         }
     }
@@ -201,7 +201,7 @@ class DisplayNodeSocket: UIView {
             if case let .inputValue(otherValue) = other.type {
                 value.connect(to: otherValue)
             }
-        case .inputVariable(_):
+        case .inputVariable:
             promptVariableConnectino(to: other)
         }
 
@@ -351,9 +351,9 @@ class DisplayNodeSocket: UIView {
         // Determine if input
         var isInput: Bool
         switch type {
-        case .inputTrigger(_), .inputValue(_), .inputVariable(_):
+        case .inputTrigger, .inputValue, .inputVariable:
             isInput = true
-        case .outputTrigger(_), .outputValue(_):
+        case .outputTrigger, .outputValue:
             isInput = false
         }
 
