@@ -75,7 +75,7 @@ func insertInsets(image: UIImage, insetWidthDimension: CGFloat, insetHeightDimen
     adjustedImage.draw(at: origin)
     let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return convertTransparent(image: imageWithInsets!, color: color)
+    return imageWithInsets!.convertTransparent(color: color)
 }
 
 func averageColor(fromColors colors: [UIColor]) -> UIColor {
@@ -110,39 +110,37 @@ func adjustColors(image: UIImage) -> UIImage {
     return image
 }
 
-func fixOrientation(image: UIImage) -> UIImage {
-    if image.imageOrientation == .up {
-        return image
-    }
-    UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-    image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-    if let normalizedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() {
-        UIGraphicsEndImageContext()
-        return normalizedImage
-    } else {
-        return image
-    }
-}
-
-func convertTransparent(image: UIImage, color: UIColor) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-    let width = image.size.width
-    let height = image.size.height
-    let imageRect: CGRect = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-    let ctx: CGContext = UIGraphicsGetCurrentContext()!
-    let redValue = CGFloat(color.cgColor.components![0])
-    let greenValue = CGFloat(color.cgColor.components![1])
-    let blueValue = CGFloat(color.cgColor.components![2])
-    let alphaValue = CGFloat(color.cgColor.components![3])
-    ctx.setFillColor(red: redValue, green: greenValue, blue: blueValue, alpha: alphaValue)
-    ctx.fill(imageRect)
-    image.draw(in: imageRect)
-    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-    UIGraphicsEndImageContext()
-    return newImage
-}
-
 extension UIImage {
+    func fixOrientation() -> UIImage {
+        if imageOrientation == .up {
+            return self
+        }
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(in: CGRect(size: size))
+        if let normalizedImage = UIGraphicsGetImageFromCurrentImageContext() {
+            UIGraphicsEndImageContext()
+            return normalizedImage
+        } else {
+            return self
+        }
+    }
+
+    func convertTransparent(color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        let imageRect = CGRect(size: size)
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        let redValue = CGFloat(color.cgColor.components![0])
+        let greenValue = CGFloat(color.cgColor.components![1])
+        let blueValue = CGFloat(color.cgColor.components![2])
+        let alphaValue = CGFloat(color.cgColor.components![3])
+        ctx.setFillColor(red: redValue, green: greenValue, blue: blueValue, alpha: alphaValue)
+        ctx.fill(imageRect)
+        draw(in: imageRect)
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+
     func pixelColor(at pixel: CGPoint) -> UIColor {
         let pixelData = cgImage!.dataProvider!.data
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
@@ -174,9 +172,6 @@ extension VNRectangleObservation {
     }
 }
 
-extension UIImage {
-}
-
 func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false, addInsets: Bool = true) -> UIImage {
     // Calculate properties
     let width = image.size.width
@@ -187,7 +182,7 @@ func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false,
     // Process the image
     var image = image
     if shouldInvert {
-        image = invert(image: image)
+        image = image.invert()
     }
     if addInsets {
         image = insertInsets(image: image, insetWidthDimension: addToWidth2, insetHeightDimension: addToHeight2)
@@ -198,31 +193,31 @@ func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false,
     return image
 }
 
-func invert(image: UIImage) -> UIImage {
-    // Get the filter and image
-    guard let filter = CIFilter(name: "CIColorInvert") else {
-        print("Failed to find CIColorInvert.")
-        return UIImage()
-    }
-    guard let cgImage = image.cgImage else {
-        print("Failed to get CGImage.")
-        return UIImage()
-    }
-
-    // Invert the image
-    let img = CIImage(cgImage: cgImage)
-    filter.setDefaults()
-    filter.setValue(img, forKey: kCIInputImageKey)
-    let ctx = CIContext(options: nil)
-    guard let imageRef = ctx.createCGImage(filter.outputImage!, from: img.extent) else {
-        print("Failed to get CGImage from CoreImage.")
-        return UIImage()
-    }
-    return UIImage(cgImage: imageRef)
-}
-
 
 extension UIImage {
+    func invert() -> UIImage {
+        // Get the filter and image
+        guard let filter = CIFilter(name: "CIColorInvert") else {
+            print("Failed to find CIColorInvert.")
+            return UIImage()
+        }
+        guard let cgImage = cgImage else {
+            print("Failed to get CGImage.")
+            return UIImage()
+        }
+
+        // Invert the image
+        let img = CIImage(cgImage: cgImage)
+        filter.setDefaults()
+        filter.setValue(img, forKey: kCIInputImageKey)
+        let ctx = CIContext(options: nil)
+        guard let imageRef = ctx.createCGImage(filter.outputImage!, from: img.extent) else {
+            print("Failed to get CGImage from CoreImage.")
+            return UIImage()
+        }
+        return UIImage(cgImage: imageRef)
+    }
+
     func removeRetinaData() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
         draw(in: CGRect(size: size))
@@ -233,10 +228,8 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return nonRetinaImage
     }
-}
 
 // From: https://gist.github.com/marchinram/3675efc96bf1cc2c02a5
-extension UIImage {
     subscript (x: Int, y: Int) -> UIColor? {
         if x < 0 || x > Int(size.width) || y < 0 || y > Int(size.height) {
             return nil
