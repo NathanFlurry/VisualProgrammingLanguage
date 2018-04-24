@@ -52,7 +52,7 @@ func convertToGrayscale(image: UIImage) -> UIImage {
 
 func insertInsets(image: UIImage, insetWidthDimension: CGFloat, insetHeightDimension: CGFloat)
     -> UIImage {
-    let adjustedImage = adjustColors(image: image)
+    let adjustedImage = image.adjustColors()
     let upperLeftPoint: CGPoint = CGPoint(x: 0, y: 0)
     let lowerLeftPoint: CGPoint = CGPoint(x: 0, y: adjustedImage.size.height - 1)
     let upperRightPoint: CGPoint = CGPoint(x: adjustedImage.size.width - 1, y: 0)
@@ -94,23 +94,22 @@ func averageColor(fromColors colors: [UIColor]) -> UIColor {
 }
 
 func adjustColors(image: UIImage) -> UIImage {
-    let context = CIContext(options: nil)
-    if let currentFilter = CIFilter(name: "CIColorControls") {
-        let beginImage = CIImage(image: image)
-        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-        currentFilter.setValue(0, forKey: kCIInputSaturationKey)
-        currentFilter.setValue(1.45, forKey: kCIInputContrastKey) //previous 1.5
-        if let output = currentFilter.outputImage {
-            if let cgimg = context.createCGImage(output, from: output.extent) {
-                let processedImage = UIImage(cgImage: cgimg)
-                return processedImage
-            }
-        }
-    }
-    return image
+    return image.adjustColors()
 }
 
 extension UIImage {
+    func adjustColors() -> UIImage {
+        let context = CIContext(options: nil)
+        guard let currentFilter = CIFilter(name: "CIColorControls") else { return self }
+        let beginImage = CIImage(image: self)
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        currentFilter.setValue(0, forKey: kCIInputSaturationKey)
+        currentFilter.setValue(1.45, forKey: kCIInputContrastKey) //previous 1.5
+        guard let output = currentFilter.outputImage,
+            let cgimg = context.createCGImage(output, from: output.extent) else { return self }
+        return UIImage(cgImage: cgimg)
+    }
+
     func fixOrientation() -> UIImage {
         if imageOrientation == .up {
             return self
@@ -136,7 +135,7 @@ extension UIImage {
         ctx.setFillColor(red: redValue, green: greenValue, blue: blueValue, alpha: alphaValue)
         ctx.fill(imageRect)
         draw(in: imageRect)
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
     }
