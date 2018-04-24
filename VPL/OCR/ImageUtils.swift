@@ -58,10 +58,10 @@ func insertInsets(image: UIImage, insetWidthDimension: CGFloat, insetHeightDimen
     let upperRightPoint: CGPoint = CGPoint(x: adjustedImage.size.width - 1, y: 0)
     let lowerRightPoint: CGPoint = CGPoint(x: adjustedImage.size.width - 1,
                                            y: adjustedImage.size.height - 1)
-    let upperLeftColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: upperLeftPoint)
-    let lowerLeftColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: lowerLeftPoint)
-    let upperRightColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: upperRightPoint)
-    let lowerRightColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: lowerRightPoint)
+    let upperLeftColor: UIColor = adjustedImage.pixelColor(at: upperLeftPoint)
+    let lowerLeftColor: UIColor = adjustedImage.pixelColor(at: lowerLeftPoint)
+    let upperRightColor: UIColor = adjustedImage.pixelColor(at: upperRightPoint)
+    let lowerRightColor: UIColor = adjustedImage.pixelColor(at: lowerRightPoint)
     let color =
         averageColor(fromColors: [upperLeftColor, lowerLeftColor, upperRightColor, lowerRightColor])
     let insets = UIEdgeInsets(top: insetHeightDimension,
@@ -142,22 +142,24 @@ func convertTransparent(image: UIImage, color: UIColor) -> UIImage {
     return newImage
 }
 
-func getPixelColor(fromImage image: UIImage, pixel: CGPoint) -> UIColor {
-    let pixelData = image.cgImage!.dataProvider!.data
-    let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-    let pixelInfo: Int = ((Int(image.size.width) * Int(pixel.y)) + Int(pixel.x)) * 4
-    let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
-    let g = CGFloat(data[pixelInfo + 1]) / CGFloat(255.0)
-    let b = CGFloat(data[pixelInfo + 2]) / CGFloat(255.0)
-    let a = CGFloat(data[pixelInfo + 3]) / CGFloat(255.0)
-    return UIColor(red: r, green: g, blue: b, alpha: a)
+extension UIImage {
+    func pixelColor(at pixel: CGPoint) -> UIColor {
+        let pixelData = cgImage!.dataProvider!.data
+        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        let pixelInfo: Int = ((Int(size.width) * Int(pixel.y)) + Int(pixel.x)) * 4
+        let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
+        let g = CGFloat(data[pixelInfo + 1]) / CGFloat(255.0)
+        let b = CGFloat(data[pixelInfo + 2]) / CGFloat(255.0)
+        let a = CGFloat(data[pixelInfo + 3]) / CGFloat(255.0)
+        return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
 }
 
 extension VNRectangleObservation {
     func applyTo(size: CGSize) -> CGRect {
-        var t: CGAffineTransform = CGAffineTransform.identity;
-        t = t.scaledBy(x: size.width, y: -size.height);
-        t = t.translatedBy(x: 0, y: -1 );
+        var t: CGAffineTransform = .identity
+        t = t.scaledBy(x: size.width, y: -size.height)
+        t = t.translatedBy(x: 0, y: -1 )
         let x = boundingBox.applying(t).origin.x
         let y = boundingBox.applying(t).origin.y
         let width = boundingBox.applying(t).width
