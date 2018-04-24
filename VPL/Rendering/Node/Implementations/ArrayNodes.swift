@@ -6,7 +6,6 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
 public class ArrayCreateNode: DisplayableNode {
     public static let shortcutCharacter: String? = "A"
 

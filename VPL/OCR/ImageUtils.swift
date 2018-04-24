@@ -2,7 +2,6 @@
  Some tools adapted from: https://github.com/martinmitrevski/TextRecognizer/blob/master/TextRecognizer/ImageUtils.swift
  ***/
 
-import Foundation
 import UIKit
 import Vision
 
@@ -21,14 +20,18 @@ public func |> <T, U>(value: T, function: ((T) -> U)) -> U {
     return function(value)
 }
 
-func resize(image: UIImage, targetSize: CGSize) -> UIImage {
-    let rect = CGRect(x: 0, y: 0, width: targetSize.width, height: targetSize.height)
-    UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)
-    image.draw(in: rect)
-    let newImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return newImage!
+extension UIImage {
+    func resize(to size: CGSize) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
 }
+
+
 
 func convertToGrayscale(image: UIImage) -> UIImage {
     let colorSpace: CGColorSpace = CGColorSpaceCreateDeviceGray()
@@ -187,7 +190,7 @@ func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false,
     if addInsets {
         image = insertInsets(image: image, insetWidthDimension: addToWidth2, insetHeightDimension: addToHeight2)
     }
-    image = resize(image: image, targetSize: size)
+    image = image.resize(to: size)
     image = convertToGrayscale(image: image)
 
     return image

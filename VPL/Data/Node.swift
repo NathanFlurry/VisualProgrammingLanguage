@@ -6,8 +6,6 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
-
 public enum NodeOutput {
     case triggers([OutputTrigger]), value(OutputValue), none
 
