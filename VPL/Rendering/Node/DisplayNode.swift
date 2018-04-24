@@ -33,9 +33,9 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         updateShadow(lifted: false)
 
         // Add label
-        let titleLabel = UILabel(frame: CGRect.zero)
+        let titleLabel = UILabel(frame: .zero)
         titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
         titleLabel.text = type(of: node).name
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -62,8 +62,8 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         }
 
         // Create panels
-        let leftPanel = UIStackView(frame: CGRect.zero)
-        let rightPanel = UIStackView(frame: CGRect.zero)
+        let leftPanel = UIStackView(frame: .zero)
+        let rightPanel = UIStackView(frame: .zero)
         leftPanel.axis = .vertical
         rightPanel.axis = .vertical
         leftPanel.alignment = .leading
@@ -135,10 +135,10 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
 
     func addProperty(parent: UIStackView, leftAlign: Bool, socket socketType: DisplayNodeSocketType, name: String, type: String?) {
 
-        let view = UIView(frame: CGRect.zero)
+        let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
 
-        let socket = DisplayNodeSocket(frame: CGRect.zero, type: socketType, node: self)
+        let socket = DisplayNodeSocket(frame: .zero, type: socketType, node: self)
         sockets.append(socket) // Save the socket
         view.addSubview(socket)
         socket.translatesAutoresizingMaskIntoConstraints = false
@@ -146,7 +146,7 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         socket.bottomAnchor.constraint(equalTo: view.bottomAnchor).activate()
         socket.widthAnchor.constraint(equalTo: socket.heightAnchor).activate()
 
-        let nameLabel = UILabel(frame: CGRect.zero)
+        let nameLabel = UILabel(frame: .zero)
         nameLabel.text = name
         view.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -154,7 +154,7 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         nameLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).activate() // ^
         nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).activate()
 
-        let typeLabel = UILabel(frame: CGRect.zero)
+        let typeLabel = UILabel(frame: .zero)
         typeLabel.text = type
         typeLabel.textColor = UIColor(white: 0, alpha: 0.5)
         typeLabel.font = UIFont.codeFont()
@@ -187,7 +187,7 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
             // Drag the view
             let translation = sender.translation(in: self)
             center = CGPoint(x: center.x + translation.x, y: center.y + translation.y)
-            sender.setTranslation(CGPoint.zero, in: self)
+            sender.setTranslation(.zero, in: self)
 
             // Notify the canvas the node was updated
             canvas?.updated(node: self)
@@ -225,13 +225,12 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         let presentation = layer.presentation()
 
         let scaleAnim = CABasicAnimation(keyPath: "transform")
-        scaleAnim.fromValue = presentation?.transform ?? CATransform3DIdentity
+        scaleAnim.fromValue = presentation?.transform ?? .identity
         scaleAnim.toValue = lifted ?
-            CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05) :
-            CATransform3DIdentity
+            CATransform3DScale(.identity, 1.05, 1.05, 1.05) : .identity
 
         let offsetAnim = CABasicAnimation(keyPath: "shadowOffset")
-        offsetAnim.fromValue = presentation?.shadowOffset ?? CGSize.zero
+        offsetAnim.fromValue = presentation?.shadowOffset ?? .zero
         offsetAnim.toValue = lifted ? CGSize(width: 0, height: 25) : CGSize(width: 0, height: 5)
 
         let shadowAnim = CABasicAnimation(keyPath: "shadowRadius")

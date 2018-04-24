@@ -108,7 +108,7 @@ func adjustColors(image: UIImage) -> UIImage {
 }
 
 func fixOrientation(image: UIImage) -> UIImage {
-    if image.imageOrientation == UIImageOrientation.up {
+    if image.imageOrientation == .up {
         return image
     }
     UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
@@ -264,7 +264,7 @@ extension UIImage {
 
         guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo),
             let ptr = context.data?.assumingMemoryBound(to: UInt8.self) else {
-                return CGRect.zero
+                return .zero
         }
 
         context.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: width, height: height))

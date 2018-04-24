@@ -21,7 +21,7 @@ public class GenericInputViewField: UIView {
         self.name = name
         self.value = defaultValue
 
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
         let fieldLabel = UILabel()
         fieldLabel.textAlignment = .center
@@ -108,7 +108,7 @@ public class GenericInputView: DisplayableNodeContentView {
         self.node = node
         self.fields = fields
 
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
         // Set the callbacks
         for field in fields {

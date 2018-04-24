@@ -26,12 +26,12 @@ class CodeOutputView: UIView {
 
     var code: String = ""
 
-    var textView: UITextView = UITextView(frame: CGRect.zero)
+    var textView: UITextView = UITextView(frame: .zero)
 
     var copyButton: UIButton = UIButton()
 
     init() {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
         // Style the view
         backgroundColor = UIColor(white: 0.96, alpha: 1.0)
@@ -109,12 +109,12 @@ class CodeOutputView: UIView {
 
                 // Updates the attributes
                 let range = NSRange(keywordRange, in: code)
-                string.addAttribute(NSAttributedStringKey.foregroundColor, value: color, range: range)
+                string.addAttribute(.foregroundColor, value: color, range: range)
             }
         }
 
         // Set the font
-        string.addAttribute(NSAttributedStringKey.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
+        string.addAttribute(.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
 
         return string
     }

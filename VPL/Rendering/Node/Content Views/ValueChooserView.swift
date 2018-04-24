@@ -35,13 +35,13 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
         self.valueLabel = valueLabel
         self.chooseCallback = chooseCallback
 
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
-        selectionLabel = UILabel(frame: CGRect.zero)
+        selectionLabel = UILabel(frame: .zero)
         selectionLabel.text = valueLabel(value)
         addSubview(selectionLabel)
 
-        pickButton = UIButton(frame: CGRect.zero)
+        pickButton = UIButton(frame: .zero)
         pickButton.setTitle("Pick...", for: .normal)
         addSubview(pickButton)
 

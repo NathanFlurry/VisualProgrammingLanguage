@@ -57,10 +57,10 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
         self.value = defaultValue
 
         self.canvasContainer = UIView()
-        self.canvas = DrawingCanvas(frame: CGRect.zero)
+        self.canvas = DrawingCanvas(frame: .zero)
         self.valueLabel = UILabel()
 
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
         // Determine the dataset
         var dataset: OCRDataset
@@ -196,17 +196,12 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
             textField.keyboardType = self.inputType == .digits ? .decimalPad : .default
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(
-            title: "Done",
-            style: .default,
-            handler: { _ in
-                let textField = alert.textFields![0]
-                if let text = textField.text {
-                    // Update the value
-                    self.value = text
-                }
-            }
-        ))
+        alert.addAction(UIAlertAction(title: "Done",
+                                      style: .default) { _ in
+                                        // Update the value
+                                        alert.textFields![0].text.map {
+                                            self.value = $0
+                                        } })
         parentViewController?.present(alert, animated: true)
     }
 

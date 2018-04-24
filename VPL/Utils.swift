@@ -30,6 +30,10 @@ extension DisplayNodeCanvas {
     }
 }
 
+extension CATransform3D {
+    static var identity: CATransform3D { return CATransform3DIdentity }
+}
+
 // Font extension
 extension UIFont {
     static func codeFont(size: CGFloat = UIFont.systemFontSize) -> UIFont {
