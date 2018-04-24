@@ -6,8 +6,6 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
-
 public final class InputTrigger {
     /// The node that owns this trigger.
     public internal(set) weak var owner: Node!

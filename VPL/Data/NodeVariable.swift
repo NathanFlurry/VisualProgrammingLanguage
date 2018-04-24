@@ -6,10 +6,8 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
-
 public class NodeVariable {
-    public static var variableId: String { return String(format: "v%06x", Int(arc4random())) }
+    public static var variableId: String { return String(format: "v%06x", Int.random()) }
 
     /// The trigger that owns this variable.
     public internal(set) weak var owner: OutputTrigger!

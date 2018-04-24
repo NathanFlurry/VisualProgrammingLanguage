@@ -30,6 +30,12 @@ extension DisplayNodeCanvas {
     }
 }
 
+extension Int {
+    static func random() -> Int {
+        return Int(arc4random())
+    }
+}
+
 extension CATransform3D {
     static var identity: CATransform3D { return CATransform3DIdentity }
 }
@@ -42,8 +48,11 @@ extension UIFont {
 }
 
 // Random float
-func randomFloat() -> CGFloat {
-    return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+    }
 }
 
 extension CGRect {

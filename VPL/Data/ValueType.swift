@@ -6,8 +6,6 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
-
 public indirect enum ValueType: CustomStringConvertible {
     /// Custom variable type. These correspond to the exact Swift variable type.
     case type(String)
