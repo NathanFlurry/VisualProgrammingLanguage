@@ -56,7 +56,7 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
         pickButton.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
 
         // Add action to picked
-        pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: .touchUpInside)
+        pickButton.addTarget(self, action: #selector(pickTouched), for: .touchUpInside)
     }
 
     public required init?(coder aDecoder: NSCoder) {

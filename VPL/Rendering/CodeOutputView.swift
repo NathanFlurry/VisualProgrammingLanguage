@@ -22,7 +22,7 @@ class CodeOutputView: UIView {
             "willSet"
     ]
 
-    let splitCharacters: [String] = [ "\n", "at ", "{", "}", "(", ")", "[", "]" ]
+    let splitCharacters: Set<String> = [ "\n", "at ", "{", "}", "(", ")", "[", "]" ]
 
     var code: String = ""
 
@@ -114,7 +114,7 @@ class CodeOutputView: UIView {
         }
 
         // Set the font
-        string.addAttribute(.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
+        string.add(attribute: .font, value: UIFont.codeFont())
 
         return string
     }

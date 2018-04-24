@@ -47,6 +47,12 @@ extension UIFont {
     }
 }
 
+extension NSMutableAttributedString {
+    open func add(attribute: NSAttributedStringKey, value: Any) {
+        addAttribute(attribute, value: value, range: NSRange(location: 0, length: length))
+    }
+}
+
 // Random float
 
 extension CGFloat {
