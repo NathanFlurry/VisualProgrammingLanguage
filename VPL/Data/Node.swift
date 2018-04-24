@@ -13,18 +13,16 @@ public enum NodeOutput {
     public var triggers: [OutputTrigger]? {
         if case let .triggers(triggers) = self {
             return triggers
-        } else {
-            return nil
         }
+        return nil
     }
 
     /// Returns the value, if a value type.
     public var value: OutputValue? {
         if case let .value(value) = self {
             return value
-        } else {
-            return nil
         }
+        return nil
     }
 }
 
@@ -57,9 +55,8 @@ extension Node {
             return trigger
         } else if case let .value(value) = output {
             return value.target?.owner.nearestControlNode
-        } else {
-            return nil
         }
+        return nil
     }
 
     /// Variables that this node can use.

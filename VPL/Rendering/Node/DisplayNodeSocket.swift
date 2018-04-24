@@ -59,31 +59,22 @@ enum DisplayNodeSocketType: Equatable {
         }
     }
 
-    static func == (lhs: DisplayNodeSocketType, rhs: DisplayNodeSocketType) -> Bool {
-        switch lhs {
-        case .inputTrigger(let lhsTrigger):
-            if case let .inputTrigger(rhsTrigger) = rhs {
-                return lhsTrigger === rhsTrigger
-            }
-        case .outputTrigger(let lhsTrigger):
-            if case let .outputTrigger(rhsTrigger) = rhs {
-                return lhsTrigger === rhsTrigger
-            }
-        case .inputValue(let lhsValue):
-            if case let .inputValue(rhsValue) = rhs {
-                return lhsValue === rhsValue
-            }
-        case .outputValue(let lhsValue):
-            if case let .outputValue(rhsValue) = rhs {
-                return lhsValue === rhsValue
-            }
-        case .inputVariable(let lhsVariable):
-            if case let .inputVariable(rhsVariable) = rhs {
-                return lhsVariable === rhsVariable
-            }
+    static func ==(lhs: DisplayNodeSocketType, rhs: DisplayNodeSocketType) -> Bool {
+        switch (lhs, rhs) {
+        case let (.inputTrigger(l), .inputTrigger(r)):
+            return l === r
+        case let (.outputTrigger(l), .outputTrigger(r)):
+            return l === r
+        case let (.inputValue(l), .inputValue(r)):
+            return l === r
+        case let (.outputValue(l), .outputValue(r)):
+            return l === r
+        case let (.inputVariable(l), .inputVariable(r)):
+            return l === r
+        default:
+            return false
         }
 
-        return false
     }
 
     func reset() {
