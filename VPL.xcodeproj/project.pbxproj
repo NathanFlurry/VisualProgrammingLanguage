@@ -38,6 +38,7 @@
 		BF62C260206E165B002A148F /* ValueChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25F206E165B002A148F /* ValueChooserView.swift */; };
 		BF62C264206E2EF6002A148F /* ArrayNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C263206E2EF6002A148F /* ArrayNodes.swift */; };
 		BF62C266206E2EFE002A148F /* DictionaryNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C265206E2EFE002A148F /* DictionaryNodes.swift */; };
+		BF7CBC9B20C3894E00FADE14 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF7CBC9A20C3894E00FADE14 /* Icons.xcassets */; };
 		BF822B72206D965A001192B1 /* DisplayNodeCanvasOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */; };
 		BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */; };
 		BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */; };
@@ -138,6 +139,7 @@
 		BF62C25F206E165B002A148F /* ValueChooserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueChooserView.swift; sourceTree = "<group>"; };
 		BF62C263206E2EF6002A148F /* ArrayNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayNodes.swift; sourceTree = "<group>"; };
 		BF62C265206E2EFE002A148F /* DictionaryNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryNodes.swift; sourceTree = "<group>"; };
+		BF7CBC9A20C3894E00FADE14 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvasOverlay.swift; sourceTree = "<group>"; };
 		BF86B738205EFDBE006AEEA7 /* OCRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRequest.swift; sourceTree = "<group>"; };
 		BF86B73A205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Alphanum_28x28.mlmodel; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			children = (
 				BF19A6DA207058060046EFC5 /* background.png */,
 				BF19A6D9207058060046EFC5 /* background@2x.png */,
+				BF7CBC9A20C3894E00FADE14 /* Icons.xcassets */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			files = (
 				BF56DEBC205862B2007E2483 /* LaunchScreen.storyboard in Resources */,
 				BF19A6DC207058060046EFC5 /* background.png in Resources */,
+				BF7CBC9B20C3894E00FADE14 /* Icons.xcassets in Resources */,
 				BF19A6DB207058060046EFC5 /* background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +632,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = US5KT4GR2Y;
 				INFOPLIST_FILE = VPL/Info.plist;
@@ -644,6 +649,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = US5KT4GR2Y;
 				INFOPLIST_FILE = VPL/Info.plist;
