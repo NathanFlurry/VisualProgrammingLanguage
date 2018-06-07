@@ -42,7 +42,7 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
         addSubview(selectionLabel)
         
         pickButton = UIButton(frame: CGRect.zero)
-        pickButton.setTitle("Pick...", for: .normal)
+        pickButton.setTitle("Pick...", for: UIControl.State.normal)
         addSubview(pickButton)
         
         // Add constraints (this is ugly af... ew)
@@ -56,7 +56,7 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
         pickButton.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
         
         // Add action to picked
-        pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: .touchUpInside)
+        pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: UIControl.Event.touchUpInside)
     }
     
     public required init?(coder aDecoder: NSCoder) {

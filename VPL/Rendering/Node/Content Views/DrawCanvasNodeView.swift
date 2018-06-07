@@ -153,9 +153,9 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
         scrollMargin.widthAnchor.constraint(equalToConstant: scrollMarginWidth).activate()
         
         // Add edit button
-        let editButton = UIButton(type: UIButtonType.detailDisclosure)
+        let editButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
         editButton.tintColor = .black
-        editButton.addTarget(self, action: #selector(manualEdit(sender:)), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(manualEdit(sender:)), for: UIControl.Event.touchUpInside)
         addSubview(editButton)
         editButton.translatesAutoresizingMaskIntoConstraints = false
         editButton.rightAnchor.constraint(equalTo: canvasContainer.rightAnchor, constant: -8).activate()

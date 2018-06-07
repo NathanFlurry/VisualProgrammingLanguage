@@ -286,8 +286,8 @@ extension DrawingCanvas {
                     with: charBox,
                     options: .usesLineFragmentOrigin,
                     attributes: [
-                        NSAttributedStringKey.font: UIFont.systemFont(ofSize: 36),
-                        NSAttributedStringKey.paragraphStyle: paragraphStyle
+                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36),
+                        NSAttributedString.Key.paragraphStyle: paragraphStyle
                     ],
                     context: nil
                 )

@@ -57,7 +57,7 @@ public class GenericInputViewField: UIView {
         pickButton.centerYAnchor.constraint(equalTo: centerYAnchor).activate()
         pickButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).activate()
         
-        pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: .touchUpInside)
+        pickButton.addTarget(self, action: #selector(pickTouched(sender:)), for: UIControl.Event.touchUpInside)
     }
     
     required public init?(coder aDecoder: NSCoder) {

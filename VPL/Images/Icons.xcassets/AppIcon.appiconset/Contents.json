@@ -277,13 +277,6 @@
       "idiom" : "mac",
       "filename" : "1024.png",
       "scale" : "2x"
-    },
-    {
-      "size" : "1024x1024",
-      "idiom" : "ios-marketing",
-      "filename" : "1024.png",
-      "unassigned" : true,
-      "scale" : "1x"
     }
   ],
   "info" : {

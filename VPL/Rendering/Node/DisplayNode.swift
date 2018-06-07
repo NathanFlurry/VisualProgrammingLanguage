@@ -211,7 +211,7 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
     
     public override func layoutSubviews() {
         // Size to fit content
-        frame.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        frame.size = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
     
     func updateShadow(lifted: Bool) {
@@ -240,9 +240,9 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         
         let groupAnim = CAAnimationGroup()
         groupAnim.duration = 0.2
-        groupAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        groupAnim.timingFunction = CAMediaTimingFunction(name: convertToCAMediaTimingFunctionName(convertFromCAMediaTimingFunctionName(CAMediaTimingFunctionName.easeOut)))
         groupAnim.animations = [ /*scaleAnim,*/ offsetAnim, shadowAnim ]
-        groupAnim.fillMode = kCAFillModeForwards
+        groupAnim.fillMode = convertToCAMediaTimingFillMode(convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.forwards))
         groupAnim.isRemovedOnCompletion = false
         layer.add(groupAnim, forKey: "shadowAnim")
     }
@@ -262,4 +262,24 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
             socket.updateState()
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFunctionName(_ input: String) -> CAMediaTimingFunctionName {
+	return CAMediaTimingFunctionName(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFunctionName(_ input: CAMediaTimingFunctionName) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFillMode(_ input: String) -> CAMediaTimingFillMode {
+	return CAMediaTimingFillMode(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFillMode(_ input: CAMediaTimingFillMode) -> String {
+	return input.rawValue
 }

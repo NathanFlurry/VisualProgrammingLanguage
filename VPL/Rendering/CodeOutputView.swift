@@ -54,9 +54,9 @@ class CodeOutputView: UIView {
         textView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600).activate().setPriority(.defaultLow)
         
         // Add copy button
-        copyButton.setTitle("Copy", for: .normal)
-        copyButton.setTitleColor(UIColor(white: 0.2, alpha: 1.0), for: .normal)
-        copyButton.addTarget(self, action: #selector(copyCode(sender:)), for: .touchUpInside)
+        copyButton.setTitle("Copy", for: UIControl.State.normal)
+        copyButton.setTitleColor(UIColor(white: 0.2, alpha: 1.0), for: UIControl.State.normal)
+        copyButton.addTarget(self, action: #selector(copyCode(sender:)), for: UIControl.Event.touchUpInside)
         addSubview(copyButton)
         copyButton.translatesAutoresizingMaskIntoConstraints = false
         copyButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).activate()
@@ -109,12 +109,12 @@ class CodeOutputView: UIView {
                 
                 // Updates the attributes
                 let range = NSRange(keywordRange, in: code)
-                string.addAttribute(NSAttributedStringKey.foregroundColor, value: color, range: range)
+                string.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
             }
         }
         
         // Set the font
-        string.addAttribute(NSAttributedStringKey.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
+        string.addAttribute(NSAttributedString.Key.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
         
         return string
     }

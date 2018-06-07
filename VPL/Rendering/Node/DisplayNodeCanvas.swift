@@ -21,7 +21,7 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
             // Add the new vlaue
             if let backgroundView = backgroundView {
                 addSubview(backgroundView)
-                sendSubview(toBack: backgroundView)
+                sendSubviewToBack(backgroundView)
             }
         }
     }
@@ -44,7 +44,7 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         // Configure the scroll view to be large & only allow panning with two
         // touches
         delegate = self
-        decelerationRate = UIScrollViewDecelerationRateFast
+        decelerationRate = UIScrollView.DecelerationRate.fast
         contentSize = CGSize(width: 10000, height: 10000)
         for recognizer in gestureRecognizers ?? [] {
             if let recognizer = recognizer as? UIPanGestureRecognizer {
@@ -141,8 +141,8 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     /// updated.
     public func updated(node: DisplayNode) {
         // Bring node to front under overlay
-        bringSubview(toFront: node)
-        bringSubview(toFront: overlayView)
+        bringSubviewToFront(node)
+        bringSubviewToFront(overlayView)
         
         // Update this canvas' state
         updateState()
