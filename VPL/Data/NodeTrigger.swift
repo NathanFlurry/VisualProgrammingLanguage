@@ -106,9 +106,4 @@ public final class OutputTrigger {
             tmpTarget?.reset()
         }
     }
-    
-    /// Assembles the code.
-    public func assemble() -> String {
-        return target?.owner.assemble() ?? ""
-    }
 }

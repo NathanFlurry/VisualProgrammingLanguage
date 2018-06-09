@@ -25,10 +25,6 @@ public class DictionaryCreateNode: DisplayableNode {
         
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        return "[\(input.fields[0].value) : \(input.fields[1].value)]()"
-    }
 }
 public class DictionarySetAtNode: DisplayableNode {
     public static let shortcutCharacter: String? = "D"
@@ -46,12 +42,6 @@ public class DictionarySetAtNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "\(inputValues[0].assemble())[\(inputValues[1].assemble())] = \(inputValues[2].assemble())"
-        return out + assembleOutputTrigger()
-    }
 }
 public class DictionaryGetAtNode: DisplayableNode {
     public static let shortcutCharacter: String? = "D"
@@ -66,10 +56,6 @@ public class DictionaryGetAtNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        return "\(inputValues[0].assemble())[\(inputValues[1].assemble())]!"
     }
 }
 public class DictionaryContainsKeyNode: DisplayableNode {
@@ -86,10 +72,6 @@ public class DictionaryContainsKeyNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        return "(\(inputValues[0].assemble())[\(inputValues[1].assemble())] != nil)"
-    }
 }
 public class DictionaryRemoveAtNode: DisplayableNode {
     public static let shortcutCharacter: String? = "D"
@@ -105,12 +87,6 @@ public class DictionaryRemoveAtNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "\(inputValues[0].assemble()).remove(at: \(inputValues[1].assemble()))"
-        return out + assembleOutputTrigger()
     }
 }
 

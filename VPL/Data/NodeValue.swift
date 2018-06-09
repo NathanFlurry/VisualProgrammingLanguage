@@ -57,11 +57,6 @@ public final class InputValue {
             tmpTarget?.reset()
         }
     }
-    
-    /// Assembles the code.
-    public func assemble() -> String {
-        return target?.owner.assemble() ?? ""
-    }
 }
 
 public final class OutputValue {

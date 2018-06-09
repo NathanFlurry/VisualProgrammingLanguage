@@ -30,12 +30,6 @@ public class DeclareVariableNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "var \(variable.id) = \(inputValues[0].assemble())"
-        return out + assembleOutputTrigger()
-    }
 }
 public class SetVariableNode: DisplayableNode {
     public static let shortcutCharacter: String? = "S"
@@ -50,12 +44,6 @@ public class SetVariableNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        let assembledInput = inputValues[0].assemble()
-        let out = "\(inputVariables[0].target?.id ?? "NO SELECTED VARIABLE") = \(assembledInput)\n"
-        return out + assembleOutputTrigger()
-    }
 }
 public class GetVariableNode: DisplayableNode {
     public static let shortcutCharacter: String? = "V"
@@ -67,9 +55,5 @@ public class GetVariableNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        return "(\(inputVariables[0].target?.id ?? "NO SELECTED VARIABLE"))"
     }
 }

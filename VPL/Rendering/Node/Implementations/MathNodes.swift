@@ -22,50 +22,26 @@ public class MathNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        fatalError("Unimplemented.")
-    }
 }
 public class AddNode: MathNode {
     public override class var id: String { return "add" }
     public override class var name: String { return "Add" }
-    
-    public override func assemble() -> String {
-        return "(\(inputA.assemble()) + \(inputB.assemble()))"
-    }
 }
 public class SubtractNode: MathNode {
     public override class var id: String { return "subtract" }
     public override class var name: String { return "Subtract" }
-    
-    public override func assemble() -> String {
-        return "(\(inputA.assemble()) - \(inputB.assemble()))"
-    }
 }
 public class MultiplyNode: MathNode {
     public override class var id: String { return "multiply" }
     public override class var name: String { return "Multiply" }
-    
-    public override func assemble() -> String {
-        return "(\(inputA.assemble()) * \(inputB.assemble()))"
-    }
 }
 public class DivideNode: MathNode {
     public override class var id: String { return "divide" }
     public override class var name: String { return "Divide" }
-    
-    public override func assemble() -> String {
-        return "(\(inputA.assemble()) / \(inputB.assemble()))"
-    }
 }
 public class ModuloNode: MathNode {
     public override class var id: String { return "modulo" }
     public override class var name: String { return "Modulo" }
-    
-    public override func assemble() -> String {
-        return "(\(inputA.assemble()) % \(inputB.assemble()))"
-    }
 }
 
 public class RandomIntNode: DisplayableNode {
@@ -77,10 +53,6 @@ public class RandomIntNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        return "(arc4random() as Int)"
     }
 }
 
@@ -94,10 +66,6 @@ public class RandomFloatNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        return "(Float(arc4random()) / Float(UINT32_MAX))"
-    }
 }
 
 public class EqualsNode: DisplayableNode {
@@ -110,11 +78,5 @@ public class EqualsNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        let assembledInputA = inputValues[0].assemble()
-        let assembledInputB = inputValues[1].assemble()
-        return "(\(assembledInputA) == \(assembledInputB))"
     }
 }

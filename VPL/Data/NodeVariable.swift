@@ -69,9 +69,4 @@ public final class InputVariable {
         // Remove the target
         target = nil
     }
-    
-    /// Assembles the code.
-    public func assemble() -> String {
-        return target?.id ?? "NO VARIABLE"
-    }
 }

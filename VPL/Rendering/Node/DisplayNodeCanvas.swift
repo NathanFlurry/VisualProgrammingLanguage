@@ -29,9 +29,6 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     /// View that overlays the canvas and draws connections between nodes.
     private var overlayView: DisplayNodeCanvasOverlay!
     
-    /// Called every time the nodes are updated.
-    var updateCallback: (() -> Void)?
-    
     /// The starting node that all other nodes build off of.
     public private(set) var baseNode: DisplayNode!
     
@@ -91,23 +88,7 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         // Update overlay
         updateState()
     }
-    
-    /// Assembles all of the code.
-    public func assemble() -> String {
-        var output = ""
-        
-        // Assemble each function
-        for node in nodes {
-            if let node = node.node as? BaseNode {
-                output += node.assemble()
-                
-                output += "\n\n"
-            }
-        }
-        
-        return output
-    }
-    
+
     /// Adds a node to the canvas.
     public func insert(node: DisplayNode, at position: CGPoint, absolutePosition: Bool = false) {
         assert(!nodes.contains(node))
@@ -149,9 +130,6 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         
         // Update the state
         node.updateState()
-        
-        // Call update
-        updateCallback?()
     }
     
     /// Removes a ndoe from the canvas.
@@ -188,7 +166,6 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         
         // Update
         updateState()
-        updateCallback?()
     }
     
     /// Creates a connection between sockets based on the current dragging
@@ -216,9 +193,6 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         
         // Remove the target
         socket.draggingTarget = nil
-        
-        // Update
-        updateCallback?()
     }
     
     func updateState() {

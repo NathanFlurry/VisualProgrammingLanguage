@@ -18,8 +18,4 @@ class BaseNode: DisplayableNode {
     required init() {
         self.setupConnections()
     }
-    
-    func assemble() -> String {
-        return assembleOutputTrigger()
-    }
 }

@@ -25,10 +25,6 @@ public class EvalConstNode: DisplayableNode {
         
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        return "(\(inputView.fields[0].value))"
-    }
 }
 public class IntConstNode: DisplayableNode {
     public static let shortcutCharacter: String? = "C"
@@ -45,18 +41,6 @@ public class IntConstNode: DisplayableNode {
         
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var rawValue = inputView.value
-        rawValue = rawValue.split(separator: ".").first.map { String($0) } ?? "" // Remove decimal
-        if rawValue.count == 0 {
-            return "(0 as Int)"
-        } else if Int(rawValue) != nil {
-            return "(\(rawValue) as Int)"
-        } else {
-            return "FAILED TO CONVERT INT"
-        }
-    }
 }
 public class StringConstNode: DisplayableNode {
     public static let shortcutCharacter: String? = "C"
@@ -72,13 +56,6 @@ public class StringConstNode: DisplayableNode {
         inputView = DrawCanvasNodeView(node: self, defaultValue: "", inputType: .alphanum)
         
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        var escapedValue = inputView.value
-        escapedValue = escapedValue.replacingOccurrences(of: "\\", with: "\\\\")
-        escapedValue = escapedValue.replacingOccurrences(of: "\"", with: "\\\"")
-        return "(\"\(escapedValue)\" as String)"
     }
 }
 

@@ -30,7 +30,7 @@ public enum NodeOutput {
     }
 }
 
-public protocol Node: class {
+public protocol Node: class { // TODO: Add exec() and asyncExec(). Implement asyncExec() by default to call exec()
     static var id: String { get }
     static var name: String { get }
     var inputTrigger: InputTrigger? { get }
@@ -39,8 +39,6 @@ public protocol Node: class {
     var output: NodeOutput { get }
     
     init()
-    
-    func assemble() -> String
 }
 
 extension Node {
@@ -95,26 +93,6 @@ extension Node {
             value.reset()
         case .none:
             break
-        }
-    }
-    
-    public func assembleOutputTrigger(id: String? = nil) -> String {
-        if case let .triggers(triggers) = output {
-            if let id = id {
-                if let trigger = triggers.first(where: { $0.id == id }) {
-                    return trigger.assemble()
-                } else {
-                    fatalError("No trigger with id \(id).")
-                }
-            } else {
-                if let trigger = triggers.first {
-                    return trigger.assemble()
-                } else {
-                    fatalError("No output triggers provided.")
-                }
-            }
-        } else {
-            fatalError("Missing output trigger, can't assemble it.")
         }
     }
 }

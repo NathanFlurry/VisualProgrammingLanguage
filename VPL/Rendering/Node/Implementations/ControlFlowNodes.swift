@@ -19,16 +19,6 @@ public class IfNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "if \(inputValues[0].assemble()) {"
-        out !!+= assembleOutputTrigger(id: "true")
-        out !+= "} else {"
-        out !!+= assembleOutputTrigger(id: "false")
-        out !+= "}"
-        return out + assembleOutputTrigger()
-    }
 }
 public class ForLoopNode: DisplayableNode {
     public static let shortcutCharacter: String? = "F"
@@ -53,14 +43,4 @@ public class ForLoopNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "for \(indexVariable.id) in (\(inputValues[0].assemble()))..<(\(inputValues[1].assemble())) {"
-        out !!+= assembleOutputTrigger(id: "loop")
-        out !+= "}"
-        return out + assembleOutputTrigger()
-    }
-    
-    
 }

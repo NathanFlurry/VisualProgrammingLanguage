@@ -24,10 +24,6 @@ public class ArrayCreateNode: DisplayableNode {
         
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        return "[\(input.fields[0].value)]()"
-    }
 }
 public class ArrayAppendNode: DisplayableNode {
     public static let shortcutCharacter: String? = "A"
@@ -43,12 +39,6 @@ public class ArrayAppendNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "\(inputValues[0].assemble()).append(\(inputValues[1].assemble()))"
-        return out + assembleOutputTrigger()
     }
 }
 public class ArraySetAtNode: DisplayableNode {
@@ -67,12 +57,6 @@ public class ArraySetAtNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "\(inputValues[0].assemble())[\(inputValues[1].assemble())] = \(inputValues[2].assemble())"
-        return out + assembleOutputTrigger()
-    }
 }
 public class ArrayGetAtNode: DisplayableNode {
     public static let shortcutCharacter: String? = "A"
@@ -87,10 +71,6 @@ public class ArrayGetAtNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        return "\(inputValues[0].assemble())[\(inputValues[1].assemble())]"
     }
 }
 public class ArrayRemoveAtNode: DisplayableNode {
@@ -108,12 +88,6 @@ public class ArrayRemoveAtNode: DisplayableNode {
     public required init() {
         self.setupConnections()
     }
-    
-    public func assemble() -> String {
-        var out = ""
-        out !+= "\(inputValues[0].assemble()).remove(at: \(inputValues[1].assemble()))"
-        return out + assembleOutputTrigger()
-    }
 }
 public class ArrayCountNode: DisplayableNode {
     public static let shortcutCharacter: String? = "A"
@@ -125,9 +99,5 @@ public class ArrayCountNode: DisplayableNode {
     
     public required init() {
         self.setupConnections()
-    }
-    
-    public func assemble() -> String {
-        return "\(inputValues[0].assemble()).count"
     }
 }

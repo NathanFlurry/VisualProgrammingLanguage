@@ -50,9 +50,6 @@ public class CanvasViewController: UIViewController {
         outputView.heightAnchor.constraint(equalToConstant: isInPlayground ? 260 : 180).activate()
 
         // Add the node canvas
-        canvas.updateCallback = {
-            self.assembleCode()
-        }
         view.addSubview(canvas)
         canvas.translatesAutoresizingMaskIntoConstraints = false
         canvas.leftAnchor.constraint(equalTo: view.leftAnchor).activate()
@@ -119,19 +116,11 @@ public class CanvasViewController: UIViewController {
             RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
             self.commitDrawingTimer = timer
         }
-        
-        // Assemble the code
-        assembleCode()
     }
 
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func assembleCode() {
-        let assembled = self.canvas.assemble()
-        self.outputView.render(code: assembled.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 
     @discardableResult
