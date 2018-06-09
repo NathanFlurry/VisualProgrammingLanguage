@@ -7,40 +7,60 @@
 //
 
 import UIKit
+
 public class IfNode: DisplayableNode {
     public static let shortcutCharacter: String? = "I"
     
     public static let id: String = "if"
     public static let name: String = "If"
     public let inputTrigger: InputTrigger? = InputTrigger()
-    public let inputValues: [InputValue] = [InputValue(id: "condition", name: "Condition", type: .bool)]
-    public let output: NodeOutput = .triggers([OutputTrigger(), OutputTrigger(id: "true", name: "True"), OutputTrigger(id: "false", name: "False")])
+    public let inputValues: [InputValue] = [InputValue(name: "Condition", type: .bool)]
+    public let output: NodeOutput = .triggers([OutputTrigger(), OutputTrigger(name: "True"), OutputTrigger(name: "False")])
     
     public required init() {
         self.setupConnections()
     }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        if call.index == 0 {
+            // Call true or false
+            let condition = call.get(index: 0).bool!
+            let trig = condition ? trigger(index: 1) : trigger(index: 2)
+            return call.exec(trigger: trig.id)
+        } else {
+            // Continue execution
+            return call.execDefault()
+        }
+    }
 }
+
 public class ForLoopNode: DisplayableNode {
     public static let shortcutCharacter: String? = "F"
     
     public static let id: String = "for"
     public static let name: String = "For Loop"
     public let inputTrigger: InputTrigger? = InputTrigger()
-    public let inputValues: [InputValue] = [InputValue(id: "from", name: "From", type: .int), InputValue(id: "to", name: "To", type: .int)]
+    public let inputValues: [InputValue] = [InputValue(name: "From", type: .int), InputValue(name: "To", type: .int)]
     public let output: NodeOutput = .triggers([
         OutputTrigger(),
-        OutputTrigger(id: "loop", name: "Loop", exposedVariables: [NodeVariable(name: "Index", type: .int)])
+        OutputTrigger(name: "Loop", exposedVariables: [NodeVariable(name: "Index", type: .int)])
     ])
-    
-    var indexVariable: NodeVariable {
-        if case let .triggers(triggers) = output {
-            return triggers[1].exposedVariables[0]
-        } else {
-            fatalError("Missing exposed variable.")
-        }
-    }
     
     public required init() {
         self.setupConnections()
+    }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        // Get from and to
+        let from = call.get(index: 0).int!
+        let to = call.get(index: 10).int!
+        
+        // Either call the loop again or continue to the next node
+        let count = to - from
+        if call.index < count {
+            return call.exec(trigger: trigger(index: 1).id)
+        } else {
+            return call.execDefault()
+        }
     }
 }

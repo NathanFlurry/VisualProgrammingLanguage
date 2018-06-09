@@ -9,8 +9,13 @@
 import Foundation
 
 public final class InputTrigger {
+    public typealias ID = UUID
+    
     /// The node that owns this trigger.
     public internal(set) weak var owner: Node!
+    
+    /// An identifier for this value.
+    public let id: ID = UUID()
     
     /// The connected trigger.
     public private(set) var target: OutputTrigger?
@@ -49,11 +54,13 @@ public final class InputTrigger {
 }
 
 public final class OutputTrigger {
+    public typealias ID = UUID
+    
     /// The node that owns this trigger
     public internal(set) weak var owner: Node!
     
-    /// An identifier for this trigger.
-    public let id: String
+    /// An identifier for this value.
+    public let id: ID = UUID()
     
     /// Name for this trigger.
     public let name: String
@@ -64,8 +71,7 @@ public final class OutputTrigger {
     /// Variables availables to any other nodes further along the control flow.
     public let exposedVariables: [NodeVariable]
     
-    public init(id: String, name: String, exposedVariables: [NodeVariable] = []) {
-        self.id = id
+    public init(name: String, exposedVariables: [NodeVariable] = []) {
         self.name = name
         self.exposedVariables = exposedVariables
         
@@ -76,7 +82,7 @@ public final class OutputTrigger {
     }
     
     public convenience init(exposedVariables: [NodeVariable] = []) {
-        self.init(id: "next", name: "Next", exposedVariables: exposedVariables)
+        self.init(name: "Next", exposedVariables: exposedVariables)
     }
     
     /// Determines if two triggers can be connected.

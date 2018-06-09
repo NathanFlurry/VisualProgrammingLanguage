@@ -8,6 +8,8 @@
 
 // TODO: Move arrays and dictionaries to class-like representations
 
+// TODO: Add some form of generics and constraints so things like math nodes work well
+
 public indirect enum ValueType: Equatable, Hashable, CustomStringConvertible {
     case bool, int, float, string
     case array(ValueType), dictionary(ValueType, ValueType)
@@ -30,9 +32,35 @@ public indirect enum ValueType: Equatable, Hashable, CustomStringConvertible {
     }
 }
 
+public struct InvalidValueCast: Error {
+    var value: Value
+    var expected: ValueType
+    
+    init(value: Value, expected: ValueType) {
+        self.value = value
+        self.expected = expected
+    }
+}
+
 public indirect enum Value: Equatable, Hashable, CustomStringConvertible {
     case bool(Bool), int(Int), float(Float), string(String)
     case array([Value]), dictionary([Value: Value])
+    
+    var bool: Bool? {
+        if case let .bool(v) = self { return v } else { return nil }
+    }
+    
+    var int: Int? {
+        if case let .int(v) = self { return v } else { return nil }
+    }
+    
+    var float: Float? {
+        if case let .float(v) = self { return v } else { return nil }
+    }
+    
+    var string: String? {
+        if case let .string(v) = self { return v } else { return nil }
+    }
     
     public var description: String {
         switch self {

@@ -18,4 +18,8 @@ class BaseNode: DisplayableNode {
     required init() {
         self.setupConnections()
     }
+    
+    func exec(call: CallData) throws -> CallResult {
+        return call.execDefault()
+    }
 }

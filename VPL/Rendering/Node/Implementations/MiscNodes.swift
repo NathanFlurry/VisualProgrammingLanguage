@@ -7,17 +7,23 @@
 //
 
 import UIKit
+
 public class PrintNode: DisplayableNode {
     public static let shortcutCharacter: String? = "P"
     
     public static let id: String = "print"
     public static let name: String = "Print"
     public let inputTrigger: InputTrigger? = InputTrigger()
-    public let inputValues: [InputValue] = [InputValue(id: "value", name: "Value", type: .string)]
+    public let inputValues: [InputValue] = [InputValue(name: "Value", type: .string)]
     public let output: NodeOutput = .triggers([OutputTrigger()])
     
     public required init() {
         self.setupConnections()
+    }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        print(call.get(index: 0).string!)
+        return call.execDefault()
     }
 }
 //public class SwapNode: DisplayableNode {

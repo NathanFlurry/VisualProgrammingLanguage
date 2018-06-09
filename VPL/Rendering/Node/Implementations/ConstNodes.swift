@@ -10,19 +10,19 @@ import UIKit
 
 //public class EvalConstNode: DisplayableNode {
 //    public static let shortcutCharacter: String? = "C"
-//    
+//
 //    public static let id: String = "eval-const"
 //    public static let name: String = "Eval Constant"
 //    public var output: NodeOutput = .value(OutputValue(type: .unknown))
 //    public var contentView: DisplayableNodeContentView? { return inputView }
-//    
+//
 //    var inputView: GenericInputView!
-//    
+//
 //    public required init() {
 //        inputView = GenericInputView(node: self, fields: [
 //            GenericInputViewField(name: "Swift Code", defaultValue: "nil")
 //        ])
-//        
+//
 //        self.setupConnections()
 //    }
 //}
@@ -42,6 +42,11 @@ public class IntConstNode: DisplayableNode {
         
         self.setupConnections()
     }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        let result = Int(inputView!.value)!
+        return call.value(.int(result))
+    }
 }
 public class StringConstNode: DisplayableNode {
     public static let shortcutCharacter: String? = "C"
@@ -57,6 +62,10 @@ public class StringConstNode: DisplayableNode {
         inputView = DrawCanvasNodeView(node: self, defaultValue: "", inputType: .alphanum)
         
         self.setupConnections()
+    }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        return call.value(.string(inputView!.value))
     }
 }
 

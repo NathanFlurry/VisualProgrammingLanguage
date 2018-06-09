@@ -9,11 +9,13 @@
 import Foundation
 
 public final class InputValue {
+    public typealias ID = UUID
+    
     /// The node that owns this value.
     public internal(set) weak var owner: Node!
     
     /// An identifier for this value.
-    public let id: String
+    public let id: ID = UUID()
     
     /// Name for this value.
     public let name: String
@@ -24,8 +26,7 @@ public final class InputValue {
     /// The connected value.
     public private(set) var target: OutputValue?
     
-    public init(id: String, name: String, type: ValueType) {
-        self.id = id
+    public init(name: String, type: ValueType) {
         self.name = name
         self.type = type
     }
@@ -60,8 +61,13 @@ public final class InputValue {
 }
 
 public final class OutputValue {
+    public typealias ID = UUID
+    
     /// The node that owns this value
     public internal(set) weak var owner: Node!
+    
+    /// An identifier for this value.
+    public let id: ID = UUID()
     
     /// The type of value this holds.
     public let type: ValueType
