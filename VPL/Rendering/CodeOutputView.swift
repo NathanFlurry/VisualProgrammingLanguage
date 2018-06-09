@@ -63,7 +63,7 @@ class CodeOutputView: UIView {
         copyButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).activate()
         
         // Render the code
-        render(code: "")
+        render(code: "<this will be the console output>")
     }
     
     required init?(coder aDecoder: NSCoder) {
