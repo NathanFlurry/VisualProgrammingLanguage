@@ -55,7 +55,7 @@ public final class InputVariable {
     /// Determines if two values can be connected.
     public func canConnect(to newTarget: NodeVariable) -> Bool {
         /// Make sure the node can see the variable.
-        return newTarget.type.canCast(to: type) && owner.availableVariables.contains { $0 === newTarget }
+        return newTarget.type == type && owner.availableVariables.contains { $0 === newTarget }
     }
     
     /// Connects this value to another value.

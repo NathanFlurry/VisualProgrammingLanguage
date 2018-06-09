@@ -147,6 +147,7 @@
 		BF899E2A2070B47B008EC5EA /* VPLEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VPLEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF899E2C2070B47B008EC5EA /* VPLEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPLEditor.h; sourceTree = "<group>"; };
 		BF899E2D2070B47B008EC5EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFEDC49E20CC494800389266 /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +254,7 @@
 		BF56DEA5205862B2007E2483 = {
 			isa = PBXGroup;
 			children = (
+				BFEDC49E20CC494800389266 /* TestPlayground.playground */,
 				BF56DEB0205862B2007E2483 /* VPL */,
 				BF899E2B2070B47B008EC5EA /* VPLEditor */,
 				BF56DEAF205862B2007E2483 /* Products */,

@@ -9,13 +9,13 @@
 import UIKit
 
 public let defaultNodes: [DisplayableNode.Type] = [
-    EvalConstNode.self,
+//    EvalConstNode.self,
     IntConstNode.self,
     StringConstNode.self,
     
-    DeclareVariableNode.self,
-    SetVariableNode.self,
-    GetVariableNode.self,
+//    DeclareVariableNode.self,
+//    SetVariableNode.self,
+//    GetVariableNode.self,
     IfNode.self,
     ForLoopNode.self,
     
@@ -28,21 +28,21 @@ public let defaultNodes: [DisplayableNode.Type] = [
     RandomFloatNode.self,
     EqualsNode.self,
     
-    ArrayCreateNode.self,
-    ArrayAppendNode.self,
-    ArraySetAtNode.self,
-    ArrayGetAtNode.self,
-    ArrayRemoveAtNode.self,
-    ArrayCountNode.self,
+//    ArrayCreateNode.self,
+//    ArrayAppendNode.self,
+//    ArraySetAtNode.self,
+//    ArrayGetAtNode.self,
+//    ArrayRemoveAtNode.self,
+//    ArrayCountNode.self,
     
-    DictionaryCreateNode.self,
-    DictionarySetAtNode.self,
-    DictionaryGetAtNode.self,
-    DictionaryContainsKeyNode.self,
-    DictionaryRemoveAtNode.self,
+//    DictionaryCreateNode.self,
+//    DictionarySetAtNode.self,
+//    DictionaryGetAtNode.self,
+//    DictionaryContainsKeyNode.self,
+//    DictionaryRemoveAtNode.self,
     
     PrintNode.self,
-    SwapNode.self
+//    SwapNode.self
 ]
 
 public protocol DisplayableNode: Node {

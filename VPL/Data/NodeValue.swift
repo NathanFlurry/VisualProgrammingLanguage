@@ -75,7 +75,7 @@ public final class OutputValue {
     
     /// Determines if two values can be connected.
     public func canConnect(to newTarget: InputValue) -> Bool {
-        return type.canCast(to: newTarget.type) && owner !== newTarget.owner && target == nil && newTarget.target == nil
+        return type == newTarget.type && owner !== newTarget.owner && target == nil && newTarget.target == nil
     }
     
     /// Connects this value to another value.
