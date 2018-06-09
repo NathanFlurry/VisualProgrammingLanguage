@@ -71,6 +71,10 @@ public final class OutputTrigger {
     /// Variables availables to any other nodes further along the control flow.
     public let exposedVariables: [NodeVariable]
     
+    /// If this trigger defines what node executes next and replaces the item
+    /// on the stack.
+    public internal(set) var nextTrigger: Bool = false
+    
     public init(name: String, exposedVariables: [NodeVariable] = []) {
         self.name = name
         self.exposedVariables = exposedVariables

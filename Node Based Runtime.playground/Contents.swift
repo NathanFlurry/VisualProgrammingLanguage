@@ -128,7 +128,7 @@ class Runtime {
     
     var stack: [Node]
     
-    var currentNode: Node? { 
+    var currentNode: Node? {
         get {
             return stack.last
         }
@@ -200,30 +200,3 @@ i1.baseOutputSocket.connect(to: p4.inputSocket)
 
 let runtime = Runtime(rootNode: p1)
 runtime.run()
-
-
-
-//  let runtime = Runtime()
-
-
-/*
- Issue: What about backtracking, like with if statements?
- There needs to be a stack.
- 
- Solution 1:
- * Execute on a separate thread that handles all of the execution
- * Everything is synchronouse, so an if statement can call `trueCondition()` then call `nextCondition()`
- * Issue 1: The stack may exceed its maximum height
- * Issue 2: This is not clean
- 
- Solution 2:
- * Make my own stack
- * The stack represents nodes that are being called
- * If it's the next node, just change the last item on the stack
- * If it's a child, then add another element to the stack
- * If it returns nil (i.e. there is no next node to go to), then pop an element off the stack and go back to the previous decision
- * It just calls `exec` again, the node will keep track of its current state
- * Issue 1: This is a bis misleading form a technical perspective: it's always output nodes, but they do different things to the stack; I guess it doesn't really matte
- 
- */
-

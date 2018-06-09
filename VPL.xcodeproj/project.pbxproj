@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		BF19A6DB207058060046EFC5 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF19A6D9207058060046EFC5 /* background@2x.png */; };
 		BF19A6DC207058060046EFC5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF19A6DA207058060046EFC5 /* background.png */; };
-		BF24CA092067623A007AB6F2 /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* ValueType.swift */; };
+		BF24CA092067623A007AB6F2 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* Value.swift */; };
 		BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
 		BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */; };
 		BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */; };
@@ -74,11 +74,13 @@
 		BF899E502070B4D6008EC5EA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BF19A6DA207058060046EFC5 /* background.png */; };
 		BF899E512070B4D6008EC5EA /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF19A6D9207058060046EFC5 /* background@2x.png */; };
 		BF899E522070B4D6008EC5EA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF56DECA20586313007E2483 /* Utils.swift */; };
-		BF899E532070B51A008EC5EA /* ValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* ValueType.swift */; };
+		BF899E532070B51A008EC5EA /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* Value.swift */; };
 		BF899E542070B51A008EC5EA /* NodeTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */; };
 		BF899E552070B51A008EC5EA /* NodeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA32206C596F007AB6F2 /* NodeValue.swift */; };
 		BF899E562070B51A008EC5EA /* NodeVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25D206E1188002A148F /* NodeVariable.swift */; };
 		BF899E572070B51A008EC5EA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
+		BFEDC4A420CC8A4400389266 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDC4A320CC8A4400389266 /* Program.swift */; };
+		BFEDC4A520CC9BD600389266 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDC4A320CC8A4400389266 /* Program.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +110,7 @@
 /* Begin PBXFileReference section */
 		BF19A6D9207058060046EFC5 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "VPL/Images/background@2x.png"; sourceTree = SOURCE_ROOT; };
 		BF19A6DA207058060046EFC5 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = VPL/Images/background.png; sourceTree = SOURCE_ROOT; };
-		BF24CA082067623A007AB6F2 /* ValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueType.swift; sourceTree = "<group>"; };
+		BF24CA082067623A007AB6F2 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		BF24CA0A2069B6E5007AB6F2 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
 		BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableNode.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 		BF899E2D2070B47B008EC5EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFEDC49E20CC494800389266 /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BFEDC49F20CC69C600389266 /* Node Based Runtime.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Node Based Runtime.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BFEDC4A320CC8A4400389266 /* Program.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,11 +196,12 @@
 		BF24CA072067620C007AB6F2 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				BF24CA082067623A007AB6F2 /* ValueType.swift */,
+				BF24CA0E2069BBA5007AB6F2 /* Node */,
+				BF24CA082067623A007AB6F2 /* Value.swift */,
 				BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */,
 				BF24CA32206C596F007AB6F2 /* NodeValue.swift */,
 				BF62C25D206E1188002A148F /* NodeVariable.swift */,
-				BF24CA0A2069B6E5007AB6F2 /* Node.swift */,
+				BFEDC4A320CC8A4400389266 /* Program.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -206,11 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				BF24CA18206C395F007AB6F2 /* Implementations */,
-				BF24CA29206C3A7F007AB6F2 /* Content Views */,
-				BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */,
-				BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */,
-				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
-				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
+				BF24CA0A2069B6E5007AB6F2 /* Node.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -291,8 +291,12 @@
 		BF56DECD2058631A007E2483 /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
-				BF24CA0E2069BBA5007AB6F2 /* Node */,
+				BF24CA29206C3A7F007AB6F2 /* Content Views */,
 				BF56DED02058631A007E2483 /* CanvasViewController.swift */,
+				BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */,
+				BF822B71206D965A001192B1 /* DisplayNodeCanvasOverlay.swift */,
+				BF56DECF2058631A007E2483 /* DisplayNode.swift */,
+				BF56DED420586439007E2483 /* DisplayNodeSocket.swift */,
 				BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */,
 			);
 			path = Rendering;
@@ -444,6 +448,7 @@
 				BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */,
 				BF24CA28206C3A13007AB6F2 /* MiscNodes.swift in Sources */,
 				BF62C260206E165B002A148F /* ValueChooserView.swift in Sources */,
+				BFEDC4A420CC8A4400389266 /* Program.swift in Sources */,
 				BF56DED72058693E007E2483 /* DrawingCanvas.swift in Sources */,
 				BF313B712066FFF7006EEA83 /* Chars74k.mlmodel in Sources */,
 				BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */,
@@ -455,7 +460,7 @@
 				BF24CA1E206C39A4007AB6F2 /* ConstNodes.swift in Sources */,
 				BF24CA2B206C3AAA007AB6F2 /* GenericInputView.swift in Sources */,
 				BF56DECC20586313007E2483 /* Utils.swift in Sources */,
-				BF24CA092067623A007AB6F2 /* ValueType.swift in Sources */,
+				BF24CA092067623A007AB6F2 /* Value.swift in Sources */,
 				BF86B739205EFDBE006AEEA7 /* OCRRequest.swift in Sources */,
 				BF56DED520586439007E2483 /* DisplayNodeSocket.swift in Sources */,
 				BF62C266206E2EFE002A148F /* DictionaryNodes.swift in Sources */,
@@ -466,11 +471,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFEDC4A520CC9BD600389266 /* Program.swift in Sources */,
 				BF899E422070B4CE008EC5EA /* ValueChooserView.swift in Sources */,
 				BF899E4B2070B4D1008EC5EA /* OCRRequest.swift in Sources */,
 				BF899E542070B51A008EC5EA /* NodeTrigger.swift in Sources */,
 				BF899E3F2070B4CA008EC5EA /* MiscNodes.swift in Sources */,
-				BF899E532070B51A008EC5EA /* ValueType.swift in Sources */,
+				BF899E532070B51A008EC5EA /* Value.swift in Sources */,
 				BF899E552070B51A008EC5EA /* NodeValue.swift in Sources */,
 				BF899E4A2070B4D1008EC5EA /* DrawingCanvas.swift in Sources */,
 				BF899E3B2070B4CA008EC5EA /* ControlFlowNodes.swift in Sources */,

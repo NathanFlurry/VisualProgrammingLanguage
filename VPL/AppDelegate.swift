@@ -17,10 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Create canvas view controller
         let canvasViewController = CanvasViewController()
+        let navigationController = UINavigationController(rootViewController: canvasViewController)
         
         // Create the window
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = canvasViewController
+        window!.rootViewController = navigationController
         window!.makeKeyAndVisible()
         
         return true

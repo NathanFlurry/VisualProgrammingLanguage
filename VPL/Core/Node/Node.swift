@@ -213,14 +213,30 @@ extension Node {
         }
     }
     
+    func outputTrigger(forID id: OutputTrigger.ID) -> OutputTrigger? {
+        if case let .triggers(triggers) = output {
+            return triggers.first { $0.id == id }
+        } else {
+            return nil
+        }
+    }
+    
     public func setupConnections() {
+        // Set input owners
         inputTrigger?.owner = self
         for value in inputValues { value.owner = self }
         for variable in inputVariables { variable.owner = self }
+        
+        // Setup outputs
         switch output {
         case .triggers(let triggers):
+            // Set owners
             for trigger in triggers { trigger.owner = self }
+            
+            // Set next trigger
+            triggers.first?.nextTrigger = true
         case .value(let value):
+            // Set owner
             value.owner = self
         case .none:
             break
