@@ -190,7 +190,7 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		BF24CA072067620C007AB6F2 /* Data */ = {
+		BF24CA072067620C007AB6F2 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				BF24CA082067623A007AB6F2 /* ValueType.swift */,
@@ -199,7 +199,7 @@
 				BF62C25D206E1188002A148F /* NodeVariable.swift */,
 				BF24CA0A2069B6E5007AB6F2 /* Node.swift */,
 			);
-			path = Data;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		BF24CA0E2069BBA5007AB6F2 /* Node */ = {
@@ -275,7 +275,7 @@
 		BF56DEB0205862B2007E2483 /* VPL */ = {
 			isa = PBXGroup;
 			children = (
-				BF24CA072067620C007AB6F2 /* Data */,
+				BF24CA072067620C007AB6F2 /* Core */,
 				BF56DECD2058631A007E2483 /* Rendering */,
 				BF24CA13206A1C58007AB6F2 /* OCR */,
 				BF19A6D820704AAE0046EFC5 /* Models */,
