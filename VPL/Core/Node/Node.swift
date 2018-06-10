@@ -105,7 +105,7 @@ public struct CallData {
     // TODO: Use this properly
     /// How many times this node has been called in the stack, if it requested
     /// to be called again when the child stack is depleted.
-    var index: Int = 0
+    var index: Int
     
     /// The parameters to be passed to the node.
     var params: [Value]
@@ -122,12 +122,15 @@ public struct CallData {
         
         // Log the result
         print("ASYNC CALLBCK RESULT", result)
+        
+        fatalError("Unimplemented.")
     }
     
     /// Creates new call data for the node to use.
-    init(node: Node, params: [Value], asyncCallback: CallResult.AsyncCallback) {
+    init(node: Node, params: [Value], index: Int) {
         self.node = node
         self.params = params
+        self.index = index
     }
     
     /// Fetches a parameter at a given index and validates its index.

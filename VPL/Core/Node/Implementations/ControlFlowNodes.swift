@@ -24,7 +24,7 @@ public class IfNode: Node {
             // Call true or false
             let condition = call.get(index: 0).bool!
             let trig = condition ? trigger(index: 1) : trigger(index: 2)
-            return call.exec(trigger: trig.id)
+            return call.exec(trigger: trig.id, visitAgain: true)
         } else {
             // Continue execution
             return call.execDefault()
