@@ -8,9 +8,7 @@
 
 import UIKit
 
-//public class DictionaryCreateNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "D"
-//
+//public class DictionaryCreateNode: Node {
 //    public static let id: String = "dict-create"
 //    public static let name: String = "Create Dictionary"
 //    public let output: NodeOutput = .value(OutputValue(type: .dictionary(.unknown, .unknown)))
@@ -27,9 +25,7 @@ import UIKit
 //        self.setupConnections()
 //    }
 //}
-//public class DictionarySetAtNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "D"
-//
+//public class DictionarySetAtNode: Node {
 //    public static let id: String = "dict-set-at"
 //    public static let name: String = "Set At Key"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
@@ -44,9 +40,7 @@ import UIKit
 //        self.setupConnections()
 //    }
 //}
-//public class DictionaryGetAtNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "D"
-//
+//public class DictionaryGetAtNode: Node {
 //    public static let id: String = "dict-get-at"
 //    public static let name: String = "Get At Key"
 //    public let inputValues: [InputValue] = [
@@ -59,9 +53,7 @@ import UIKit
 //        self.setupConnections()
 //    }
 //}
-//public class DictionaryContainsKeyNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "D"
-//
+//public class DictionaryContainsKeyNode: Node {
 //    public static let id: String = "dict-get-at"
 //    public static let name: String = "Contains Key"
 //    public let inputValues: [InputValue] = [
@@ -74,9 +66,7 @@ import UIKit
 //        self.setupConnections()
 //    }
 //}
-//public class DictionaryRemoveAtNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "D"
-//
+//public class DictionaryRemoveAtNode: Node {
 //    public static let id: String = "dict-remove-at"
 //    public static let name: String = "Remove At Key"
 //    public let inputTrigger: InputTrigger? = InputTrigger()

@@ -97,7 +97,7 @@ public class GenericInputViewField: UIView {
     }
 }
 
-public class GenericInputView: DisplayableNodeContentView {
+public class GenericInputView: NodeContentEditorView<[String]> {
     /// The owning node.
     weak var node: Node?
     
@@ -113,7 +113,7 @@ public class GenericInputView: DisplayableNodeContentView {
         // Set the callbacks
         for field in fields {
             field.valueChangeCallback = {
-                self.contentValueChanged()
+                self.contentValueChanged(value: self.fields.map { $0.value })
             }
         }
         

@@ -8,6 +8,43 @@
 
 import Foundation
 
+public let defaultNodes: [Node.Type] = [
+//    EvalConstNode.self,
+    IntConstNode.self,
+    StringConstNode.self,
+    
+//    DeclareVariableNode.self,
+//    SetVariableNode.self,
+//    GetVariableNode.self,
+    IfNode.self,
+    ForLoopNode.self,
+    
+    AddNode.self,
+    SubtractNode.self,
+    MultiplyNode.self,
+    DivideNode.self,
+    ModuloNode.self,
+    RandomIntNode.self,
+    RandomFloatNode.self,
+    EqualsNode.self,
+    
+//    ArrayCreateNode.self,
+//    ArrayAppendNode.self,
+//    ArraySetAtNode.self,
+//    ArrayGetAtNode.self,
+//    ArrayRemoveAtNode.self,
+//    ArrayCountNode.self,
+
+//    DictionaryCreateNode.self,
+//    DictionarySetAtNode.self,
+//    DictionaryGetAtNode.self,
+//    DictionaryContainsKeyNode.self,
+//    DictionaryRemoveAtNode.self,
+    
+    PrintNode.self,
+//    SwapNode.self
+]
+
 public enum NodeOutput {
     case triggers([OutputTrigger]), value(OutputValue), none
     
@@ -164,8 +201,10 @@ public struct CallResult {
 // TODO: Async will queue while waiting to hit another async point on another node at which point that can execute
 
 public protocol Node: class {
+    static var destroyable: Bool { get }
     static var id: String { get }
     static var name: String { get }
+    
     var inputTrigger: InputTrigger? { get }
     var inputValues: [InputValue] { get }
     var inputVariables: [InputVariable] { get }
@@ -177,6 +216,7 @@ public protocol Node: class {
 }
 
 extension Node {
+    public static var destroyable: Bool { return true }
     public var inputTrigger: InputTrigger? { return nil }
     public var inputValues: [InputValue] { return [] }
     public var inputVariables: [InputVariable] { return [] }

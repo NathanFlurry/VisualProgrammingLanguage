@@ -12,7 +12,7 @@ public enum DrawCanvasNodeInputType {
     case digits, alphanum
 }
 
-public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate {
+public class DrawCanvasNodeView: NodeContentEditorView<String>, UITextFieldDelegate {
     /// Reference to the node.
     weak var node: Node?
     
@@ -23,7 +23,7 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
             renderValue()
             
             // Notify change
-            contentValueChanged()
+            contentValueChanged(value: value)
         }
     }
     
@@ -49,9 +49,9 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
     private var commitDrawingTimer: Timer?
     
     // Don't allow dragging
-    override var absorbsTouches: Bool { return true }
+    public override var absorbsTouches: Bool { return true }
     
-    public init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 85)) {
+    public init(node: Node, defaultValue: String, inputType: DrawCanvasNodeInputType, minSize: CGSize = CGSize(width: 250, height: 85), callback: @escaping Callback) {
         self.node = node
         self.inputType = inputType
         self.value = defaultValue
@@ -61,6 +61,8 @@ public class DrawCanvasNodeView: DisplayableNodeContentView, UITextFieldDelegate
         self.valueLabel = UILabel()
         
         super.init(frame: CGRect.zero)
+        
+        self.onChangeCallback = callback
         
         // Determine the dataset
         var dataset: OCRDataset

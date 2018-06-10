@@ -15,7 +15,7 @@ var isInPlayground: Bool {
 
 // Easy node insertion
 extension DisplayNodeCanvas {
-    public func insert(node: DisplayableNode, base: DisplayNode, offset: CGPoint) -> DisplayNode {
+    public func insert(node: Node, base: DisplayNode, offset: CGPoint) -> DisplayNode {
         // Create the ndoe
         let node = DisplayNode(node: node)
         

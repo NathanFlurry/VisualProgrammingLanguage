@@ -149,9 +149,8 @@ class Runtime {
     }
     
     func nodeFinished(output: OutputSocket) {
-        var isBaseSocket = output is BaseOutputSocket
         if let nextNode = output.target?.owner {
-            if isBaseSocket {
+            if output is BaseOutputSocket {
                 log("replacing current")
                 currentNode = nextNode
             } else {
@@ -166,7 +165,7 @@ class Runtime {
     }
     
     func execCurrent() {
-        log("Executing: \(currentNode)")
+//        log("Executing: \(currentNode)")
         if let currentNode = currentNode {        
             currentNode.execute(callback: self.nodeFinished)
         } else {

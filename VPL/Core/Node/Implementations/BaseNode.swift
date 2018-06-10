@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseNode: DisplayableNode {
+class BaseNode: Node {
     static let destroyable: Bool = false
     
     static let id: String = "start"

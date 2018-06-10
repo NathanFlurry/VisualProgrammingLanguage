@@ -8,9 +8,7 @@
 
 import UIKit
 
-//public class DeclareVariableNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "S"
-//    
+//public class DeclareVariableNode: Node {
 //    public static let id: String = "declare variable"
 //    public static let name: String = "Declare Variable"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
@@ -31,9 +29,7 @@ import UIKit
 //        self.setupConnections()
 //    }
 //}
-//public class SetVariableNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "S"
-//    
+//public class SetVariableNode: Node {
 //    public static let id: String = "set variable"
 //    public static let name: String = "Set Variable"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
@@ -45,9 +41,7 @@ import UIKit
 //        self.setupConnections()
 //    }
 //}
-//public class GetVariableNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "V"
-//    
+//public class GetVariableNode: Node {
 //    public static let id: String = "get variable"
 //    public static let name: String = "Get Variable"
 //    public let inputVariables: [InputVariable] = [ InputVariable(id: "target", name: "Target", type: .unknown) ]

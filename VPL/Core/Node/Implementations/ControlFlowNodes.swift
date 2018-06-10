@@ -8,9 +8,7 @@
 
 import UIKit
 
-public class IfNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "I"
-    
+public class IfNode: Node {
     public static let id: String = "if"
     public static let name: String = "If"
     public let inputTrigger: InputTrigger? = InputTrigger()
@@ -34,9 +32,7 @@ public class IfNode: DisplayableNode {
     }
 }
 
-public class ForLoopNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "F"
-    
+public class ForLoopNode: Node {
     public static let id: String = "for"
     public static let name: String = "For Loop"
     public let inputTrigger: InputTrigger? = InputTrigger()

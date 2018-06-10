@@ -8,9 +8,7 @@
 
 import UIKit
 
-public class MathNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "M"
-    
+public class MathNode: Node {
     public class var id: String { fatalError("Unimplemented.") }
     public class var name: String { fatalError("Unimplemented.") }
     public let inputValues: [InputValue] = [InputValue(name: "A", type: .int), InputValue(name: "B", type: .int)]
@@ -72,9 +70,7 @@ public class ModuloNode: MathNode {
     }
 }
 
-public class RandomIntNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "M"
-    
+public class RandomIntNode: Node {
     public static let id: String = "random-in"
     public static let name: String = "Random Integer"
     public var inputValues: [InputValue] = [ InputValue(name: "Lower", type: .int), InputValue(name: "Upper", type: .int) ]
@@ -91,9 +87,7 @@ public class RandomIntNode: DisplayableNode {
     }
 }
 
-public class RandomFloatNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "M"
-    
+public class RandomFloatNode: Node {
     public static let id: String = "random-float"
     public static let name: String = "Random Float"
     public var inputValues: [InputValue] = [ InputValue(name: "Lower", type: .float), InputValue(name: "Upper", type: .float) ]
@@ -110,9 +104,7 @@ public class RandomFloatNode: DisplayableNode {
     }
 }
 
-public class EqualsNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "E"
-    
+public class EqualsNode: Node {
     public static let id: String = "equals"
     public static let name: String = "Equals"
     public let inputValues: [InputValue] = [InputValue(name: "A", type: .int), InputValue(name: "B", type: .int)]

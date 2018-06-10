@@ -13,7 +13,7 @@ public class CanvasViewController: UIViewController {
     var customNodeShortcut: String = "X"
     
     /// View nodes that can be created.
-    public var spawnableNodes: [DisplayableNode.Type] = defaultNodes
+    public var spawnableNodes: [Node.Type] = defaultNodes
     
     /// Output of the code.
     var outputView: CodeOutputView!
@@ -100,7 +100,9 @@ public class CanvasViewController: UIViewController {
                         self.nodeListPopover(nodes: self.spawnableNodes, charBox: charBox, showShortcuts: true)
                     } else {
                         // Find the nodes for the character
-                        let availableNodes = self.spawnableNodes.filter { $0.shortcutCharacter == character }
+                        // TODO: Add custom shortcut charactesr
+                        let availableNodes = self.spawnableNodes
+//                        let availableNodes = self.spawnableNodes.filter { $0.shortcutCharacter == character }
                         
                         // Create the node or popup a list
                         if availableNodes.count > 1 {
@@ -124,7 +126,7 @@ public class CanvasViewController: UIViewController {
     }
 
     @discardableResult
-    func create(node nodeType: DisplayableNode.Type, position: CGPoint) -> DisplayNode? {
+    func create(node nodeType: Node.Type, position: CGPoint) -> DisplayNode? {
         // Create the node
         let node = nodeType.init()
         
@@ -136,7 +138,7 @@ public class CanvasViewController: UIViewController {
     }
     
     /// Creates a popover to create a node.
-    func nodeListPopover(nodes: [DisplayableNode.Type], charBox: CGRect, showShortcuts: Bool) {
+    func nodeListPopover(nodes: [Node.Type], charBox: CGRect, showShortcuts: Bool) {
         // Create the controller
         let alert = UIAlertController(
             title: "Spawn Node",
@@ -152,9 +154,10 @@ public class CanvasViewController: UIViewController {
         for node in nodes {
             // Create the title with the shortcut (only if listing all nodes)
             var title = node.name
-            if let shortcut = node.shortcutCharacter, showShortcuts {
-                title += " (\(shortcut))"
-            }
+//            if let shortcut = node.shortcutCharacter, showShortcuts {
+//                title += " (\(shortcut))"
+//            }
+            title += "(<FUTURE SHORTCUT>)"
             
             // Create an action to spawn the node
             let action = UIAlertAction(title: title, style: .default) { _ in

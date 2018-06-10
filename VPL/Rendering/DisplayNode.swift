@@ -10,7 +10,7 @@ import UIKit
 
 public class DisplayNode: UIView, UIGestureRecognizerDelegate {
     /// The underlying node data.
-    public let node: DisplayableNode
+    public let node: Node
     
     /// Canvas that this node is displayed in.
     weak var canvas: DisplayNodeCanvas?
@@ -18,10 +18,11 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
     /// List of all sockets on the node.
     var sockets: [DisplayNodeSocket] = []
     
-    /// The content view for this node.
-    public var contentView: DisplayableNodeContentView?
+    /// The content view for this node that provides extra information or an
+    /// editable area.
+    public var contentView: NodeContentView?
     
-    public init(node: DisplayableNode) {
+    public init(node: Node) {
         // Save the node and canvas
         self.node = node
         
@@ -44,11 +45,9 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         
         // Add content view
         var panelBottomAnchor = bottomAnchor // Anchor to attatch the panels to
-        if let contentView = node.contentView {
-            // Save the view
-            self.contentView = contentView
-            
+        if let contentView = (node as? ContentViewNode)?.initContentView() {
             // Add the view
+            self.contentView = contentView
             addSubview(contentView)
             
             // Size it

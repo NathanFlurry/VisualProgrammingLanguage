@@ -8,64 +8,34 @@
 
 import UIKit
 
-//public class EvalConstNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "C"
-//
-//    public static let id: String = "eval-const"
-//    public static let name: String = "Eval Constant"
-//    public var output: NodeOutput = .value(OutputValue(type: .unknown))
-//    public var contentView: DisplayableNodeContentView? { return inputView }
-//
-//    var inputView: GenericInputView!
-//
-//    public required init() {
-//        inputView = GenericInputView(node: self, fields: [
-//            GenericInputViewField(name: "Swift Code", defaultValue: "nil")
-//        ])
-//
-//        self.setupConnections()
-//    }
-//}
-
-public class IntConstNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "C"
-    
+public class IntConstNode: Node {
     public static let id: String = "int-const"
     public static let name: String = "Integer Constant"
     public let output: NodeOutput = .value(OutputValue(type: .int))
-    public var contentView: DisplayableNodeContentView? { return inputView }
     
-    var inputView: DrawCanvasNodeView!
+    var intConst: Int = 0
     
     public required init() {
-        inputView = DrawCanvasNodeView(node: self, defaultValue: "0", inputType: .digits)
-        
         self.setupConnections()
     }
     
     public func exec(call: CallData) throws -> CallResult {
-        let result = Int(inputView!.value)!
-        return call.value(.int(result))
+        return call.value(.int(intConst))
     }
 }
-public class StringConstNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "C"
-    
+public class StringConstNode: Node {    
     public static let id: String = "str-const"
     public static let name: String = "String Constant"
     public let output: NodeOutput = .value(OutputValue(type: .string))
-    public var contentView: DisplayableNodeContentView? { return inputView }
     
-    var inputView: DrawCanvasNodeView!
+    var stringConst: String = "Hello, world!"
     
     public required init() {
-        inputView = DrawCanvasNodeView(node: self, defaultValue: "", inputType: .alphanum)
-        
         self.setupConnections()
     }
     
     public func exec(call: CallData) throws -> CallResult {
-        return call.value(.string(inputView!.value))
+        return call.value(.string(stringConst))
     }
 }
 

@@ -8,9 +8,7 @@
 
 import UIKit
 
-public class PrintNode: DisplayableNode {
-    public static let shortcutCharacter: String? = "P"
-    
+public class PrintNode: Node {
     public static let id: String = "print"
     public static let name: String = "Print"
     public let inputTrigger: InputTrigger? = InputTrigger()
@@ -26,7 +24,7 @@ public class PrintNode: DisplayableNode {
         return call.execDefault()
     }
 }
-//public class SwapNode: DisplayableNode {
+//public class SwapNode: Node {
 //    public static let id: String = "swap"
 //    public static let name: String = "Swap"
 //    public let inputTrigger: InputTrigger? = InputTrigger()

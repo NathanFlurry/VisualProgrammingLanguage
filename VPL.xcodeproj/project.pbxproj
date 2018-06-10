@@ -12,7 +12,6 @@
 		BF24CA092067623A007AB6F2 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA082067623A007AB6F2 /* Value.swift */; };
 		BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
 		BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */; };
-		BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */; };
 		BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1B206C398F007AB6F2 /* BaseNode.swift */; };
 		BF24CA1E206C39A4007AB6F2 /* ConstNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */; };
 		BF24CA20206C39B5007AB6F2 /* VariableNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */; };
@@ -20,7 +19,7 @@
 		BF24CA24206C39DA007AB6F2 /* MathNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA23206C39D9007AB6F2 /* MathNodes.swift */; };
 		BF24CA28206C3A13007AB6F2 /* MiscNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */; };
 		BF24CA2B206C3AAA007AB6F2 /* GenericInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */; };
-		BF24CA2F206C4DF8007AB6F2 /* DisplayNodeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */; };
+		BF24CA2F206C4DF8007AB6F2 /* NodeContentEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2E206C4DF8007AB6F2 /* NodeContentEditorView.swift */; };
 		BF24CA31206C5966007AB6F2 /* NodeTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */; };
 		BF24CA33206C596F007AB6F2 /* NodeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA32206C596F007AB6F2 /* NodeValue.swift */; };
 		BF24CA37206CEC19007AB6F2 /* CodeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */; };
@@ -46,7 +45,6 @@
 		BF899E2E2070B47B008EC5EA /* VPLEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = BF899E2C2070B47B008EC5EA /* VPLEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF899E312070B47B008EC5EA /* VPLEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF899E2A2070B47B008EC5EA /* VPLEditor.framework */; };
 		BF899E322070B47B008EC5EA /* VPLEditor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF899E2A2070B47B008EC5EA /* VPLEditor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BF899E372070B4CA008EC5EA /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */; };
 		BF899E382070B4CA008EC5EA /* BaseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1B206C398F007AB6F2 /* BaseNode.swift */; };
 		BF899E392070B4CA008EC5EA /* ConstNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */; };
 		BF899E3A2070B4CA008EC5EA /* VariableNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */; };
@@ -55,7 +53,7 @@
 		BF899E3D2070B4CA008EC5EA /* ArrayNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C263206E2EF6002A148F /* ArrayNodes.swift */; };
 		BF899E3E2070B4CA008EC5EA /* DictionaryNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C265206E2EFE002A148F /* DictionaryNodes.swift */; };
 		BF899E3F2070B4CA008EC5EA /* MiscNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */; };
-		BF899E402070B4CE008EC5EA /* DisplayNodeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */; };
+		BF899E402070B4CE008EC5EA /* NodeContentEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2E206C4DF8007AB6F2 /* NodeContentEditorView.swift */; };
 		BF899E412070B4CE008EC5EA /* GenericInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */; };
 		BF899E422070B4CE008EC5EA /* ValueChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25F206E165B002A148F /* ValueChooserView.swift */; };
 		BF899E432070B4CE008EC5EA /* DrawCanvasNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */; };
@@ -81,6 +79,8 @@
 		BF899E572070B51A008EC5EA /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF24CA0A2069B6E5007AB6F2 /* Node.swift */; };
 		BFEDC4A420CC8A4400389266 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDC4A320CC8A4400389266 /* Program.swift */; };
 		BFEDC4A520CC9BD600389266 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDC4A320CC8A4400389266 /* Program.swift */; };
+		BFEDC4A920CC9DA700389266 /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDC4A820CC9DA700389266 /* DisplayableNode.swift */; };
+		BFEDC4AA20CC9DBD00389266 /* DisplayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDC4A820CC9DA700389266 /* DisplayableNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,7 +113,6 @@
 		BF24CA082067623A007AB6F2 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		BF24CA0A2069B6E5007AB6F2 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
-		BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableNode.swift; sourceTree = "<group>"; };
 		BF24CA1B206C398F007AB6F2 /* BaseNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNode.swift; sourceTree = "<group>"; };
 		BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstNodes.swift; sourceTree = "<group>"; };
 		BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableNodes.swift; sourceTree = "<group>"; };
@@ -121,7 +120,7 @@
 		BF24CA23206C39D9007AB6F2 /* MathNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathNodes.swift; sourceTree = "<group>"; };
 		BF24CA27206C3A13007AB6F2 /* MiscNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscNodes.swift; sourceTree = "<group>"; };
 		BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericInputView.swift; sourceTree = "<group>"; };
-		BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeContentView.swift; sourceTree = "<group>"; };
+		BF24CA2E206C4DF8007AB6F2 /* NodeContentEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeContentEditorView.swift; sourceTree = "<group>"; };
 		BF24CA30206C5966007AB6F2 /* NodeTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTrigger.swift; sourceTree = "<group>"; };
 		BF24CA32206C596F007AB6F2 /* NodeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValue.swift; sourceTree = "<group>"; };
 		BF24CA36206CEC19007AB6F2 /* CodeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeOutputView.swift; sourceTree = "<group>"; };
@@ -152,6 +151,7 @@
 		BFEDC49E20CC494800389266 /* TestPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BFEDC49F20CC69C600389266 /* Node Based Runtime.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Node Based Runtime.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BFEDC4A320CC8A4400389266 /* Program.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
+		BFEDC4A820CC9DA700389266 /* DisplayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,7 +228,6 @@
 		BF24CA18206C395F007AB6F2 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				BF24CA19206C3975007AB6F2 /* DisplayableNode.swift */,
 				BF24CA1B206C398F007AB6F2 /* BaseNode.swift */,
 				BF24CA1D206C39A4007AB6F2 /* ConstNodes.swift */,
 				BF24CA1F206C39B5007AB6F2 /* VariableNodes.swift */,
@@ -244,7 +243,8 @@
 		BF24CA29206C3A7F007AB6F2 /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
-				BF24CA2E206C4DF8007AB6F2 /* DisplayNodeContentView.swift */,
+				BF24CA2E206C4DF8007AB6F2 /* NodeContentEditorView.swift */,
+				BFEDC4A820CC9DA700389266 /* DisplayableNode.swift */,
 				BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */,
 				BF62C25F206E165B002A148F /* ValueChooserView.swift */,
 				BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */,
@@ -431,7 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF24CA2F206C4DF8007AB6F2 /* DisplayNodeContentView.swift in Sources */,
+				BF24CA2F206C4DF8007AB6F2 /* NodeContentEditorView.swift in Sources */,
 				BF62C25A206D9B7A002A148F /* MNIST.mlmodel in Sources */,
 				BF56DEB2205862B2007E2483 /* AppDelegate.swift in Sources */,
 				BF24CA24206C39DA007AB6F2 /* MathNodes.swift in Sources */,
@@ -445,6 +445,7 @@
 				BF62C264206E2EF6002A148F /* ArrayNodes.swift in Sources */,
 				BF86B73B205EFDF2006AEEA7 /* Alphanum_28x28.mlmodel in Sources */,
 				BF24CA0B2069B6E5007AB6F2 /* Node.swift in Sources */,
+				BFEDC4A920CC9DA700389266 /* DisplayableNode.swift in Sources */,
 				BF24CA122069C6D2007AB6F2 /* DisplayNodeCanvas.swift in Sources */,
 				BF24CA28206C3A13007AB6F2 /* MiscNodes.swift in Sources */,
 				BF62C260206E165B002A148F /* ValueChooserView.swift in Sources */,
@@ -454,7 +455,6 @@
 				BF24CA1C206C398F007AB6F2 /* BaseNode.swift in Sources */,
 				BF62C25C206DA520002A148F /* DrawCanvasNodeView.swift in Sources */,
 				BF56DED22058631A007E2483 /* DisplayNode.swift in Sources */,
-				BF24CA1A206C3975007AB6F2 /* DisplayableNode.swift in Sources */,
 				BF24CA37206CEC19007AB6F2 /* CodeOutputView.swift in Sources */,
 				BF24CA22206C39CA007AB6F2 /* ControlFlowNodes.swift in Sources */,
 				BF24CA1E206C39A4007AB6F2 /* ConstNodes.swift in Sources */,
@@ -475,6 +475,7 @@
 				BF899E422070B4CE008EC5EA /* ValueChooserView.swift in Sources */,
 				BF899E4B2070B4D1008EC5EA /* OCRRequest.swift in Sources */,
 				BF899E542070B51A008EC5EA /* NodeTrigger.swift in Sources */,
+				BFEDC4AA20CC9DBD00389266 /* DisplayableNode.swift in Sources */,
 				BF899E3F2070B4CA008EC5EA /* MiscNodes.swift in Sources */,
 				BF899E532070B51A008EC5EA /* Value.swift in Sources */,
 				BF899E552070B51A008EC5EA /* NodeValue.swift in Sources */,
@@ -489,12 +490,11 @@
 				BF899E4D2070B4D3008EC5EA /* MNIST.mlmodel in Sources */,
 				BF899E3A2070B4CA008EC5EA /* VariableNodes.swift in Sources */,
 				BF899E462070B4CE008EC5EA /* DisplayNode.swift in Sources */,
-				BF899E372070B4CA008EC5EA /* DisplayableNode.swift in Sources */,
 				BF899E472070B4CE008EC5EA /* DisplayNodeSocket.swift in Sources */,
 				BF899E4E2070B4D3008EC5EA /* Alphanum_28x28.mlmodel in Sources */,
 				BF899E392070B4CA008EC5EA /* ConstNodes.swift in Sources */,
 				BF899E492070B4CE008EC5EA /* CodeOutputView.swift in Sources */,
-				BF899E402070B4CE008EC5EA /* DisplayNodeContentView.swift in Sources */,
+				BF899E402070B4CE008EC5EA /* NodeContentEditorView.swift in Sources */,
 				BF899E3C2070B4CA008EC5EA /* MathNodes.swift in Sources */,
 				BF899E572070B51A008EC5EA /* Node.swift in Sources */,
 				BF899E4F2070B4D3008EC5EA /* Chars74k.mlmodel in Sources */,

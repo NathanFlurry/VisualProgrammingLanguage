@@ -98,9 +98,7 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         node.canvas = self
         
         // Add callabck on content change
-        node.node.contentView?.onChangeCallback = {
-            self.updated(node: node)
-        }
+        node.contentView?.onChangeCanvasCallback = { self.updated(node: node) }
         
         // Insert into the list and view
         nodes.append(node)

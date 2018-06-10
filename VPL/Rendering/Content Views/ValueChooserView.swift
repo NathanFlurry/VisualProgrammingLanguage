@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ValueChooserView<T>: DisplayableNodeContentView {
+public class ValueChooserView<T>: NodeContentEditorView<T> {
     /// The currently selected item.
     public var value: T
     
@@ -18,9 +18,6 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
     /// Returns a string label for an item.
     var valueLabel: (T) -> String
     
-    /// Called when an value is chosen.
-    var chooseCallback: (T) -> Void
-    
     private var selectionLabel: UILabel!
     private var pickButton: UIButton!
     
@@ -28,14 +25,15 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
         defaultValue: T,
         getValues: @escaping () -> [T],
         valueLabel: @escaping (T) -> String,
-        chooseCallback: @escaping (T) -> Void = { _ in }
+        callback: @escaping Callback
     ) {
         self.value = defaultValue
         self.getValues = getValues
         self.valueLabel = valueLabel
-        self.chooseCallback = chooseCallback
         
         super.init(frame: CGRect.zero)
+        
+        self.onChangeCallback = callback
         
         selectionLabel = UILabel(frame: CGRect.zero)
         selectionLabel.text = valueLabel(value)
@@ -88,8 +86,7 @@ public class ValueChooserView<T>: DisplayableNodeContentView {
                 self.selectionLabel.text = label
                 
                 // Callbacks
-                self.chooseCallback(value)
-                self.contentValueChanged()
+                self.contentValueChanged(value: value)
             }
             alert.addAction(action)
         }

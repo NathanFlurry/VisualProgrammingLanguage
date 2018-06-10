@@ -8,9 +8,7 @@
 
 import Foundation
 
-//public class ArrayCreateNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "A"
-//    
+//public class ArrayCreateNode: Node {
 //    public static let id: String = "array-create"
 //    public static let name: String = "Create Array"
 //    public let output: NodeOutput = .value(OutputValue(type: .array(.unknown)))
@@ -26,9 +24,7 @@ import Foundation
 //        self.setupConnections()
 //    }
 //}
-//public class ArrayAppendNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "A"
-//    
+//public class ArrayAppendNode: Node {
 //    public static let id: String = "array-appent"
 //    public static let name: String = "Append to Array"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
@@ -42,9 +38,7 @@ import Foundation
 //        self.setupConnections()
 //    }
 //}
-//public class ArraySetAtNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "A"
-//    
+//public class ArraySetAtNode: Node {
 //    public static let id: String = "array-set-at"
 //    public static let name: String = "Set At Index"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
@@ -59,9 +53,7 @@ import Foundation
 //        self.setupConnections()
 //    }
 //}
-//public class ArrayGetAtNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "A"
-//    
+//public class ArrayGetAtNode: Node {
 //    public static let id: String = "array-get-at"
 //    public static let name: String = "Get At Index"
 //    public let inputValues: [InputValue] = [
@@ -74,9 +66,7 @@ import Foundation
 //        self.setupConnections()
 //    }
 //}
-//public class ArrayRemoveAtNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "A"
-//    
+//public class ArrayRemoveAtNode: Node {
 //    public static let id: String = "array-remove-at"
 //    public static let name: String = "Remove At Index"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
@@ -90,9 +80,7 @@ import Foundation
 //        self.setupConnections()
 //    }
 //}
-//public class ArrayCountNode: DisplayableNode {
-//    public static let shortcutCharacter: String? = "A"
-//    
+//public class ArrayCountNode: Node {
 //    public static let id: String = "array-count"
 //    public static let name: String = "Value Count"
 //    public let inputValues: [InputValue] = [InputValue(id: "array", name: "Array", type: .array(.unknown))]

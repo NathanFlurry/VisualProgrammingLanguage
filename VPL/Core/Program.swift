@@ -106,7 +106,7 @@ public class Program {
             }
             
             break
-        case .value(let value):
+        case .value(_):
             print("Unimplemented.")
             break
         case .async:
