@@ -117,4 +117,20 @@ public class Program {
     private func asyncCallback(results: CallResult) {
         fatalError("Unimplemented.")
     }
+    
+    public func add(node: Node) {
+        assert(!running)
+        assert(!nodes.contains { $0 === node })
+        
+        // Add the node to the array
+        nodes.append(node)
+    }
+    
+    public func remove(node: Node) {
+        assert(!running)
+        assert(nodes.contains { $0 === node })
+        
+        // Add the node to the array
+        nodes.removeAll { $0 === node }
+    }
 }

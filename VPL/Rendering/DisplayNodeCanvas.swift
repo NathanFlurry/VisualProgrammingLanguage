@@ -9,6 +9,9 @@
 import UIKit
 
 public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
+    /// The underlying program that powers the VPL.
+    var program: Program = Program()
+    
     /// List of all nodes in the canvas.
     public private(set) var nodes: [DisplayNode]
     
@@ -94,6 +97,9 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         assert(!nodes.contains(node))
         assert(node.canvas == nil)
         
+        // Add the node to the program
+        program.add(node: node.node)
+        
         // Set the canvas
         node.canvas = self
         
@@ -139,6 +145,9 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
         guard type(of: node.node).destroyable else {
             return
         }
+        
+        // Remove the node from the program
+        program.remove(node: node.node)
         
         // Remove the node from the list
         guard let nodeIndex = nodes.index(where: { $0 === node }) else {
