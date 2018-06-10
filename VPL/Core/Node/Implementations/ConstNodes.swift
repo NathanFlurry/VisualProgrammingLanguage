@@ -8,6 +8,34 @@
 
 import UIKit
 
+public class TrueConstNode: Node {
+    public static let id: String = "true-const"
+    public static let name: String = "True Constant"
+    public let output: NodeOutput = .value(OutputValue(type: .bool))
+    
+    public required init() {
+        self.setupConnections()
+    }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        return call.value(.bool(true))
+    }
+}
+
+public class FalseConstNode: Node {
+    public static let id: String = "false-const"
+    public static let name: String = "False Constant"
+    public let output: NodeOutput = .value(OutputValue(type: .bool))
+    
+    public required init() {
+        self.setupConnections()
+    }
+    
+    public func exec(call: CallData) throws -> CallResult {
+        return call.value(.bool(false))
+    }
+}
+
 public class IntConstNode: Node {
     public static let id: String = "int-const"
     public static let name: String = "Integer Constant"
@@ -23,6 +51,7 @@ public class IntConstNode: Node {
         return call.value(.int(intConst))
     }
 }
+
 public class StringConstNode: Node {    
     public static let id: String = "str-const"
     public static let name: String = "String Constant"

@@ -173,7 +173,7 @@ public class CanvasViewController: UIViewController {
 //            if let shortcut = node.shortcutCharacter, showShortcuts {
 //                title += " (\(shortcut))"
 //            }
-            title += "(<FUTURE SHORTCUT>)"
+            title += " (???)"
             
             // Create an action to spawn the node
             let action = UIAlertAction(title: title, style: .default) { _ in

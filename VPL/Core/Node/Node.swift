@@ -9,7 +9,8 @@
 import Foundation
 
 public let defaultNodes: [Node.Type] = [
-//    EvalConstNode.self,
+    TrueConstNode.self,
+    FalseConstNode.self,
     IntConstNode.self,
     StringConstNode.self,
     

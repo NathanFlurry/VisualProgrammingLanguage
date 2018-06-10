@@ -8,10 +8,12 @@
 
 import Foundation
 
-enum InternalRuntimeError: Error {
+public enum InternalRuntimeError: Error {
     case missingStartNode
     case invalidTriggerID
     case stackIsEmpty
+    case missingInputValue
+    case missingOutputValue
 }
 
 // TODO: Need a way to notify of the updated running state, or just observe it for better performance
@@ -65,21 +67,24 @@ public class Program {
         stack = []
     }
     
+    /// Executs a node on the control flow. This cannot execute nodes with value
+    /// outputs.
     private func executeCurrent() throws {
         // DEBUG: Print the stack
-        print("Stack", stack.map { type(of: $0).name }.joined())
+        let debugStack = stack.map { type(of: $0).name }.joined()
+        print("Stack: [\(debugStack)]")
         
         // Find the node to execute
         guard let node = stack.last else {
             throw InternalRuntimeError.stackIsEmpty
         }
         
-        // TODO: Traverse data flow to get call data
+        // Get results from input data
+        let params = try node.inputValues.map { try self.evaluate(value: $0) }
         
         // Execute the node and get the results
-        let data = CallData(node: node, params: [], asyncCallback: self.asyncCallback)
+        let data = CallData(node: node, params: params, asyncCallback: self.asyncCallback)
         let result = try node.exec(call: data)
-        print("Executed node", node, result)
         
         // Handle the action
         switch result.data {
@@ -87,7 +92,6 @@ public class Program {
             // Remove the last node from the stack if reaches an end
             stack.removeLast()
             
-            break
         case .exec(let triggerID):
             // Find the trigger
             guard let trigger = node.outputTrigger(forID: triggerID) else {
@@ -108,12 +112,34 @@ public class Program {
                 stack.removeLast()
             }
             
-            break
         case .value(_):
-            print("Unimplemented.")
-            break
+            fatalError("Value result cannot exist in control flow execution.")
+            
         case .async:
             fatalError("Unimplemented.")
+        }
+    }
+    
+    /// Evaluates nodes that output values from the input socket that points to
+    /// the given node.
+    func evaluate(value: InputValue) throws -> Value {
+        // Get the node for the data
+        guard let node = value.target?.owner else {
+            throw InternalRuntimeError.missingInputValue
+        }
+        
+        // Evaluate the params
+        let params = try node.inputValues.map { try self.evaluate(value: $0) }
+        
+        // Execute the node
+        let data = CallData(node: node, params: params, asyncCallback: { _ in fatalError("Unimplemented.") })
+        let result = try node.exec(call: data)
+        
+        // Handle the result
+        if case let .value(value) = result.data {
+            return value
+        } else {
+            throw InternalRuntimeError.missingOutputValue
         }
     }
     
