@@ -40,6 +40,10 @@ public class CanvasViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add run button
+        let runButton = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.run))
+        navigationItem.rightBarButtonItem = runButton
+        
         // Add the text
         outputView = CodeOutputView()
         view.addSubview(outputView)
@@ -124,6 +128,18 @@ public class CanvasViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Rerender the overlay
+        canvas.updateState()
+    }
+    
+    @objc
+    func run() {
+        try! canvas.program.run()
+    }
 
     @discardableResult
     func create(node nodeType: Node.Type, position: CGPoint) -> DisplayNode? {
@@ -168,12 +184,5 @@ public class CanvasViewController: UIViewController {
         
         // Present it
         self.present(alert, animated: true)
-    }
-    
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // Rerender the overlay
-        canvas.updateState()
     }
 }

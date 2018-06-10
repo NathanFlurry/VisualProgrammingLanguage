@@ -52,6 +52,9 @@ public class Program {
         while stack.count > 0 && running {
             try executeCurrent()
         }
+        
+        // Execution is finished, so stop
+        stop()
     }
     
     public func stop() {

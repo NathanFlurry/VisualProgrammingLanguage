@@ -20,7 +20,7 @@ public class PrintNode: Node {
     }
     
     public func exec(call: CallData) throws -> CallResult {
-        print(call.get(index: 0).string!)
+        print("Print:", call.get(index: 0).string!)
         return call.execDefault()
     }
 }
