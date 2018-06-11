@@ -29,61 +29,39 @@ class RuntimeStackItem {
 // TODO: Need a way to notify of the updated running state, or just observe it for better performance
 // TODO: Should this run on another thread or have the user do it manually
 
-public class Program {
-    /// Determines if the program is currently running.
-    public private(set) var running: Bool = false
+public class ProgramRuntime {
+    /// The runtime stack for the running program.
+    private var stack: [RuntimeStackItem]
     
-    /// List of all nodes associated with the program.
-    var nodes: [Node]
-    
-    /// Finds the starting node.
-    var startNode: Node? {
-        return nodes.first { $0 is BaseNode }
+    /// If the program is finished.
+    public var finished: Bool {
+        return stack.count == 0
     }
     
-    /// The runtime stack for the program.
-    private var stack: [RuntimeStackItem] = []
-    
-    init(nodes: [Node] = []) {
-        self.nodes = nodes
+    fileprivate init(startNode: Node) {
+        stack = [ RuntimeStackItem(node: startNode) ]
     }
     
-    public func run() throws {
-        // Set to running
-        running = true
-        
-        // Find the start node of the program
-        guard let startNode = startNode else {
-            throw InternalRuntimeError.missingStartNode
+    /// Executes the entire program without stopping.
+    public func runSync() throws {
+        // Keep stepping through the program
+        while !finished {
+            try step()
         }
-        
-        // Set the stack to the start node so the program knows where to start
-        stack = [RuntimeStackItem(node: startNode)]
-        
-        // Execute the current node
-        while stack.count > 0 && running {
-            try executeCurrent()
-        }
-        
-        // Execution is finished, so stop
-        stop()
     }
     
-    public func stop() {
-        // Set to not running
-        running = false
-        
-        // Clear the stack
-        stack = []
+    /// Executes one step of the program.
+    public func step() throws {
+        try executeCurrent()
     }
     
     /// Executs a node on the control flow. This cannot execute nodes with value
     /// outputs.
     private func executeCurrent() throws {
         // DEBUG: Print the stack
-        let debugStack = stack.map { type(of: $0.node).name }.joined(separator: ", ")
-        print("Stack: [\(debugStack)]")
-        
+//        let debugStack = stack.map { type(of: $0.node).name }.joined(separator: ", ")
+//        print("Stack: [\(debugStack)]")
+
         // Find the node to execute
         guard let stackItem = stack.last else {
             throw InternalRuntimeError.stackIsEmpty
@@ -140,6 +118,7 @@ public class Program {
         }
     }
     
+    // TODO: Find a way to async execut this so you can step through this
     /// Evaluates nodes that output values from the input socket that points to
     /// the given node.
     func evaluate(value: InputValue) throws -> Value {
@@ -166,9 +145,31 @@ public class Program {
     private func asyncCallback(results: CallResult) {
         fatalError("Unimplemented.")
     }
+}
+
+public class Program {
+    /// List of all nodes associated with the program.
+    public private(set) var nodes: [Node]
+    
+    /// Finds the starting node.
+    var startNode: Node? {
+        return nodes.first { $0 is BaseNode }
+    }
+    
+    init(nodes: [Node] = []) {
+        self.nodes = nodes
+    }
+    
+    public func create() throws -> ProgramRuntime {
+        // Find the start node of the program
+        guard let startNode = startNode else {
+            throw InternalRuntimeError.missingStartNode
+        }
+        
+        return ProgramRuntime(startNode: startNode)
+    }
     
     public func add(node: Node) {
-        assert(!running)
         assert(!nodes.contains { $0 === node })
         
         // Add the node to the array
@@ -176,7 +177,6 @@ public class Program {
     }
     
     public func remove(node: Node) {
-        assert(!running)
         assert(nodes.contains { $0 === node })
         
         // Add the node to the array

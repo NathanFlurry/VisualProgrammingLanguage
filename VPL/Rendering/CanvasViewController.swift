@@ -138,7 +138,7 @@ public class CanvasViewController: UIViewController {
     
     @objc
     func run() {
-        try! canvas.program.run()
+        try! canvas.program.create().runSync()
     }
 
     @discardableResult
