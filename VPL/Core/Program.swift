@@ -114,7 +114,7 @@ public class Program {
             
         case .exec(let triggerID):
             // Find the trigger
-            guard let trigger = node.outputTrigger(forID: triggerID) else {
+            guard let trigger = node.trigger(id: triggerID) else {
                 throw InternalRuntimeError.invalidTriggerID
             }
             

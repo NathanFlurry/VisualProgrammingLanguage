@@ -75,6 +75,7 @@ class OCRRequest {
                 }
             }
         }
+        
         return true
     }
     

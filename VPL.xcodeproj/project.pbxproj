@@ -243,8 +243,8 @@
 		BF24CA29206C3A7F007AB6F2 /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
-				BF24CA2E206C4DF8007AB6F2 /* NodeContentEditorView.swift */,
 				BFEDC4A820CC9DA700389266 /* DisplayableNode.swift */,
+				BF24CA2E206C4DF8007AB6F2 /* NodeContentEditorView.swift */,
 				BF24CA2A206C3AAA007AB6F2 /* GenericInputView.swift */,
 				BF62C25F206E165B002A148F /* ValueChooserView.swift */,
 				BF62C25B206DA520002A148F /* DrawCanvasNodeView.swift */,

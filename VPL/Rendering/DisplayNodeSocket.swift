@@ -12,7 +12,9 @@ enum DisplayNodeSocketType: Equatable {
     case inputTrigger(InputTrigger), outputTrigger(OutputTrigger)
     case inputValue(InputValue), outputValue(OutputValue)
     case inputVariable(InputVariable)
-    
+}
+
+extension DisplayNodeSocketType {
     var socketColor: UIColor {
         switch self {
         case .inputTrigger(_), .outputTrigger(_):
@@ -34,7 +36,9 @@ enum DisplayNodeSocketType: Equatable {
             return UIColor(red: 0.44, green: 1, blue: 0.74, alpha: 0.35)
         }
     }
-    
+}
+
+extension DisplayNodeSocketType {
     var isInput: Bool {
         switch self {
         case .inputTrigger(_), .inputValue(_), .inputVariable(_):
@@ -98,7 +102,7 @@ class DisplayNodeSocket: UIView {
     
     var variablesText: UILabel?
     
-    var triangleShape: CAShapeLayer!
+    var triangleShape: CAShapeLayer = CAShapeLayer()
     
     init(frame: CGRect, type: DisplayNodeSocketType, node: DisplayNode) {
         self.type = type
@@ -349,7 +353,7 @@ class DisplayNodeSocket: UIView {
         super.layoutSublayers(of: layer)
         
         // Determine if input
-        var isInput: Bool
+        let isInput: Bool
         switch type {
         case .inputTrigger(_), .inputValue(_), .inputVariable(_):
             isInput = true

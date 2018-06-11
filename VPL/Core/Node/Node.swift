@@ -100,19 +100,19 @@ struct AsyncResultFromAsyncCall {
 
 public struct CallData {
     /// The node that this data is being passed to.
-    var node: Node
+    public private(set) var node: Node
     
     // TODO: Use this properly
     /// How many times this node has been called in the stack, if it requested
     /// to be called again when the child stack is depleted.
-    var index: Int
+    public private(set) var index: Int
     
     /// The parameters to be passed to the node.
-    var params: [Value]
+    public private(set) var params: [Value]
     
     // TOOD: Make sure we handle if the async callback is called before the end of the exec
     /// Callback used if passed to an async node.
-    var asyncCallback: CallResult.AsyncCallback = { result in
+    public private(set) var asyncCallback: CallResult.AsyncCallback = { result in
         // Ensure it's not an async result
         if case .async = result.data {
             // TODO: Make sure this is not a fatal error and handled properly
@@ -127,14 +127,14 @@ public struct CallData {
     }
     
     /// Creates new call data for the node to use.
-    init(node: Node, params: [Value], index: Int) {
+    internal init(node: Node, params: [Value], index: Int) {
         self.node = node
         self.params = params
         self.index = index
     }
     
     /// Fetches a parameter at a given index and validates its index.
-    func get(index: Int) -> Value {
+    public func get(index: Int) -> Value {
         if index < 0 || index >= params.count {
             fatalError("Index \(index) is out of bounds for \(params.count) params.")
         } else {
@@ -142,11 +142,11 @@ public struct CallData {
         }
     }
     
-    func noResult(visitAgain: Bool = false) -> CallResult {
+    public func noResult(visitAgain: Bool = false) -> CallResult {
         return CallResult(call: self, data: .none, visitAgain: visitAgain)
     }
     
-    func execDefault(visitAgain: Bool = false) -> CallResult {
+    public func execDefault(visitAgain: Bool = false) -> CallResult {
         if let triggers = self.node.output.triggers, let trigger = triggers.first {
             return self.exec(trigger: trigger.id)
         } else {
@@ -154,17 +154,17 @@ public struct CallData {
         }
     }
     
-    func exec(trigger: OutputTrigger.ID, visitAgain: Bool = false) -> CallResult {
+    public func exec(trigger: OutputTrigger.ID, visitAgain: Bool = false) -> CallResult {
         return CallResult(call: self, data: .exec(trigger), visitAgain: visitAgain)
     }
     
-    func value(_ value: Value, visitAgain: Bool = false) -> CallResult {
+    public func value(_ value: Value, visitAgain: Bool = false) -> CallResult {
         return CallResult(call: self, data: .value(value), visitAgain: visitAgain)
     }
 }
 
 public struct CallResult {
-    enum Data {
+    internal enum Data {
         /// This will do nothing after this node. This is very rarely used,
         /// since nothing will execute after it.
         case none
@@ -248,7 +248,7 @@ extension Node {
         return (trigger?.target?.exposedVariables ?? []) + (trigger?.target?.owner.availableVariables ?? [])
     }
     
-    func trigger(index: Int) -> OutputTrigger {
+    public func trigger(index: Int) -> OutputTrigger {
         switch self.output {
         case .triggers(let triggers):
             return triggers[index]
@@ -257,7 +257,7 @@ extension Node {
         }
     }
     
-    func outputTrigger(forID id: OutputTrigger.ID) -> OutputTrigger? {
+    public func trigger(id: OutputTrigger.ID) -> OutputTrigger? {
         if case let .triggers(triggers) = output {
             return triggers.first { $0.id == id }
         } else {
@@ -268,14 +268,14 @@ extension Node {
     public func setupConnections() {
         // Set input owners
         inputTrigger?.owner = self
-        for value in inputValues { value.owner = self }
-        for variable in inputVariables { variable.owner = self }
+        inputValues.forEach { $0.owner = self }
+        inputVariables.forEach { $0.owner = self }
         
         // Setup outputs
         switch output {
         case .triggers(let triggers):
             // Set owners
-            for trigger in triggers { trigger.owner = self }
+            triggers.forEach { $0.owner = self }
             
             // Set next trigger
             triggers.first?.nextTrigger = true

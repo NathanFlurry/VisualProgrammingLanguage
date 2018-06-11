@@ -10,10 +10,12 @@
 
 // TODO: Add some form of generics and constraints so things like math nodes work well
 
-public indirect enum ValueType: Equatable, Hashable, CustomStringConvertible {
+public indirect enum ValueType: Equatable, Hashable {
     case bool, int, float, string
     case array(ValueType), dictionary(ValueType, ValueType)
-    
+}
+
+extension ValueType: CustomStringConvertible {
     public var description: String {
         switch self {
         case .bool:
@@ -42,26 +44,12 @@ public struct InvalidValueCast: Error {
     }
 }
 
-public indirect enum Value: Equatable, Hashable, CustomStringConvertible {
+public indirect enum Value: Equatable, Hashable {
     case bool(Bool), int(Int), float(Float), string(String)
     case array([Value]), dictionary([Value: Value])
-    
-    var bool: Bool? {
-        if case let .bool(v) = self { return v } else { return nil }
-    }
-    
-    var int: Int? {
-        if case let .int(v) = self { return v } else { return nil }
-    }
-    
-    var float: Float? {
-        if case let .float(v) = self { return v } else { return nil }
-    }
-    
-    var string: String? {
-        if case let .string(v) = self { return v } else { return nil }
-    }
-    
+}
+
+extension Value: CustomStringConvertible {
     public var description: String {
         switch self {
         case .bool(let v):
@@ -79,6 +67,24 @@ public indirect enum Value: Equatable, Hashable, CustomStringConvertible {
             let contents = dictionary.map { "\($0): \($1)" }.joined()
             return "[\(contents)"
         }
+    }
+}
+
+extension Value {
+    public var bool: Bool? {
+        if case let .bool(v) = self { return v } else { return nil }
+    }
+    
+    public var int: Int? {
+        if case let .int(v) = self { return v } else { return nil }
+    }
+    
+    public var float: Float? {
+        if case let .float(v) = self { return v } else { return nil }
+    }
+    
+    public var string: String? {
+        if case let .string(v) = self { return v } else { return nil }
     }
 }
 

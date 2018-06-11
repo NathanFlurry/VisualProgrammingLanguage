@@ -20,10 +20,6 @@ public final class InputTrigger {
     /// The connected trigger.
     public private(set) var target: OutputTrigger?
     
-    public init() {
-        
-    }
-    
     /// Determines if two triggers can be connected.
     public func canConnect(to newTarget: OutputTrigger) -> Bool {
         return newTarget.canConnect(to: self)
@@ -56,7 +52,7 @@ public final class InputTrigger {
 public final class OutputTrigger {
     public typealias ID = UUID
     
-    /// The node that owns this trigger
+    /// The node that owns this trigger.
     public internal(set) weak var owner: Node!
     
     /// An identifier for this value.
@@ -71,8 +67,8 @@ public final class OutputTrigger {
     /// Variables availables to any other nodes further along the control flow.
     public let exposedVariables: [NodeVariable]
     
-    /// If this trigger defines what node executes next and replaces the item
-    /// on the stack.
+    /// If this trigger defines what node executes next and replaces the item on
+    /// the stack.
     public internal(set) var nextTrigger: Bool = false
     
     public init(name: String, exposedVariables: [NodeVariable] = []) {
@@ -80,9 +76,7 @@ public final class OutputTrigger {
         self.exposedVariables = exposedVariables
         
         // Set owner on variables
-        for variable in exposedVariables {
-            variable.owner = self
-        }
+        exposedVariables.forEach { $0.owner = self }
     }
     
     public convenience init(exposedVariables: [NodeVariable] = []) {

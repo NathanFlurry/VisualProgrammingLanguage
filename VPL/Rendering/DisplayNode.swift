@@ -223,17 +223,17 @@ public class DisplayNode: UIView, UIGestureRecognizerDelegate {
         // Animate properties
         let presentation = layer.presentation()
         
-        let scaleAnim = CABasicAnimation(keyPath: "transform")
+        let scaleAnim = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
         scaleAnim.fromValue = presentation?.transform ?? CATransform3DIdentity
         scaleAnim.toValue = lifted ?
             CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05) :
             CATransform3DIdentity
         
-        let offsetAnim = CABasicAnimation(keyPath: "shadowOffset")
+        let offsetAnim = CABasicAnimation(keyPath: #keyPath(CALayer.shadowOffset))
         offsetAnim.fromValue = presentation?.shadowOffset ?? CGSize.zero
         offsetAnim.toValue = lifted ? CGSize(width: 0, height: 25) : CGSize(width: 0, height: 5)
         
-        let shadowAnim = CABasicAnimation(keyPath: "shadowRadius")
+        let shadowAnim = CABasicAnimation(keyPath: #keyPath(CALayer.shadowRadius))
         shadowAnim.fromValue = presentation?.shadowRadius ?? 0
         shadowAnim.toValue = lifted ? 30 : 10
         
