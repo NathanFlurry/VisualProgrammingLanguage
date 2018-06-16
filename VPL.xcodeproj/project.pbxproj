@@ -111,6 +111,7 @@
 		BF19A6D9207058060046EFC5 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "VPL/Images/background@2x.png"; sourceTree = SOURCE_ROOT; };
 		BF19A6DA207058060046EFC5 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = VPL/Images/background.png; sourceTree = SOURCE_ROOT; };
 		BF1BE89D20D4DC12001122F9 /* Type System Test 2.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Type System Test 2.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BF1BE89E20D4DF82001122F9 /* Type System Test 3.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Type System Test 3.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BF24CA082067623A007AB6F2 /* Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		BF24CA0A2069B6E5007AB6F2 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		BF24CA112069C6D2007AB6F2 /* DisplayNodeCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeCanvas.swift; sourceTree = "<group>"; };
@@ -257,6 +258,7 @@
 			children = (
 				BFEDC49E20CC494800389266 /* Type System Test 1.playground */,
 				BF1BE89D20D4DC12001122F9 /* Type System Test 2.playground */,
+				BF1BE89E20D4DF82001122F9 /* Type System Test 3.playground */,
 				BF56DEB0205862B2007E2483 /* VPL */,
 				BF899E2B2070B47B008EC5EA /* VPLEditor */,
 				BF56DEAF205862B2007E2483 /* Products */,
