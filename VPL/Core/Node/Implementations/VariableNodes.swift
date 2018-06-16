@@ -34,7 +34,6 @@ import UIKit
 //    public static let name: String = "Set Variable"
 //    public let inputTrigger: InputTrigger? = InputTrigger()
 //    public let inputValues: [InputValue] = [ InputValue(id: "set value", name: "Set Value", type: .unknown) ]
-//    public let inputVariables: [InputVariable] = [ InputVariable(id: "target", name: "Target", type: .unknown) ]
 //    public let output: NodeOutput = .triggers([OutputTrigger()])
 //    
 //    public required init() {
@@ -44,7 +43,6 @@ import UIKit
 //public class GetVariableNode: Node {
 //    public static let id: String = "get variable"
 //    public static let name: String = "Get Variable"
-//    public let inputVariables: [InputVariable] = [ InputVariable(id: "target", name: "Target", type: .unknown) ]
 //    public let output: NodeOutput = .value(OutputValue(type: .unknown))
 //    
 //    public required init() {

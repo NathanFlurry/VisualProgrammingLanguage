@@ -98,16 +98,24 @@ class DisplayNodeCanvasOverlay: UIView {
                         if trigger.target === otherTrigger { return otherSocket }
                     }
                 case .inputValue(let value):
-                    if case let .outputValue(otherValue) = otherSocket.type {
-                        if value.target === otherValue { return otherSocket }
+                    switch value.target {
+                    case .constant(_):
+                        return nil
+                    case .value(let value):
+                        if case let .outputValue(otherValue) = otherSocket.type, value === otherValue {
+                            return otherSocket
+                        }
+                    case .variable(let variable):
+                        if
+                            case let .outputTrigger(otherTrigger) = otherSocket.type,
+                            otherTrigger.exposedVariables.contains(where: { $0 === variable })
+                        {
+                            return otherSocket
+                        }
                     }
                 case .outputValue(let value):
                     if case let .inputValue(otherValue) = otherSocket.type {
                         if value.target === otherValue { return otherSocket }
-                    }
-                case .inputVariable(let variable):
-                    if case let .outputTrigger(trigger) = otherSocket.type {
-                        if variable.target?.owner === trigger { return otherSocket }
                     }
                 }
             }
@@ -173,6 +181,6 @@ class DisplayNodeCanvasOverlay: UIView {
     }
     
     override func layoutSubviews() {
-//        setNeedsLayout()
+        setNeedsLayout()
     }
 }

@@ -11,6 +11,21 @@ import Foundation
 public final class InputValue {
     public typealias ID = UUID
     
+    public enum Target {
+        case value(OutputValue)
+        case variable(NodeVariable)
+        case constant(Value)
+        
+        /// If this target can be connected to another output target.
+        public func isConnectable() -> Bool {
+            if case .constant(_) = self {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+    
     /// The node that owns this value.
     public internal(set) weak var owner: Node!
     
@@ -23,12 +38,18 @@ public final class InputValue {
     /// The type of value this holds.
     public let type: ValueType
     
-    /// The connected value.
-    public private(set) var target: OutputValue?
+    /// The default value for this socket.
+    public let defaultValue: Value
     
-    public init(name: String, type: ValueType) {
+    /// The connected value.
+    public private(set) var target: Target
+    
+    public init(name: String, type: ValueType, defaultValue: Value? = nil) {
+        assert(defaultValue?.conforms(to: type) ?? true)
         self.name = name
         self.type = type
+        self.defaultValue = defaultValue ?? type.defaultValue
+        self.target = Target.constant(self.defaultValue)
     }
     
     /// Determines if two values can be connected.
@@ -36,10 +57,15 @@ public final class InputValue {
         return newTarget.canConnect(to: self)
     }
     
+    /// Determines if this value can be connected to the target trigger.
+    public func canConnect(to newTarget: NodeVariable) -> Bool {
+        return newTarget.type == type && owner.availableVariables.contains { $0 === newTarget }
+    }
+    
     /// Connects this value to another value.
     public func connect(to newTarget: OutputValue) {
         // Set the new target
-        target = newTarget
+        target = .value(newTarget)
         
         // Connect the other node
         if newTarget.target !== self {
@@ -47,15 +73,31 @@ public final class InputValue {
         }
     }
     
+    /// Connects this value to another variable.
+    public func connect(to newTarget: NodeVariable) {
+        // Set the new target
+        target = .variable(newTarget)
+    }
+    
+    /// Sets the value to a constant.
+    public func set(const value: Value) {
+        assert(value.conforms(to: type))
+        
+        // Set the new constant
+        target = .constant(value)
+    }
+    
     /// Disconnects any targets this is connected to.
     public func reset() {
-        // Remove the target
+        // Set the new target
         let tmpTarget = target
-        target = nil
+        target = Target.constant(defaultValue)
         
-        // Remove other target if needed
-        if tmpTarget?.target != nil {
-            tmpTarget?.reset()
+        // Reset the other value's connection if needed
+        if case let .value(value) = tmpTarget {
+            if value.target != nil {
+                value.reset()
+            }
         }
     }
 }
@@ -81,7 +123,7 @@ public final class OutputValue {
     
     /// Determines if two values can be connected.
     public func canConnect(to newTarget: InputValue) -> Bool {
-        return type == newTarget.type && owner !== newTarget.owner && target == nil && newTarget.target == nil
+        return type == newTarget.type && owner !== newTarget.owner && target == nil && newTarget.target.isConnectable()
     }
     
     /// Connects this value to another value.
@@ -90,7 +132,7 @@ public final class OutputValue {
         target = newTarget
         
         // Connect the other node
-        if newTarget.target !== self {
+        if newTarget.target.isConnectable() {
             newTarget.connect(to: self)
         }
     }

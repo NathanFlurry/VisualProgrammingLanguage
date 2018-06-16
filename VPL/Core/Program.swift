@@ -14,6 +14,8 @@ public enum InternalRuntimeError: Error {
     case stackIsEmpty
     case missingInputValue
     case missingOutputValue
+    case missingOwner
+    case nonexistentVariableID
 }
 
 class RuntimeStackItem {
@@ -32,6 +34,9 @@ class RuntimeStackItem {
 public class ProgramRuntime {
     /// The runtime stack for the running program.
     private var stack: [RuntimeStackItem]
+    
+    /// The register for all variable values in the runtime.
+    internal var variableRegister: [NodeVariable.ID: Value] = [:] // TODO: Make sure to clear old values
     
     /// If the program is finished.
     public var finished: Bool {
@@ -71,7 +76,7 @@ public class ProgramRuntime {
         // Determine if should execute again; otherwise just pop the item and
         // keep travering up the node tree
         guard stackItem.callIndex == 0 || stackItem.visitAgain else {
-            stack.removeLast()
+            popStack()
             return
         }
         
@@ -79,7 +84,7 @@ public class ProgramRuntime {
         let params = try node.inputValues.map { try self.evaluate(value: $0) }
         
         // Execute the node and get the results
-        let data = CallData(node: node, params: params, index: stackItem.callIndex)
+        let data = CallData(runtime: self, node: node, params: params, index: stackItem.callIndex)
         let result = try node.exec(call: data)
         stackItem.callIndex += 1 // Increment count if called again
         stackItem.visitAgain = result.visitAgain // Determine if visit again
@@ -88,8 +93,7 @@ public class ProgramRuntime {
         switch result.data {
         case .none:
             // Remove the last node from the stack if reaches an end
-            stack.removeLast()
-            
+            popStack()
         case .exec(let triggerID):
             // Find the trigger
             guard let trigger = node.trigger(id: triggerID) else {
@@ -100,45 +104,88 @@ public class ProgramRuntime {
             if let targetNode = trigger.target?.owner {
                 if trigger.nextTrigger {
                     // Replace the current item on the stack if moving to the next node
-                    stack[stack.count - 1] = RuntimeStackItem(node: targetNode)
+                    replaceStack(node: targetNode)
                 } else {
                     // Push the node to the stack if it's a child
-                    stack.append(RuntimeStackItem(node: targetNode))
+                    pushStack(node: targetNode)
                 }
             } else {
                 // Remove the last node from the stack if reaches an end
-                stack.removeLast()
+                popStack()
             }
-            
         case .value(_):
             fatalError("Value result cannot exist in control flow execution.")
-            
         case .async:
             fatalError("Unimplemented.")
         }
+    }
+    
+    @discardableResult
+    func pushStack(node: Node) -> RuntimeStackItem {
+        // Create the item and add it to the stack
+        let item = RuntimeStackItem(node: node)
+        stack.append(item)
+        
+        return item
+    }
+    
+    func popStack() {
+        // Remove the last node
+        let item = stack.removeLast()
+        
+        // Remove all of the exposed variables from the item
+        if case let .triggers(triggers) = item.node.output {
+            for trigger in triggers {
+                for variable in trigger.exposedVariables {
+                    // Remove the value at the exposed variable's ID in the dict
+                    variableRegister[variable.id] = nil
+                }
+            }
+        }
+    }
+    
+    func replaceStack(node: Node) {
+        // Remove the last item
+        popStack()
+        
+        // Add the next item
+        pushStack(node: node)
     }
     
     // TODO: Find a way to async execut this so you can step through this
     /// Evaluates nodes that output values from the input socket that points to
     /// the given node.
     func evaluate(value: InputValue) throws -> Value {
-        // Get the node for the data
-        guard let node = value.target?.owner else {
-            throw InternalRuntimeError.missingInputValue
-        }
-        
-        // Evaluate the params
-        let params = try node.inputValues.map { try self.evaluate(value: $0) }
-        
-        // Execute the node; index does not apply to evaluating nodes
-        let data = CallData(node: node, params: params, index: 0)
-        let result = try node.exec(call: data)
-        
-        // Handle the result
-        if case let .value(value) = result.data {
+        switch value.target {
+        case .constant(let value):
+            // Return the constant value
             return value
-        } else {
-            throw InternalRuntimeError.missingOutputValue
+        case .value(let value):
+            // Get the owner
+            guard let node = value.owner else {
+                throw InternalRuntimeError.missingOwner
+            }
+            
+            // Evaluate the params
+            let params = try node.inputValues.map { try self.evaluate(value: $0) }
+            
+            // Execute the node; index does not apply to evaluating nodes
+            let data = CallData(runtime: self, node: node, params: params, index: 0)
+            let result = try node.exec(call: data)
+            
+            // Handle the result
+            if case let .value(value) = result.data {
+                return value
+            } else {
+                throw InternalRuntimeError.missingOutputValue
+            }
+        case .variable(let variable):
+            // Look up the variable's value
+            if let value = variableRegister[variable.id] {
+                return value
+            } else {
+                throw InternalRuntimeError.nonexistentVariableID
+            }
         }
     }
     

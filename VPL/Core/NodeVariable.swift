@@ -9,13 +9,13 @@
 import Foundation
 
 public class NodeVariable {
-    public static var variableId: String { return String(format: "v%06x", Int(arc4random())) }
+    public typealias ID = UUID
     
     /// The trigger that owns this variable.
     public internal(set) weak var owner: OutputTrigger!
     
-    /// A UUID that represents this variable in the code itself.
-    public let id: String
+    /// An identifier for this variable.
+    public let id: ID = UUID()
     
     /// Label for human readability.
     public let name: String
@@ -24,49 +24,7 @@ public class NodeVariable {
     public let type: ValueType
     
     public init(name: String, type: ValueType) {
-        self.id = NodeVariable.variableId
         self.name = name
         self.type = type
-    }
-}
-
-public final class InputVariable {
-    /// The node that owns this value.
-    public internal(set) weak var owner: Node!
-    
-    /// An identifier for this value.
-    public let id: String
-    
-    /// Name for this value.
-    public let name: String
-    
-    /// The type of value this holds.
-    public let type: ValueType
-    
-    /// The connected value.
-    public private(set) var target: NodeVariable?
-    
-    public init(id: String, name: String, type: ValueType) {
-        self.id = id
-        self.name = name
-        self.type = type
-    }
-    
-    /// Determines if two values can be connected.
-    public func canConnect(to newTarget: NodeVariable) -> Bool {
-        /// Make sure the node can see the variable.
-        return newTarget.type == type && owner.availableVariables.contains { $0 === newTarget }
-    }
-    
-    /// Connects this value to another value.
-    public func connect(to newTarget: NodeVariable) {
-        // Set the new target
-        target = newTarget
-    }
-    
-    /// Disconnects any targets this is connected to.
-    public func reset() {
-        // Remove the target
-        target = nil
     }
 }

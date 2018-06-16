@@ -99,6 +99,9 @@ struct AsyncResultFromAsyncCall {
 }
 
 public struct CallData {
+    /// The runtime that this call data belongs to.
+    fileprivate var runtime: ProgramRuntime
+    
     /// The node that this data is being passed to.
     public private(set) var node: Node
     
@@ -127,7 +130,8 @@ public struct CallData {
     }
     
     /// Creates new call data for the node to use.
-    internal init(node: Node, params: [Value], index: Int) {
+    internal init(runtime: ProgramRuntime, node: Node, params: [Value], index: Int) {
+        self.runtime = runtime
         self.node = node
         self.params = params
         self.index = index
@@ -194,10 +198,26 @@ public struct CallResult {
     /// which need to be visited multiple times.
     var visitAgain: Bool
     
-    fileprivate init(call: CallData, data: Data, visitAgain: Bool) {
+    fileprivate init(call: CallData, data: Data, visitAgain: Bool, variables: [Value] = []) {
+        // Save the data
         self.call = call
         self.data = data
         self.visitAgain = visitAgain
+        
+        if case let .exec(triggerID) = data, let trigger = call.node.trigger(id: triggerID) {
+            // Make sure there are the same number of exposed variables
+            assert(trigger.exposedVariables.count == variables.count, "Exposed variable count does not match resulting variables.")
+            
+            // Make sure each value conforms to the appropriate type
+            for (i, variable) in variables.enumerated() {
+                assert(variable.conforms(to: trigger.exposedVariables[i].type), "Resulting variable value does not conform to variable type.")
+            }
+            
+            // Save the values to the variable register
+            for (i, variable) in variables.enumerated() {
+                call.runtime.variableRegister[trigger.exposedVariables[i].id] = variable
+            }
+        }
     }
 }
 
@@ -211,7 +231,6 @@ public protocol Node: class {
     
     var inputTrigger: InputTrigger? { get }
     var inputValues: [InputValue] { get }
-    var inputVariables: [InputVariable] { get }
     var output: NodeOutput { get }
     
     init()
@@ -223,7 +242,6 @@ extension Node {
     public static var destroyable: Bool { return true }
     public var inputTrigger: InputTrigger? { return nil }
     public var inputValues: [InputValue] { return [] }
-    public var inputVariables: [InputVariable] { return [] }
     public var output: NodeOutput { return .none }
 }
 
@@ -269,7 +287,6 @@ extension Node {
         // Set input owners
         inputTrigger?.owner = self
         inputValues.forEach { $0.owner = self }
-        inputVariables.forEach { $0.owner = self }
         
         // Setup outputs
         switch output {

@@ -11,7 +11,6 @@ import UIKit
 enum DisplayNodeSocketType: Equatable {
     case inputTrigger(InputTrigger), outputTrigger(OutputTrigger)
     case inputValue(InputValue), outputValue(OutputValue)
-    case inputVariable(InputVariable)
 }
 
 extension DisplayNodeSocketType {
@@ -21,8 +20,6 @@ extension DisplayNodeSocketType {
             return UIColor(red: 1, green: 0.74, blue: 0.24, alpha: 1.0)
         case .inputValue(_), .outputValue(_):
             return UIColor(red: 0.11, green: 0.84, blue: 1.0, alpha: 1.0)
-        case .inputVariable(_):
-            return UIColor(red: 0.12, green: 1, blue: 0.59, alpha: 1.0)
         }
     }
     
@@ -32,8 +29,6 @@ extension DisplayNodeSocketType {
             return UIColor(red: 1, green: 0.85, blue: 0.56, alpha: 1.0)
         case .inputValue(_), .outputValue(_):
             return UIColor(red: 0.65, green: 0.93, blue: 1.0, alpha: 1.0)
-        case .inputVariable(_):
-            return UIColor(red: 0.44, green: 1, blue: 0.74, alpha: 0.35)
         }
     }
 }
@@ -41,7 +36,7 @@ extension DisplayNodeSocketType {
 extension DisplayNodeSocketType {
     var isInput: Bool {
         switch self {
-        case .inputTrigger(_), .inputValue(_), .inputVariable(_):
+        case .inputTrigger(_), .inputValue(_):
             return true
         case .outputValue(_), .outputTrigger(_):
             return false
@@ -58,8 +53,6 @@ extension DisplayNodeSocketType {
             return value.target != nil
         case .outputValue(let value):
             return value.target != nil
-        case .inputVariable(let variable):
-            return variable.target != nil
         }
     }
     
@@ -80,10 +73,6 @@ extension DisplayNodeSocketType {
         case .outputValue(let lhsValue):
             if case let .outputValue(rhsValue) = rhs {
                 return lhsValue === rhsValue
-            }
-        case .inputVariable(let lhsVariable):
-            if case let .inputVariable(rhsVariable) = rhs {
-                return lhsVariable === rhsVariable
             }
         }
         
@@ -172,14 +161,6 @@ class DisplayNodeSocket: UIView {
             if case let .inputValue(otherValue) = other.type {
                 return value.canConnect(to: otherValue)
             }
-        case .inputVariable(let variable):
-            if case let .outputTrigger(trigger) = other.type {
-                for otherVariable in trigger.exposedVariables {
-                    if variable.canConnect(to: otherVariable) {
-                        return true
-                    }
-                }
-            }
         }
         
         return false
@@ -205,8 +186,6 @@ class DisplayNodeSocket: UIView {
             if case let .inputValue(otherValue) = other.type {
                 value.connect(to: otherValue)
             }
-        case .inputVariable(_):
-            promptVariableConnectino(to: other)
         }
         
         // Update the socket
@@ -215,8 +194,8 @@ class DisplayNodeSocket: UIView {
     }
     
     func promptVariableConnectino(to other: DisplayNodeSocket) {
-        guard case let .inputVariable(variable) = type else {
-            print("Cannot propt for variable connection on non-variable types.")
+        guard case let .inputValue(variable) = type else {
+            print("Cannot propt for variable connection on non-value types.")
             return
         }
         guard case let .outputTrigger(trigger) = other.type else {
@@ -269,8 +248,8 @@ class DisplayNodeSocket: UIView {
     /// Label that will be drawn on the connection.
     func connectionLabel() -> String? {
         switch type {
-        case .inputVariable(let variable):
-            if let target = variable.target {
+        case .inputValue(let value):
+            if case let .variable(target) = value.target {
                 return "\(target.name) (\(target.type.description))"
             } else {
                 return nil
@@ -292,7 +271,6 @@ class DisplayNodeSocket: UIView {
         case .outputTrigger(let trigger): trigger.reset()
         case .inputValue(let value): value.reset()
         case .outputValue(let value): value.reset()
-        case .inputVariable(let variable): variable.reset()
         }
         
         // Update the dragging to position
@@ -355,7 +333,7 @@ class DisplayNodeSocket: UIView {
         // Determine if input
         let isInput: Bool
         switch type {
-        case .inputTrigger(_), .inputValue(_), .inputVariable(_):
+        case .inputTrigger(_), .inputValue(_):
             isInput = true
         case .outputTrigger(_), .outputValue(_):
             isInput = false
