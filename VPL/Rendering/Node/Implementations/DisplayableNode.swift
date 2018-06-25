@@ -12,13 +12,13 @@ public let defaultNodes: [DisplayableNode.Type] = [
     EvalConstNode.self,
     IntConstNode.self,
     StringConstNode.self,
-    
+
     DeclareVariableNode.self,
     SetVariableNode.self,
     GetVariableNode.self,
     IfNode.self,
     ForLoopNode.self,
-    
+
     AddNode.self,
     SubtractNode.self,
     MultiplyNode.self,
@@ -27,20 +27,20 @@ public let defaultNodes: [DisplayableNode.Type] = [
     RandomIntNode.self,
     RandomFloatNode.self,
     EqualsNode.self,
-    
+
     ArrayCreateNode.self,
     ArrayAppendNode.self,
     ArraySetAtNode.self,
     ArrayGetAtNode.self,
     ArrayRemoveAtNode.self,
     ArrayCountNode.self,
-    
+
     DictionaryCreateNode.self,
     DictionarySetAtNode.self,
     DictionaryGetAtNode.self,
     DictionaryContainsKeyNode.self,
     DictionaryRemoveAtNode.self,
-    
+
     PrintNode.self,
     SwapNode.self
 ]
@@ -48,10 +48,10 @@ public let defaultNodes: [DisplayableNode.Type] = [
 public protocol DisplayableNode: Node {
     /// The character that can be drawn to spawn this node.
     static var shortcutCharacter: String? { get }
-    
+
     /// If the node is deletable.
     static var destroyable: Bool { get }
-    
+
     /// View that can be used to represent the view's interactable content. This
     /// allows for things like constant nodes to have dynamic content.
     var contentView: DisplayableNodeContentView? { get }
@@ -59,8 +59,8 @@ public protocol DisplayableNode: Node {
 
 extension DisplayableNode {
     public static var shortcutCharacter: String? { return nil }
-    
+
     public static var destroyable: Bool { return true }
-    
+
     public var contentView: DisplayableNodeContentView? { return nil }
 }

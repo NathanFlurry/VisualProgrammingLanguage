@@ -9,17 +9,17 @@
 import UIKit
 public class PrintNode: DisplayableNode {
     public static let shortcutCharacter: String? = "P"
-    
+
     public static let id: String = "print"
     public static let name: String = "Print"
     public let inputTrigger: InputTrigger? = InputTrigger()
     public let inputValues: [InputValue] = [InputValue(id: "value", name: "Value", type: .unknown)]
     public let output: NodeOutput = .triggers([OutputTrigger()])
-    
+
     public required init() {
         self.setupConnections()
     }
-    
+
     public func assemble() -> String {
         var out = ""
         out !+= "print(\(inputValues[0].assemble()))"
@@ -32,11 +32,11 @@ public class SwapNode: DisplayableNode {
     public let inputTrigger: InputTrigger? = InputTrigger()
     public let inputVariables: [InputVariable] = [InputVariable(id: "a", name: "A", type: .unknown), InputVariable(id: "b", name: "B", type: .unknown)]
     public let output: NodeOutput = .triggers([OutputTrigger()])
-    
+
     public required init() {
         self.setupConnections()
     }
-    
+
     public func assemble() -> String {
         let tmpVariableId = NodeVariable.variableId
         var out = ""
