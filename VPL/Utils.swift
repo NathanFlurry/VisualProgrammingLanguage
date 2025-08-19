@@ -18,16 +18,26 @@ extension DisplayNodeCanvas {
     public func insert(node: DisplayableNode, base: DisplayNode, offset: CGPoint) -> DisplayNode {
         // Create the ndoe
         let node = DisplayNode(node: node)
-        
+
         // Insert the node
         insert(
             node: node,
             at: CGPoint(x: base.center.x + offset.x, y: base.center.y + offset.y),
             absolutePosition: true
         )
-        
+
         return node
     }
+}
+
+extension Int {
+    static func random() -> Int {
+        return Int(arc4random())
+    }
+}
+
+extension CATransform3D {
+    static var identity: CATransform3D { return CATransform3DIdentity }
 }
 
 // Font extension
@@ -37,9 +47,32 @@ extension UIFont {
     }
 }
 
+extension NSMutableAttributedString {
+    open func add(attribute: NSAttributedStringKey, value: Any) {
+        addAttribute(attribute, value: value, range: NSRange(location: 0, length: length))
+    }
+}
+
 // Random float
-func randomFloat() -> CGFloat {
-    return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+    }
+}
+
+extension CGRect {
+    public var center: CGPoint {
+        return CGPoint(x: midX, y: midY)
+    }
+
+    public init(square: CGFloat) {
+        self.init(size: CGSize(width: square, height: square))
+    }
+
+    public init(size: CGSize) {
+        self.init(origin: .zero, size: size)
+    }
 }
 
 // Extension helpers
@@ -49,7 +82,7 @@ extension NSLayoutConstraint {
         self.isActive = true
         return self
     }
-    
+
     @discardableResult
     func setPriority(_ priority: UILayoutPriority) -> Self {
         self.priority = priority

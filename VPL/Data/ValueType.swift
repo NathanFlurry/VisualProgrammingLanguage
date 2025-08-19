@@ -6,39 +6,37 @@
 //  Copyright © 2018 Nathan Flurry. All rights reserved.
 //
 
-import Foundation
-
 public indirect enum ValueType: CustomStringConvertible {
     /// Custom variable type. These correspond to the exact Swift variable type.
     case type(String)
-    
+
     /// `unknown` is used as a way of passing around non-primitive or unknown
     /// value types. This basically allows for having functionality that the VFL
     /// does not support yet. *However*, this removes safety can may cause
     /// compile time errors after assembly.
     case unknown
-    
+
     /// Pseudo-generic types.
     case generic(String, [ValueType])
-    
+
     /// Provides as a way of having a flexible variable type that is inherited
     /// from another input value. `inputId` is the ID of the `InputValue` that
     /// represents where the data comes from.
 //    case proxy(inputId: String)
-    
+
     public static var bool: ValueType { return .type("Bool") }
     public static var int: ValueType { return .type("Int") }
     public static var float: ValueType { return .type("Float") }
     public static var string: ValueType { return .type("String") }
-    
+
     public static func array(_ inner: ValueType) -> ValueType {
         return .generic("Array", [inner])
-        
+
     }
     public static func dictionary(_ a: ValueType, _ b: ValueType) -> ValueType {
         return .generic("Dictionary", [a, b])
     }
-        
+
     public var description: String {
         switch self {
         case .type(let type):
@@ -49,13 +47,13 @@ public indirect enum ValueType: CustomStringConvertible {
             return "unknown"
         }
     }
-    
+
     public func canCast(to other: ValueType) -> Bool {
         // Anything cna be casted to unknown
         if case .unknown = other {
             return true
         }
-        
+
         // Check for other casting
         switch self {
         case .type(let type):
@@ -70,14 +68,14 @@ public indirect enum ValueType: CustomStringConvertible {
                 if subtypes.count != otherSubtypes.count {
                     return false
                 }
-                
+
                 // Check each subtype can cast
                 for i in 0..<subtypes.count {
                     if !subtypes[i].canCast(to: otherSubtypes[i]) {
                         return false
                     }
                 }
-                
+
                 // Make sure the base types are equal
                 return type == otherType
             } else {

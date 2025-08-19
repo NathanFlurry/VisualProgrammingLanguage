@@ -2,7 +2,6 @@
  Some tools adapted from: https://github.com/martinmitrevski/TextRecognizer/blob/master/TextRecognizer/ImageUtils.swift
  ***/
 
-import Foundation
 import UIKit
 import Vision
 
@@ -21,14 +20,18 @@ public func |> <T, U>(value: T, function: ((T) -> U)) -> U {
     return function(value)
 }
 
-func resize(image: UIImage, targetSize: CGSize) -> UIImage {
-    let rect = CGRect(x: 0, y: 0, width: targetSize.width, height: targetSize.height)
-    UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)
-    image.draw(in: rect)
-    let newImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return newImage!
+extension UIImage {
+    func resize(to size: CGSize) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
 }
+
+
 
 func convertToGrayscale(image: UIImage) -> UIImage {
     let colorSpace: CGColorSpace = CGColorSpaceCreateDeviceGray()
@@ -49,16 +52,16 @@ func convertToGrayscale(image: UIImage) -> UIImage {
 
 func insertInsets(image: UIImage, insetWidthDimension: CGFloat, insetHeightDimension: CGFloat)
     -> UIImage {
-    let adjustedImage = adjustColors(image: image)
+    let adjustedImage = image.adjustColors()
     let upperLeftPoint: CGPoint = CGPoint(x: 0, y: 0)
     let lowerLeftPoint: CGPoint = CGPoint(x: 0, y: adjustedImage.size.height - 1)
     let upperRightPoint: CGPoint = CGPoint(x: adjustedImage.size.width - 1, y: 0)
     let lowerRightPoint: CGPoint = CGPoint(x: adjustedImage.size.width - 1,
                                            y: adjustedImage.size.height - 1)
-    let upperLeftColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: upperLeftPoint)
-    let lowerLeftColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: lowerLeftPoint)
-    let upperRightColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: upperRightPoint)
-    let lowerRightColor: UIColor = getPixelColor(fromImage: adjustedImage, pixel: lowerRightPoint)
+    let upperLeftColor: UIColor = adjustedImage.pixelColor(at: upperLeftPoint)
+    let lowerLeftColor: UIColor = adjustedImage.pixelColor(at: lowerLeftPoint)
+    let upperRightColor: UIColor = adjustedImage.pixelColor(at: upperRightPoint)
+    let lowerRightColor: UIColor = adjustedImage.pixelColor(at: lowerRightPoint)
     let color =
         averageColor(fromColors: [upperLeftColor, lowerLeftColor, upperRightColor, lowerRightColor])
     let insets = UIEdgeInsets(top: insetHeightDimension,
@@ -72,7 +75,7 @@ func insertInsets(image: UIImage, insetWidthDimension: CGFloat, insetHeightDimen
     adjustedImage.draw(at: origin)
     let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
-    return convertTransparent(image: imageWithInsets!, color: color)
+    return imageWithInsets!.convertTransparent(color: color)
 }
 
 func averageColor(fromColors colors: [UIColor]) -> UIColor {
@@ -91,70 +94,75 @@ func averageColor(fromColors colors: [UIColor]) -> UIColor {
 }
 
 func adjustColors(image: UIImage) -> UIImage {
-    let context = CIContext(options: nil)
-    if let currentFilter = CIFilter(name: "CIColorControls") {
-        let beginImage = CIImage(image: image)
+    return image.adjustColors()
+}
+
+extension UIImage {
+    func adjustColors() -> UIImage {
+        let context = CIContext(options: nil)
+        guard let currentFilter = CIFilter(name: "CIColorControls") else { return self }
+        let beginImage = CIImage(image: self)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         currentFilter.setValue(0, forKey: kCIInputSaturationKey)
         currentFilter.setValue(1.45, forKey: kCIInputContrastKey) //previous 1.5
-        if let output = currentFilter.outputImage {
-            if let cgimg = context.createCGImage(output, from: output.extent) {
-                let processedImage = UIImage(cgImage: cgimg)
-                return processedImage
-            }
+        guard let output = currentFilter.outputImage,
+            let cgimg = context.createCGImage(output, from: output.extent) else { return self }
+        return UIImage(cgImage: cgimg)
+    }
+
+    func fixOrientation() -> UIImage {
+        if imageOrientation == .up {
+            return self
+        }
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(in: CGRect(size: size))
+        if let normalizedImage = UIGraphicsGetImageFromCurrentImageContext() {
+            UIGraphicsEndImageContext()
+            return normalizedImage
+        } else {
+            return self
         }
     }
-    return image
-}
 
-func fixOrientation(image: UIImage) -> UIImage {
-    if image.imageOrientation == UIImageOrientation.up {
-        return image
-    }
-    UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-    image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-    if let normalizedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() {
+    func convertTransparent(color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        let imageRect = CGRect(size: size)
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        let redValue = CGFloat(color.cgColor.components![0])
+        let greenValue = CGFloat(color.cgColor.components![1])
+        let blueValue = CGFloat(color.cgColor.components![2])
+        let alphaValue = CGFloat(color.cgColor.components![3])
+        ctx.setFillColor(red: redValue, green: greenValue, blue: blueValue, alpha: alphaValue)
+        ctx.fill(imageRect)
+        draw(in: imageRect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        return normalizedImage
-    } else {
-        return image
+        return newImage
     }
-}
 
-func convertTransparent(image: UIImage, color: UIColor) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-    let width = image.size.width
-    let height = image.size.height
-    let imageRect: CGRect = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-    let ctx: CGContext = UIGraphicsGetCurrentContext()!
-    let redValue = CGFloat(color.cgColor.components![0])
-    let greenValue = CGFloat(color.cgColor.components![1])
-    let blueValue = CGFloat(color.cgColor.components![2])
-    let alphaValue = CGFloat(color.cgColor.components![3])
-    ctx.setFillColor(red: redValue, green: greenValue, blue: blueValue, alpha: alphaValue)
-    ctx.fill(imageRect)
-    image.draw(in: imageRect)
-    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-    UIGraphicsEndImageContext()
-    return newImage
-}
+    func pixelColor(at pixel: CGPoint) -> UIColor {
+        let pixelData = cgImage!.dataProvider!.data
+        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        let pixelInfo: Int = ((Int(size.width) * Int(pixel.y)) + Int(pixel.x)) * 4
+        let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
+        let g = CGFloat(data[pixelInfo + 1]) / CGFloat(255.0)
+        let b = CGFloat(data[pixelInfo + 2]) / CGFloat(255.0)
+        let a = CGFloat(data[pixelInfo + 3]) / CGFloat(255.0)
+        return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
 
-func getPixelColor(fromImage image: UIImage, pixel: CGPoint) -> UIColor {
-    let pixelData = image.cgImage!.dataProvider!.data
-    let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-    let pixelInfo: Int = ((Int(image.size.width) * Int(pixel.y)) + Int(pixel.x)) * 4
-    let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
-    let g = CGFloat(data[pixelInfo + 1]) / CGFloat(255.0)
-    let b = CGFloat(data[pixelInfo + 2]) / CGFloat(255.0)
-    let a = CGFloat(data[pixelInfo + 3]) / CGFloat(255.0)
-    return UIColor(red: r, green: g, blue: b, alpha: a)
+    func cropping(to rect: CGRect) -> UIImage? {
+        return cgImage!.cropping(to: rect).flatMap {
+            UIImage(cgImage: $0)
+        }
+    }
 }
 
 extension VNRectangleObservation {
     func applyTo(size: CGSize) -> CGRect {
-        var t: CGAffineTransform = CGAffineTransform.identity;
-        t = t.scaledBy(x: size.width, y: -size.height);
-        t = t.translatedBy(x: 0, y: -1 );
+        var t: CGAffineTransform = .identity
+        t = t.scaledBy(x: size.width, y: -size.height)
+        t = t.translatedBy(x: 0, y: -1 )
         let x = boundingBox.applying(t).origin.x
         let y = boundingBox.applying(t).origin.y
         let width = boundingBox.applying(t).width
@@ -163,117 +171,109 @@ extension VNRectangleObservation {
     }
 }
 
-func crop(image: UIImage, rectangle: CGRect) -> UIImage? {
-    let drawImage = image.cgImage!.cropping(to: rectangle)
-    if let drawImage = drawImage {
-        let uiImage = UIImage(cgImage: drawImage)
-        return uiImage
-    }
-    return nil
-}
-
 func preProcess(image: UIImage, size: CGSize, invert shouldInvert: Bool = false, addInsets: Bool = true) -> UIImage {
     // Calculate properties
     let width = image.size.width
     let height = image.size.height
     let addToHeight2 = height / 2
     let addToWidth2 = ((6 * height) / 3 - width) / 2
-    
+
     // Process the image
     var image = image
     if shouldInvert {
-        image = invert(image: image)
+        image = image.invert()
     }
     if addInsets {
         image = insertInsets(image: image, insetWidthDimension: addToWidth2, insetHeightDimension: addToHeight2)
     }
-    image = resize(image: image, targetSize: size)
+    image = image.resize(to: size)
     image = convertToGrayscale(image: image)
-    
+
     return image
 }
 
-func invert(image: UIImage) -> UIImage {
-    // Get the filter and image
-    guard let filter = CIFilter(name: "CIColorInvert") else {
-        print("Failed to find CIColorInvert.")
-        return UIImage()
-    }
-    guard let cgImage = image.cgImage else {
-        print("Failed to get CGImage.")
-        return UIImage()
-    }
-    
-    // Invert the image
-    let img = CIImage(cgImage: cgImage)
-    filter.setDefaults()
-    filter.setValue(img, forKey: kCIInputImageKey)
-    let ctx = CIContext(options: nil)
-    guard let imageRef = ctx.createCGImage(filter.outputImage!, from: img.extent) else {
-        print("Failed to get CGImage from CoreImage.")
-        return UIImage()
-    }
-    return UIImage(cgImage: imageRef)
-}
 
-func removeRetinaData(image input: UIImage) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(input.size, false, 1.0)
-    input.draw(in: CGRect(x: 0, y: 0, width: input.size.width, height: input.size.height))
-    guard let nonRetinaImage = UIGraphicsGetImageFromCurrentImageContext() else {
-        print("Failed to construct non-retina image.")
-        return UIImage()
+extension UIImage {
+    func invert() -> UIImage {
+        // Get the filter and image
+        guard let filter = CIFilter(name: "CIColorInvert") else {
+            print("Failed to find CIColorInvert.")
+            return UIImage()
+        }
+        guard let cgImage = cgImage else {
+            print("Failed to get CGImage.")
+            return UIImage()
+        }
+
+        // Invert the image
+        let img = CIImage(cgImage: cgImage)
+        filter.setDefaults()
+        filter.setValue(img, forKey: kCIInputImageKey)
+        let ctx = CIContext(options: nil)
+        guard let imageRef = ctx.createCGImage(filter.outputImage!, from: img.extent) else {
+            print("Failed to get CGImage from CoreImage.")
+            return UIImage()
+        }
+        return UIImage(cgImage: imageRef)
     }
-    UIGraphicsEndImageContext()
-    return nonRetinaImage
-}
+
+    func removeRetinaData() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        draw(in: CGRect(size: size))
+        guard let nonRetinaImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            print("Failed to construct non-retina image.")
+            return UIImage()
+        }
+        UIGraphicsEndImageContext()
+        return nonRetinaImage
+    }
 
 // From: https://gist.github.com/marchinram/3675efc96bf1cc2c02a5
-extension UIImage {
     subscript (x: Int, y: Int) -> UIColor? {
         if x < 0 || x > Int(size.width) || y < 0 || y > Int(size.height) {
             return nil
         }
-        
+
         guard let providerData = cgImage?.dataProvider?.data else { return nil }
         let data = CFDataGetBytePtr(providerData)!
-        
+
         let numberOfComponents = 4
         let pixelData = ((Int(size.width) * y) + x) * numberOfComponents
-        
+
         let r = CGFloat(data[pixelData]) / 255.0
         let g = CGFloat(data[pixelData + 1]) / 255.0
         let b = CGFloat(data[pixelData + 2]) / 255.0
         let a = CGFloat(data[pixelData + 3]) / 255.0
-        
+
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
-    
+
     // From: https://stackoverflow.com/a/48759198
     func trimWhiteRect() -> CGRect {
-        
+
         let cgImage = self.cgImage!
-        
+
         let width = cgImage.width
         let height = cgImage.height
-        
+
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bytesPerPixel:Int = 4
         let bytesPerRow = bytesPerPixel * width
         let bitsPerComponent = 8
         let bitmapInfo: UInt32 = CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue
-        
+
         guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo),
             let ptr = context.data?.assumingMemoryBound(to: UInt8.self) else {
-                return CGRect.zero
+                return .zero
         }
-        
+
         context.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: width, height: height))
-        
+
         var minX = width
         var minY = height
         var maxX: Int = 0
         var maxY: Int = 0
-        
+
         for x in 1..<width {
             for y in 1..<height {
                 let i = bytesPerRow * Int(y) + bytesPerPixel * Int(x)
@@ -281,7 +281,7 @@ extension UIImage {
                 let g = CGFloat(ptr[i + 1]) / 255.0
                 let b = CGFloat(ptr[i + 2]) / 255.0
 //                let a = CGFloat(ptr[i + 3]) / 255.0
-                
+
                 if r != 1 || g != 1 || b != 1 { // Check if it's white
                     if x < minX { minX = x }
                     if x > maxX { maxX = x }
@@ -290,7 +290,7 @@ extension UIImage {
                 }
             }
         }
-        
+
         return CGRect(x: CGFloat(minX),y: CGFloat(minY), width: CGFloat(maxX-minX), height: CGFloat(maxY-minY))
     }
 }

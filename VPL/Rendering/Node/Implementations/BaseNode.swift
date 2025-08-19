@@ -10,15 +10,15 @@ import UIKit
 
 class BaseNode: DisplayableNode {
     static let destroyable: Bool = false
-    
+
     static let id: String = "start"
     static let name: String = "Start"
     var output: NodeOutput = .triggers([OutputTrigger()])
-    
+
     required init() {
         self.setupConnections()
     }
-    
+
     func assemble() -> String {
         return assembleOutputTrigger()
     }

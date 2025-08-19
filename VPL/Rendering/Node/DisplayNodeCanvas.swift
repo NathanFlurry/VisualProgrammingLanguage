@@ -8,16 +8,55 @@
 
 import UIKit
 
+extension Array where Element == DisplayNode {
+
+    /// Finds a display node socket that matches a socket type.
+    func target(for socketType: DisplayNodeSocketType) -> DisplayNodeSocket? {
+        // Find a socket that matches the target of this view
+        for node in self {
+            for otherSocket in node.sockets {
+                switch (socketType, otherSocket.type) {
+                case let (.inputTrigger(trigger), .outputTrigger(otherTrigger)):
+                    if trigger.target === otherTrigger {
+                        return otherSocket
+                    }
+                case let (.outputTrigger(trigger), .inputTrigger(otherTrigger)):
+                    if trigger.target === otherTrigger {
+                        return otherSocket
+                    }
+                case let (.inputValue(value), .outputValue(otherValue)):
+                    if value.target === otherValue {
+                        return otherSocket
+                    }
+                case let (.outputValue(value), .inputValue(otherValue)):
+                    if value.target === otherValue {
+                        return otherSocket
+                    }
+                case let (.inputVariable(variable), .outputTrigger(trigger)):
+                    if variable.target?.owner === trigger {
+                        return otherSocket
+                    }
+                default:
+                    break
+                }
+            }
+        }
+
+        // No match
+        return nil
+    }
+}
+
 public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
     /// List of all nodes in the canvas.
     public private(set) var nodes: [DisplayNode]
-    
+
     /// View that is drawn behind all other views.
     var backgroundView: UIView? {
         didSet {
             // Remove the old value
             oldValue?.removeFromSuperview()
-            
+
             // Add the new vlaue
             if let backgroundView = backgroundView {
                 addSubview(backgroundView)
@@ -25,22 +64,22 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
             }
         }
     }
-    
+
     /// View that overlays the canvas and draws connections between nodes.
     private var overlayView: DisplayNodeCanvasOverlay!
-    
+
     /// Called every time the nodes are updated.
     var updateCallback: (() -> Void)?
-    
+
     /// The starting node that all other nodes build off of.
     public private(set) var baseNode: DisplayNode!
-    
+
     override init(frame: CGRect) {
         // Create new node list
         nodes = []
-        
+
         super.init(frame: frame)
-        
+
         // Configure the scroll view to be large & only allow panning with two
         // touches
         delegate = self
@@ -56,75 +95,75 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
                 recognizer.isEnabled = false
             }
         }
-        
+
         // Style the view
         clipsToBounds = true
         backgroundColor = .clear
-        
+
         // Add the overlay
         overlayView = DisplayNodeCanvasOverlay(frame: bounds, canvas: self)
         addSubview(overlayView)
-        
+
         // Create and insert the display node
         baseNode = DisplayNode(node: BaseNode())
         insert(node: baseNode, at: CGPoint(x: contentSize.width / 2, y: contentSize.height / 2))
-        
+
         // Scroll to the center
         contentOffset = CGPoint(x: contentSize.width / 2 - 200, y: contentSize.height / 2 - 200)
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func layoutSubviews() {
         // Resize all views
         backgroundView?.frame.size = bounds.size
         overlayView.frame.size = bounds.size
     }
-    
+
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Move the background and overlay with the view
         backgroundView?.frame.origin = scrollView.contentOffset
         overlayView.frame.origin = scrollView.contentOffset
-        
+
         // Update overlay
         updateState()
     }
-    
+
     /// Assembles all of the code.
     public func assemble() -> String {
         var output = ""
-        
+
         // Assemble each function
         for node in nodes {
             if let node = node.node as? BaseNode {
                 output += node.assemble()
-                
+
                 output += "\n\n"
             }
         }
-        
+
         return output
     }
-    
+
     /// Adds a node to the canvas.
     public func insert(node: DisplayNode, at position: CGPoint, absolutePosition: Bool = false) {
         assert(!nodes.contains(node))
         assert(node.canvas == nil)
-        
+
         // Set the canvas
         node.canvas = self
-        
+
         // Add callabck on content change
         node.node.contentView?.onChangeCallback = {
             self.updated(node: node)
         }
-        
+
         // Insert into the list and view
         nodes.append(node)
         addSubview(node)
-        
+
         // Position the node
         node.layoutIfNeeded()
         node.center = position
@@ -132,45 +171,45 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
             node.frame.origin.x += contentOffset.x
             node.frame.origin.y += contentOffset.y
         }
-        
+
         // Perform updated
         updated(node: node)
     }
-    
+
     /// Called when any interaction occurs with the node and it needs to be
     /// updated.
     public func updated(node: DisplayNode) {
         // Bring node to front under overlay
         bringSubview(toFront: node)
         bringSubview(toFront: overlayView)
-        
+
         // Update this canvas' state
         updateState()
-        
+
         // Update the state
         node.updateState()
-        
+
         // Call update
         updateCallback?()
     }
-    
+
     /// Removes a ndoe from the canvas.
     public func remove(node: DisplayNode) {
         assert(nodes.contains(node))
         assert(node.canvas == self)
-        
+
         // Make sure the node is destroyable
         guard type(of: node.node).destroyable else {
             return
         }
-        
+
         // Remove the node from the list
         guard let nodeIndex = nodes.index(where: { $0 === node }) else {
             print("Failed to find node in list.")
             return
         }
         nodes.remove(at: nodeIndex)
-        
+
         // Add destory animation
         UIView.animate(
             withDuration: 0.2,
@@ -182,15 +221,15 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
                 node.removeFromSuperview()
             }
         )
-        
+
         // Destroy the node
         node.node.destroy()
-        
+
         // Update
         updateState()
         updateCallback?()
     }
-    
+
     /// Creates a connection between sockets based on the current dragging
     /// position.
     func finishConnection(socket: DisplayNodeSocket) {
@@ -198,7 +237,7 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
             print("No target for socket.")
             return
         }
-        
+
         // Find a socket dislplay that matches the point
         nodeLoop: for node in nodes {
             if node.point(inside: node.convert(target, from: socket), with: nil) {
@@ -213,18 +252,18 @@ public class DisplayNodeCanvas: UIScrollView, UIScrollViewDelegate {
                 }
             }
         }
-        
+
         // Remove the target
         socket.draggingTarget = nil
-        
+
         // Update
         updateCallback?()
     }
-    
+
     func updateState() {
         // Update overlay
         overlayView.setNeedsDisplay()
-        
+
         // This does not notify the child node's state, since that's an
         // expensive operatino and should rarely update all at once.
     }

@@ -21,21 +21,21 @@ class CodeOutputView: UIView {
             "switch", "throws", "true", "try", "var", "weak", "where", "while",
             "willSet"
     ]
-    
-    let splitCharacters: [String] = [ "\n", "at ", "{", "}", "(", ")", "[", "]" ]
-    
+
+    let splitCharacters: Set<String> = [ "\n", "at ", "{", "}", "(", ")", "[", "]" ]
+
     var code: String = ""
-    
-    var textView: UITextView = UITextView(frame: CGRect.zero)
-    
+
+    var textView: UITextView = UITextView(frame: .zero)
+
     var copyButton: UIButton = UIButton()
-    
+
     init() {
-        super.init(frame: CGRect.zero)
-        
+        super.init(frame: .zero)
+
         // Style the view
         backgroundColor = UIColor(white: 0.96, alpha: 1.0)
-        
+
         // Create text view
         let inset: CGFloat = 16
         textView.textContainerInset = UIEdgeInsets(top: inset, left: inset, bottom: isInPlayground ? 80 : inset, right: inset)
@@ -43,7 +43,7 @@ class CodeOutputView: UIView {
         textView.isEditable = false
         textView.isSelectable = true
         addSubview(textView)
-        
+
         // Add constraints
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.topAnchor.constraint(equalTo: topAnchor).activate()
@@ -52,7 +52,7 @@ class CodeOutputView: UIView {
         textView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 64).activate()
         textView.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: 64).activate()
         textView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600).activate().setPriority(.defaultLow)
-        
+
         // Add copy button
         copyButton.setTitle("Copy", for: .normal)
         copyButton.setTitleColor(UIColor(white: 0.2, alpha: 1.0), for: .normal)
@@ -61,27 +61,27 @@ class CodeOutputView: UIView {
         copyButton.translatesAutoresizingMaskIntoConstraints = false
         copyButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).activate()
         copyButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).activate()
-        
+
         // Render the code
         render(code: "")
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func render(code: String) {
         // Get the code
         self.code = code
         let code = code.count > 0 ? code : "No assembled code."
-        
+
         // Show/hide button
         copyButton.isHidden = code.count == 0
-        
+
         // Update attributed text
         textView.attributedText = stylize(code: code)
     }
-    
+
     private func stylize(code: String) -> NSMutableAttributedString {
         // Process the code
         let string = NSMutableAttributedString(string: code)
@@ -93,7 +93,7 @@ class CodeOutputView: UIView {
             while let keywordRange = searchCode.range(of: keyword) {
                 // Replace the code to search
                 searchCode = searchCode[keywordRange.upperBound..<code.endIndex]
-                
+
                 // Make sure that it's surrounded by split characters or at the
                 // edge of the string
                 if let prevIndex = code.index(keywordRange.lowerBound, offsetBy: -1, limitedBy: code.startIndex) {
@@ -106,19 +106,19 @@ class CodeOutputView: UIView {
                         continue
                     }
                 }
-                
+
                 // Updates the attributes
                 let range = NSRange(keywordRange, in: code)
-                string.addAttribute(NSAttributedStringKey.foregroundColor, value: color, range: range)
+                string.addAttribute(.foregroundColor, value: color, range: range)
             }
         }
-        
+
         // Set the font
-        string.addAttribute(NSAttributedStringKey.font, value: UIFont.codeFont(), range: NSRange(location: 0, length: string.length))
-        
+        string.add(attribute: .font, value: UIFont.codeFont())
+
         return string
     }
-    
+
     @objc func copyCode(sender: UIButton) {
         UIPasteboard.general.string = code
     }
